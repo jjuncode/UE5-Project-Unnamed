@@ -1,7 +1,5 @@
 #include "ServerPacketHandler.h"
-#include "BufferReader.h"
-#include "PacketSession.h"
-#include "MyGameInstance.h"
+#include "UE5_CppServer.h"
 
 extern PacketHandlerFunc GPacketHandler[UINT16_MAX]{};
 
@@ -16,14 +14,14 @@ bool Handle_S_LOGIN(PacketSessionRef& session, Protocol::S_LOGIN& pkt)
 		return false;
 
 	// TODO : 캐릭터 선택해서 idx전송
-	for (int32 i = 0; i < pkt.players_size(); i++)
-	{
-		const Protocol::PlayerInfo& Player = pkt.players(i);
-	}
+	Protocol::ObjectInfo playerInfo = pkt.player_info();
 
 	// 입장 UI버튼 눌러서 게임 입장
 	Protocol::C_ENTER_GAME enterGamePkt;
-	enterGamePkt.set_playerindex(0);	// 첫번째 캐릭터로 강제입장 
+
+	static int32 PlayerId = 0;
+	enterGamePkt.set_player_id(PlayerId++);	// 첫번째 캐릭터로 강제입장  -> fuck
+
 	SEND_PACKET(session, enterGamePkt);
 
 	return true;
@@ -31,9 +29,12 @@ bool Handle_S_LOGIN(PacketSessionRef& session, Protocol::S_LOGIN& pkt)
 
 bool Handle_S_ENTER_GAME(PacketSessionRef& session, Protocol::S_ENTER_GAME& pkt)
 {
-	if ( auto* GameInstance = Cast<UMyGameInstance>(GWorld->GetGameInstance()))
+	if (pkt.success() == false)
+		return false;
+
+	if (auto* GameManager = GetManager<UGameManager>())
 	{
-		GameInstance->HandleSpawn(pkt);
+		GameManager->HandleSpawn(pkt);
 	}
 
 	return true;
@@ -41,7 +42,7 @@ bool Handle_S_ENTER_GAME(PacketSessionRef& session, Protocol::S_ENTER_GAME& pkt)
 
 bool Handle_S_LEAVE_GAME(PacketSessionRef& session, Protocol::S_LEAVE_GAME& pkt)
 {
-	if (auto* GameInstance = Cast<UMyGameInstance>(GWorld->GetGameInstance()))
+	if (auto* GameManager = GetManager<UGameManager>())
 	{
 		// TODO : 종료 로직
 	}
@@ -51,33 +52,27 @@ bool Handle_S_LEAVE_GAME(PacketSessionRef& session, Protocol::S_LEAVE_GAME& pkt)
 
 bool Handle_S_SPAWN(PacketSessionRef& session, Protocol::S_SPAWN& pkt)
 {
-	if (auto* GameInstance = Cast<UMyGameInstance>(GWorld->GetGameInstance()))
+	if (auto* GameManager = GetManager<UGameManager>())
 	{
-		GameInstance->HandleSpawn(pkt);
+		GameManager->HandleSpawn(pkt);
 	}
 	return true;
 }
 
 bool Handle_S_DESPAWN(PacketSessionRef& session, Protocol::S_DESPAWN& pkt)
 {
-	if (auto* GameInstance = Cast<UMyGameInstance>(GWorld->GetGameInstance()))
+	if (auto* GameManager = GetManager<UGameManager>())
 	{
-		GameInstance->HandleDespawn(pkt);
+		GameManager->HandleDespawn(pkt);
 	}
 	return true;
 }
 
 bool Handle_S_MOVE(PacketSessionRef& session, Protocol::S_MOVE& pkt)
 {
-	if (auto* GameInstance = Cast<UMyGameInstance>(GWorld->GetGameInstance()))
+	if (auto* GameManager = GetManager<UGameManager>())
 	{
-		GameInstance->HandleMove(pkt);
+		GameManager->HandleMove(pkt);
 	}
-	return true;
-}
-
-bool Handle_S_CHAT(PacketSessionRef& session, Protocol::S_CHAT& pkt)
-{
-	std::cout << pkt.msg() << std::endl;
 	return true;
 }

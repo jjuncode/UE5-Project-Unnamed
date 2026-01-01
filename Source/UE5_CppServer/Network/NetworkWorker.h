@@ -7,28 +7,6 @@
 
 class FSocket;
 
-struct UE5_CPPSERVER_API FPacketHeader
-{
-	FPacketHeader() : Size{ 0 }, ID{ 0 }
-	{
-	}
-
-	FPacketHeader(uint16 PacketSize, uint16 PakcetID)
-		: Size{ PacketSize }, ID{ PakcetID }
-	{
-	}
-
-	friend FArchive& operator<<(FArchive& Ar, FPacketHeader& Data)
-	{
-		Ar << Data.Size;
-		Ar << Data.ID;
-		return Ar;
-	}
-
-	uint16 Size;
-	uint16 ID;
-};
-
 class UE5_CPPSERVER_API RecvWorker : public FRunnable
 {
 public:

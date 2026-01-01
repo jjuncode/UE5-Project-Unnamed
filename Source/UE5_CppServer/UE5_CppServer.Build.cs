@@ -20,6 +20,7 @@ public class UE5_CppServer : ModuleRules
 			"UE5_CppServer/Protobuf/",
 			"UE5_CppServer/Network/",
 			"UE5_CppServer/Game/",
+			"UE5_CppServer/Manager/",
         });
     }
 }

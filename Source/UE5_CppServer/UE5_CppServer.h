@@ -4,7 +4,27 @@
 
 #include "CoreMinimal.h"
 
+#include "PacketSession.h"
 #include "Protocol.pb.h"
 #include "Network/NetUtils.h"
-#include "MyGameInstance.h"
 #include "ServerPacketHandler.h"
+
+#include "Manager/GameManager.h"
+#include "Manager/NetworkManager.h"
+
+template<typename T>
+T* GetManager()
+{
+	if (auto* GameInstance = GWorld->GetGameInstance())
+	{
+		return GameInstance->GetSubsystem<T>();
+	}
+
+	return nullptr;
+}
+
+UFUNCTION(BlueprintCallable, Category = "Manager")
+inline UNetworkManager* GetNetworkManager()
+{
+	return GetManager<UNetworkManager>();
+}

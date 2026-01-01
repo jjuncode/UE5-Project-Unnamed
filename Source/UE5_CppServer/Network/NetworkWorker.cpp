@@ -58,7 +58,7 @@ void RecvWorker::WaitForThread()
 bool RecvWorker::RecvPacket(TArray<uint8>& OutPacket)
 {
 	// Parsing Packet Header
-	const int32 HeaderSize = sizeof(FPacketHeader);
+	const int32 HeaderSize = sizeof(PacketHeader);
 	TArray<uint8> HeaderBuffer;
 	HeaderBuffer.AddZeroed(HeaderSize);
 
@@ -66,13 +66,13 @@ bool RecvWorker::RecvPacket(TArray<uint8>& OutPacket)
 		return false;
 
 	// ID, Size √ﬂ√‚
-	FPacketHeader Header = *reinterpret_cast<FPacketHeader*>(HeaderBuffer.GetData());
-	UE_LOG(LogTemp, Log, TEXT("Recv Packet ID : %d, Size : %d"), Header.ID, Header.Size);
+	PacketHeader Header = *reinterpret_cast<PacketHeader*>(HeaderBuffer.GetData());
+	UE_LOG(LogTemp, Log, TEXT("Recv Packet ID : %d, Size : %d"), Header.id, Header.size);
 
 	OutPacket = HeaderBuffer;
 
 	TArray<uint8> DataBuffer;
-	const int32 DataSize = Header.Size - HeaderSize;
+	const int32 DataSize = Header.size - HeaderSize;
 	if (DataSize == 0)
 		return true;
 
