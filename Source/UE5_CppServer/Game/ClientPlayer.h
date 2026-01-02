@@ -14,4 +14,9 @@ class UE5_CPPSERVER_API AClientPlayer : public APlayerBase
 {
 	GENERATED_BODY()
 	
+private:
+	void MoveSync(float DeltaTime);
+
+public:
+	virtual void Tick(float DeltaTime) override;
 };

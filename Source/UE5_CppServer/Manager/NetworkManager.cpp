@@ -73,10 +73,13 @@ void UNetworkManager::Deinitialize()
 
 	DisconnectServer();
 
-	ClientSession->StopThread();
-	ClientSession->WaitForThread();
-	ClientSession->DestroyThread();
-
+	if (ClientSession != nullptr)
+	{
+		// Client Only ( not connected to server ) 
+		ClientSession->StopThread();
+		ClientSession->WaitForThread();
+		ClientSession->DestroyThread();
+	}
 	ISocketSubsystem* SocketSubSystem = ISocketSubsystem::Get();
 	SocketSubSystem->DestroySocket(Socket);
 	Socket = nullptr;

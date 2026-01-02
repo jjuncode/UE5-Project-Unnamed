@@ -45,16 +45,6 @@ void UGameManager::HandleSpawn(const Protocol::ObjectInfo& PlayerInfo, bool IsMi
 	{
 		// Spawn Other
 		AActor* SpawnPlayer = World->SpawnActor(OtherPlayerClass, &SpawnLocation);
-		if (SpawnPlayer)
-		{
-			UE_LOG(LogTemp, Log, TEXT("[GameManager] : SpawnActor Try Again..."));
-			GetWorld()->GetTimerManager().SetTimerForNextTick([this, PlayerInfo, IsMine]()
-				{
-					HandleSpawn(PlayerInfo, IsMine); // 안전하게 1회 호출
-					//TODO : fucking nullptr 
-				});// ?? FUCK
-		}
-
 		APlayerBase* Player = Cast<APlayerBase>(SpawnPlayer);
 		check(Player);
 		
@@ -113,10 +103,10 @@ void UGameManager::HandleMove(const Protocol::S_MOVE& MovePkt)
 	if (IsMyPlayer(Player))
 		return;
 
-	Player->SetObjectInfo(MovePkt.player_info());
-	Player->SetDesntInfo(MovePkt.player_info());
-
-	Player->SetMoveState(MovePkt.player_info().creature_info().state());
+	// Only About Other Player
+	//Player->SetObjectInfo(MovePkt.player_info());	// 정보 최신화
+	Player->SetDesntInfo(MovePkt.player_info());							// 목적지 설정
+	Player->SetMoveState(MovePkt.player_info().creature_info().state());	// 상태 설정
 }
 
 bool UGameManager::IsMyPlayer(TObjectPtr<class APlayerBase> rhs)
