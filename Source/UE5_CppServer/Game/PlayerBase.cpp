@@ -1,12 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
-
 #include "Game/PlayerBase.h"
-
-APlayerBase::APlayerBase()
-	:Super()
-{
-}
+#include "ClientPlayer.h"
 
 void APlayerBase::Tick(float DeltaTime)
 {
@@ -14,23 +9,18 @@ void APlayerBase::Tick(float DeltaTime)
 
 	if (ObjectInfo.creature_info().state() == Protocol::MOVE_STATE_RUN)
 	{
+		// ClientPlayer´Â Á¦¿Ü
+		if (auto* ClientPlayer = Cast<AClientPlayer>(this))
+			return;
+
 		// Rotate
 		{
-			FRotator Rotator = GetController()->GetControlRotation();
-			Rotator.Yaw = DestnInfo.yaw();
-
-			GetController()->SetControlRotation(Rotator);
+			SetActorRotation(FRotator(0, DestnInfo.yaw(),0));
 		}
 
 		// Move
 		{
-			FVector DestnPos = { DestnInfo.pos().x(),  DestnInfo.pos().y(),  DestnInfo.pos().z() };
-			FVector CurPos = { ObjectInfo.pos().x(),  ObjectInfo.pos().y(),  ObjectInfo.pos().z() };
-
-
-			FVector dir = DestnPos - CurPos;
-			dir.Normalize();
-			AddMovementInput(dir);
+			AddMovementInput(GetActorForwardVector());
 		}
 	}
 }

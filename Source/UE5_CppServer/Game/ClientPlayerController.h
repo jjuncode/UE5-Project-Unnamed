@@ -4,9 +4,11 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
+#include "Protocol.pb.h"
 #include "ClientPlayerController.generated.h"
 
 struct FInputActionValue;
+
 /**
  * 
  */
@@ -20,7 +22,10 @@ public:
 	virtual void SetupInputComponent() override;
 
 private:
-	void HandleMoveAction(const FInputActionValue& Value);
+	void _HandleMoveAction(const FInputActionValue& Value, const Protocol::MoveState& State);
+	void HandleMoveActionTrigerred(const FInputActionValue& Value);
+	void HandleMoveActionCompleted(const FInputActionValue& Value);
+
 	void HandleMouseLookAction(const FInputActionValue& Value);
 
 private:

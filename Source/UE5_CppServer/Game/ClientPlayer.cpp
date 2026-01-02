@@ -3,13 +3,14 @@
 
 #include "Game/ClientPlayer.h"
 #include "NetUtils.h"
+#include "ServerPacketHandler.h"
+#include "UE5_CppServer.h"
 
 void AClientPlayer::MoveSync(float DeltaTime)
 {
-	constexpr float SendPacketTime = 2.5f;
-
+	// Send Move Packet
+	constexpr float SendPacketTime = 0.25f;
 	static float AccTime = 0;
-
 	AccTime += DeltaTime;
 
 	if (AccTime >= SendPacketTime)
@@ -18,11 +19,13 @@ void AClientPlayer::MoveSync(float DeltaTime)
 		Protocol::ObjectInfo* PlayerInfo = MovePkt.mutable_player_info();
 		PlayerInfo->CopyFrom(GetObjectInfo());
 
-		// SEND_PACKET_NO_SESSION(MovePkt);
+		 SEND_PACKET_NO_SESSION(MovePkt);
 	}
 }
 
 void AClientPlayer::Tick(float DeltaTime)
 {
+	Super::Tick(DeltaTime);
+
 	MoveSync(DeltaTime);
 }

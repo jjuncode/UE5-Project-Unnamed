@@ -17,6 +17,7 @@ public:
 
 public:
 	virtual void BeginPlay() override;
+	virtual void Tick(float DeltaTime) override;
 
 public:
 	void SetObjectInfo(const Protocol::ObjectInfo& rhs) { ObjectInfo.CopyFrom(rhs); }

@@ -9,9 +9,12 @@
 #include "Network/NetUtils.h"
 #include "ServerPacketHandler.h"
 
-#include "GameManager.h"
-#include "NetworkManager.h"
+#include "Manager/GameManager.h"
+#include "Manager/NetworkManager.h"
 
+/*------------
+	Utils
+-------------*/
 template<typename T>
 T* GetManager()
 {

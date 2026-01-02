@@ -106,7 +106,7 @@ void UGameManager::HandleMove(const Protocol::S_MOVE& MovePkt)
 	// Only About Other Player
 	//Player->SetObjectInfo(MovePkt.player_info());	// 정보 최신화
 	Player->SetDesntInfo(MovePkt.player_info());							// 목적지 설정
-	Player->SetMoveState(MovePkt.player_info().creature_info().state());	// 상태 설정
+	Player->SetMoveState(MovePkt.player_info().creature_info().state());	
 }
 
 bool UGameManager::IsMyPlayer(TObjectPtr<class APlayerBase> rhs)

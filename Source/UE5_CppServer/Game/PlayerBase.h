@@ -12,8 +12,5 @@ class UE5_CPPSERVER_API APlayerBase : public ACreature
 	GENERATED_BODY()
 
 public:
-	APlayerBase();
-
-public:
 	virtual void Tick(float DeltaTime) override;
 };
