@@ -42,28 +42,36 @@ void AClientPlayerController::SetupInputComponent()
 	}
 }
 
-void AClientPlayerController::_HandleMoveAction(const FInputActionValue& Value, const Protocol::MoveState& State)
+void AClientPlayerController::_HandleMoveAction(const FInputActionValue& Value, const Protocol::MoveState& State, AClientPlayer* ClientPlayer)
 {
 	FVector2D InputValue = Value.Get<FVector2D>();
-
-	AClientPlayer* ClientPlayer = Cast<AClientPlayer>(GetCharacter());
-	check(ClientPlayer);
 
 	auto Forward = ClientPlayer->GetActorForwardVector() * InputValue.X;
 	auto Right = ClientPlayer->GetActorRightVector() * InputValue.Y;
 
-	ClientPlayer->AddMovementInput(Forward + Right);
+	// 이동방향 셋팅
+	FVector MoveDir = Forward + Right;
+	ClientPlayer->SetMoveDir(MoveDir);
+
+	ClientPlayer->AddMovementInput(MoveDir);
 	ClientPlayer->SetMoveState(State);
 }
 
 void AClientPlayerController::HandleMoveActionTrigerred(const FInputActionValue& Value)
 {
-	_HandleMoveAction(Value, Protocol::MOVE_STATE_RUN);
+	AClientPlayer* ClientPlayer = Cast<AClientPlayer>(GetCharacter());
+	check(ClientPlayer);
+
+	_HandleMoveAction(Value, Protocol::MOVE_STATE_RUN, ClientPlayer);
 }
 
 void AClientPlayerController::HandleMoveActionCompleted(const FInputActionValue& Value)
 {
-	_HandleMoveAction(Value, Protocol::MOVE_STATE_IDLE);
+	AClientPlayer* ClientPlayer = Cast<AClientPlayer>(GetCharacter());
+	check(ClientPlayer);
+	ClientPlayer->ForceSendMovePkt();
+
+	_HandleMoveAction(Value, Protocol::MOVE_STATE_IDLE, ClientPlayer);
 }
 
 
@@ -73,4 +81,6 @@ void AClientPlayerController::HandleMouseLookAction(const FInputActionValue& Val
 
 	AddYawInput(InputValue.X);
 	AddPitchInput(InputValue.Y);
+
+	AClientPlayer* ClientPlayer = Cast<AClientPlayer>(GetCharacter());
 }

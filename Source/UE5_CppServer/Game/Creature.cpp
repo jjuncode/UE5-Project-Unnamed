@@ -26,10 +26,10 @@ void ACreature::BeginPlay()
 
 		Protocol::ObjectInfo ObjInfo = GetObjectInfo();
 
-		Protocol::Pos* pos = ObjInfo.mutable_pos();
-		pos->set_x(Location.X);
-		pos->set_y(Location.Y);
-		pos->set_z(Location.Z);
+		Protocol::Vec3* Pos = ObjInfo.mutable_pos();
+		Pos->set_x(Location.X);
+		Pos->set_y(Location.Y);
+		Pos->set_z(Location.Z);
 
 		ObjInfo.set_yaw(Rotation.Yaw);
 
@@ -47,7 +47,7 @@ void ACreature::Tick(float DeltaTime)
 
 		Protocol::ObjectInfo ObjInfo = GetObjectInfo();
 
-		Protocol::Pos* pos = ObjInfo.mutable_pos();
+		Protocol::Vec3* pos = ObjInfo.mutable_pos();
 		pos->set_x(Location.X);
 		pos->set_y(Location.Y);
 		pos->set_z(Location.Z);
@@ -56,7 +56,6 @@ void ACreature::Tick(float DeltaTime)
 
 		SetObjectInfo(ObjInfo);
 	}
-
 }
 
 void ACreature::SetMoveState(const Protocol::MoveState& rhs)
@@ -64,3 +63,9 @@ void ACreature::SetMoveState(const Protocol::MoveState& rhs)
 	Protocol::CreatureInfo* CreatureInfo = ObjectInfo.mutable_creature_info();
 	CreatureInfo->set_state(rhs);
 }
+void ACreature::SetMoveDir(const FVector& Vec)
+{
+	MoveDir.set_x(Vec.X);
+	MoveDir.set_y(Vec.Y);
+	MoveDir.set_z(Vec.Z);
+};

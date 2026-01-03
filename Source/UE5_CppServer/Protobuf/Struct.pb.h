@@ -52,14 +52,14 @@ extern CreatureInfoDefaultTypeInternal _CreatureInfo_default_instance_;
 class ObjectInfo;
 struct ObjectInfoDefaultTypeInternal;
 extern ObjectInfoDefaultTypeInternal _ObjectInfo_default_instance_;
-class Pos;
-struct PosDefaultTypeInternal;
-extern PosDefaultTypeInternal _Pos_default_instance_;
+class Vec3;
+struct Vec3DefaultTypeInternal;
+extern Vec3DefaultTypeInternal _Vec3_default_instance_;
 }  // namespace Protocol
 PROTOBUF_NAMESPACE_OPEN
 template<> ::Protocol::CreatureInfo* Arena::CreateMaybeMessage<::Protocol::CreatureInfo>(Arena*);
 template<> ::Protocol::ObjectInfo* Arena::CreateMaybeMessage<::Protocol::ObjectInfo>(Arena*);
-template<> ::Protocol::Pos* Arena::CreateMaybeMessage<::Protocol::Pos>(Arena*);
+template<> ::Protocol::Vec3* Arena::CreateMaybeMessage<::Protocol::Vec3>(Arena*);
 PROTOBUF_NAMESPACE_CLOSE
 namespace Protocol {
 
@@ -188,23 +188,23 @@ class ObjectInfo final :
     kCreatureInfoFieldNumber = 3,
     kYawFieldNumber = 2,
   };
-  // .Protocol.Pos pos = 1;
+  // .Protocol.Vec3 pos = 1;
   bool has_pos() const;
   private:
   bool _internal_has_pos() const;
   public:
   void clear_pos();
-  const ::Protocol::Pos& pos() const;
-  PROTOBUF_NODISCARD ::Protocol::Pos* release_pos();
-  ::Protocol::Pos* mutable_pos();
-  void set_allocated_pos(::Protocol::Pos* pos);
+  const ::Protocol::Vec3& pos() const;
+  PROTOBUF_NODISCARD ::Protocol::Vec3* release_pos();
+  ::Protocol::Vec3* mutable_pos();
+  void set_allocated_pos(::Protocol::Vec3* pos);
   private:
-  const ::Protocol::Pos& _internal_pos() const;
-  ::Protocol::Pos* _internal_mutable_pos();
+  const ::Protocol::Vec3& _internal_pos() const;
+  ::Protocol::Vec3* _internal_mutable_pos();
   public:
   void unsafe_arena_set_allocated_pos(
-      ::Protocol::Pos* pos);
-  ::Protocol::Pos* unsafe_arena_release_pos();
+      ::Protocol::Vec3* pos);
+  ::Protocol::Vec3* unsafe_arena_release_pos();
 
   // .Protocol.CreatureInfo creature_info = 3;
   bool has_creature_info() const;
@@ -240,7 +240,7 @@ class ObjectInfo final :
   template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
-  ::Protocol::Pos* pos_;
+  ::Protocol::Vec3* pos_;
   ::Protocol::CreatureInfo* creature_info_;
   float yaw_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
@@ -402,24 +402,24 @@ class CreatureInfo final :
 };
 // -------------------------------------------------------------------
 
-class Pos final :
-    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:Protocol.Pos) */ {
+class Vec3 final :
+    public ::PROTOBUF_NAMESPACE_ID::Message /* @@protoc_insertion_point(class_definition:Protocol.Vec3) */ {
  public:
-  inline Pos() : Pos(nullptr) {}
-  ~Pos() override;
-  explicit PROTOBUF_CONSTEXPR Pos(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
+  inline Vec3() : Vec3(nullptr) {}
+  ~Vec3() override;
+  explicit PROTOBUF_CONSTEXPR Vec3(::PROTOBUF_NAMESPACE_ID::internal::ConstantInitialized);
 
-  Pos(const Pos& from);
-  Pos(Pos&& from) noexcept
-    : Pos() {
+  Vec3(const Vec3& from);
+  Vec3(Vec3&& from) noexcept
+    : Vec3() {
     *this = ::std::move(from);
   }
 
-  inline Pos& operator=(const Pos& from) {
+  inline Vec3& operator=(const Vec3& from) {
     CopyFrom(from);
     return *this;
   }
-  inline Pos& operator=(Pos&& from) noexcept {
+  inline Vec3& operator=(Vec3&& from) noexcept {
     if (this == &from) return *this;
     if (GetOwningArena() == from.GetOwningArena()
   #ifdef PROTOBUF_FORCE_COPY_IN_MOVE
@@ -442,20 +442,20 @@ class Pos final :
   static const ::PROTOBUF_NAMESPACE_ID::Reflection* GetReflection() {
     return default_instance().GetMetadata().reflection;
   }
-  static const Pos& default_instance() {
+  static const Vec3& default_instance() {
     return *internal_default_instance();
   }
-  static inline const Pos* internal_default_instance() {
-    return reinterpret_cast<const Pos*>(
-               &_Pos_default_instance_);
+  static inline const Vec3* internal_default_instance() {
+    return reinterpret_cast<const Vec3*>(
+               &_Vec3_default_instance_);
   }
   static constexpr int kIndexInFileMessages =
     2;
 
-  friend void swap(Pos& a, Pos& b) {
+  friend void swap(Vec3& a, Vec3& b) {
     a.Swap(&b);
   }
-  inline void Swap(Pos* other) {
+  inline void Swap(Vec3* other) {
     if (other == this) return;
   #ifdef PROTOBUF_FORCE_COPY_IN_SWAP
     if (GetOwningArena() != nullptr &&
@@ -468,7 +468,7 @@ class Pos final :
       ::PROTOBUF_NAMESPACE_ID::internal::GenericSwap(this, other);
     }
   }
-  void UnsafeArenaSwap(Pos* other) {
+  void UnsafeArenaSwap(Vec3* other) {
     if (other == this) return;
     GOOGLE_DCHECK(GetOwningArena() == other->GetOwningArena());
     InternalSwap(other);
@@ -476,13 +476,13 @@ class Pos final :
 
   // implements Message ----------------------------------------------
 
-  Pos* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
-    return CreateMaybeMessage<Pos>(arena);
+  Vec3* New(::PROTOBUF_NAMESPACE_ID::Arena* arena = nullptr) const final {
+    return CreateMaybeMessage<Vec3>(arena);
   }
   using ::PROTOBUF_NAMESPACE_ID::Message::CopyFrom;
-  void CopyFrom(const Pos& from);
+  void CopyFrom(const Vec3& from);
   using ::PROTOBUF_NAMESPACE_ID::Message::MergeFrom;
-  void MergeFrom(const Pos& from);
+  void MergeFrom(const Vec3& from);
   private:
   static void MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to, const ::PROTOBUF_NAMESPACE_ID::Message& from);
   public:
@@ -499,15 +499,15 @@ class Pos final :
   void SharedCtor();
   void SharedDtor();
   void SetCachedSize(int size) const final;
-  void InternalSwap(Pos* other);
+  void InternalSwap(Vec3* other);
 
   private:
   friend class ::PROTOBUF_NAMESPACE_ID::internal::AnyMetadata;
   static ::PROTOBUF_NAMESPACE_ID::StringPiece FullMessageName() {
-    return "Protocol.Pos";
+    return "Protocol.Vec3";
   }
   protected:
-  explicit Pos(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+  explicit Vec3(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                        bool is_message_owned = false);
   public:
 
@@ -552,7 +552,7 @@ class Pos final :
   void _internal_set_z(float value);
   public:
 
-  // @@protoc_insertion_point(class_scope:Protocol.Pos)
+  // @@protoc_insertion_point(class_scope:Protocol.Vec3)
  private:
   class _Internal;
 
@@ -576,7 +576,7 @@ class Pos final :
 #endif  // __GNUC__
 // ObjectInfo
 
-// .Protocol.Pos pos = 1;
+// .Protocol.Vec3 pos = 1;
 inline bool ObjectInfo::_internal_has_pos() const {
   return this != internal_default_instance() && pos_ != nullptr;
 }
@@ -589,17 +589,17 @@ inline void ObjectInfo::clear_pos() {
   }
   pos_ = nullptr;
 }
-inline const ::Protocol::Pos& ObjectInfo::_internal_pos() const {
-  const ::Protocol::Pos* p = pos_;
-  return p != nullptr ? *p : reinterpret_cast<const ::Protocol::Pos&>(
-      ::Protocol::_Pos_default_instance_);
+inline const ::Protocol::Vec3& ObjectInfo::_internal_pos() const {
+  const ::Protocol::Vec3* p = pos_;
+  return p != nullptr ? *p : reinterpret_cast<const ::Protocol::Vec3&>(
+      ::Protocol::_Vec3_default_instance_);
 }
-inline const ::Protocol::Pos& ObjectInfo::pos() const {
+inline const ::Protocol::Vec3& ObjectInfo::pos() const {
   // @@protoc_insertion_point(field_get:Protocol.ObjectInfo.pos)
   return _internal_pos();
 }
 inline void ObjectInfo::unsafe_arena_set_allocated_pos(
-    ::Protocol::Pos* pos) {
+    ::Protocol::Vec3* pos) {
   if (GetArenaForAllocation() == nullptr) {
     delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(pos_);
   }
@@ -611,9 +611,9 @@ inline void ObjectInfo::unsafe_arena_set_allocated_pos(
   }
   // @@protoc_insertion_point(field_unsafe_arena_set_allocated:Protocol.ObjectInfo.pos)
 }
-inline ::Protocol::Pos* ObjectInfo::release_pos() {
+inline ::Protocol::Vec3* ObjectInfo::release_pos() {
   
-  ::Protocol::Pos* temp = pos_;
+  ::Protocol::Vec3* temp = pos_;
   pos_ = nullptr;
 #ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
   auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
@@ -626,27 +626,27 @@ inline ::Protocol::Pos* ObjectInfo::release_pos() {
 #endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
   return temp;
 }
-inline ::Protocol::Pos* ObjectInfo::unsafe_arena_release_pos() {
+inline ::Protocol::Vec3* ObjectInfo::unsafe_arena_release_pos() {
   // @@protoc_insertion_point(field_release:Protocol.ObjectInfo.pos)
   
-  ::Protocol::Pos* temp = pos_;
+  ::Protocol::Vec3* temp = pos_;
   pos_ = nullptr;
   return temp;
 }
-inline ::Protocol::Pos* ObjectInfo::_internal_mutable_pos() {
+inline ::Protocol::Vec3* ObjectInfo::_internal_mutable_pos() {
   
   if (pos_ == nullptr) {
-    auto* p = CreateMaybeMessage<::Protocol::Pos>(GetArenaForAllocation());
+    auto* p = CreateMaybeMessage<::Protocol::Vec3>(GetArenaForAllocation());
     pos_ = p;
   }
   return pos_;
 }
-inline ::Protocol::Pos* ObjectInfo::mutable_pos() {
-  ::Protocol::Pos* _msg = _internal_mutable_pos();
+inline ::Protocol::Vec3* ObjectInfo::mutable_pos() {
+  ::Protocol::Vec3* _msg = _internal_mutable_pos();
   // @@protoc_insertion_point(field_mutable:Protocol.ObjectInfo.pos)
   return _msg;
 }
-inline void ObjectInfo::set_allocated_pos(::Protocol::Pos* pos) {
+inline void ObjectInfo::set_allocated_pos(::Protocol::Vec3* pos) {
   ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
   if (message_arena == nullptr) {
     delete pos_;
@@ -822,66 +822,66 @@ inline void CreatureInfo::set_state(::Protocol::MoveState value) {
 
 // -------------------------------------------------------------------
 
-// Pos
+// Vec3
 
 // float x = 1;
-inline void Pos::clear_x() {
+inline void Vec3::clear_x() {
   x_ = 0;
 }
-inline float Pos::_internal_x() const {
+inline float Vec3::_internal_x() const {
   return x_;
 }
-inline float Pos::x() const {
-  // @@protoc_insertion_point(field_get:Protocol.Pos.x)
+inline float Vec3::x() const {
+  // @@protoc_insertion_point(field_get:Protocol.Vec3.x)
   return _internal_x();
 }
-inline void Pos::_internal_set_x(float value) {
+inline void Vec3::_internal_set_x(float value) {
   
   x_ = value;
 }
-inline void Pos::set_x(float value) {
+inline void Vec3::set_x(float value) {
   _internal_set_x(value);
-  // @@protoc_insertion_point(field_set:Protocol.Pos.x)
+  // @@protoc_insertion_point(field_set:Protocol.Vec3.x)
 }
 
 // float y = 2;
-inline void Pos::clear_y() {
+inline void Vec3::clear_y() {
   y_ = 0;
 }
-inline float Pos::_internal_y() const {
+inline float Vec3::_internal_y() const {
   return y_;
 }
-inline float Pos::y() const {
-  // @@protoc_insertion_point(field_get:Protocol.Pos.y)
+inline float Vec3::y() const {
+  // @@protoc_insertion_point(field_get:Protocol.Vec3.y)
   return _internal_y();
 }
-inline void Pos::_internal_set_y(float value) {
+inline void Vec3::_internal_set_y(float value) {
   
   y_ = value;
 }
-inline void Pos::set_y(float value) {
+inline void Vec3::set_y(float value) {
   _internal_set_y(value);
-  // @@protoc_insertion_point(field_set:Protocol.Pos.y)
+  // @@protoc_insertion_point(field_set:Protocol.Vec3.y)
 }
 
 // float z = 3;
-inline void Pos::clear_z() {
+inline void Vec3::clear_z() {
   z_ = 0;
 }
-inline float Pos::_internal_z() const {
+inline float Vec3::_internal_z() const {
   return z_;
 }
-inline float Pos::z() const {
-  // @@protoc_insertion_point(field_get:Protocol.Pos.z)
+inline float Vec3::z() const {
+  // @@protoc_insertion_point(field_get:Protocol.Vec3.z)
   return _internal_z();
 }
-inline void Pos::_internal_set_z(float value) {
+inline void Vec3::_internal_set_z(float value) {
   
   z_ = value;
 }
-inline void Pos::set_z(float value) {
+inline void Vec3::set_z(float value) {
   _internal_set_z(value);
-  // @@protoc_insertion_point(field_set:Protocol.Pos.z)
+  // @@protoc_insertion_point(field_set:Protocol.Vec3.z)
 }
 
 #ifdef __GNUC__

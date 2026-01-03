@@ -27,9 +27,13 @@ public:
 	Protocol::MoveState GetMoveState() { return ObjectInfo.creature_info().state(); }
 
 	void SetDesntInfo(const Protocol::ObjectInfo& rhs){ DestnInfo.CopyFrom(rhs); }
+	void SetMoveDir(const FVector& Vec);
+	void SetMoveDir(const Protocol::Vec3& Dir) { MoveDir.CopyFrom(Dir); }
 
 protected:
-	Protocol::ObjectInfo DestnInfo;
-
 	Protocol::ObjectInfo ObjectInfo;
+	
+	// MoveSync
+	Protocol::ObjectInfo DestnInfo;
+	Protocol::Vec3 MoveDir;
 };

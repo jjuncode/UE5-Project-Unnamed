@@ -1368,6 +1368,7 @@ class C_MOVE final :
 
   enum : int {
     kPlayerInfoFieldNumber = 1,
+    kMoveDirFieldNumber = 2,
   };
   // .Protocol.ObjectInfo player_info = 1;
   bool has_player_info() const;
@@ -1387,6 +1388,24 @@ class C_MOVE final :
       ::Protocol::ObjectInfo* player_info);
   ::Protocol::ObjectInfo* unsafe_arena_release_player_info();
 
+  // .Protocol.Vec3 move_dir = 2;
+  bool has_move_dir() const;
+  private:
+  bool _internal_has_move_dir() const;
+  public:
+  void clear_move_dir();
+  const ::Protocol::Vec3& move_dir() const;
+  PROTOBUF_NODISCARD ::Protocol::Vec3* release_move_dir();
+  ::Protocol::Vec3* mutable_move_dir();
+  void set_allocated_move_dir(::Protocol::Vec3* move_dir);
+  private:
+  const ::Protocol::Vec3& _internal_move_dir() const;
+  ::Protocol::Vec3* _internal_mutable_move_dir();
+  public:
+  void unsafe_arena_set_allocated_move_dir(
+      ::Protocol::Vec3* move_dir);
+  ::Protocol::Vec3* unsafe_arena_release_move_dir();
+
   // @@protoc_insertion_point(class_scope:Protocol.C_MOVE)
  private:
   class _Internal;
@@ -1395,6 +1414,7 @@ class C_MOVE final :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   ::Protocol::ObjectInfo* player_info_;
+  ::Protocol::Vec3* move_dir_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_Protocol_2eproto;
 };
@@ -1520,6 +1540,7 @@ class S_MOVE final :
 
   enum : int {
     kPlayerInfoFieldNumber = 1,
+    kMoveDirFieldNumber = 2,
   };
   // .Protocol.ObjectInfo player_info = 1;
   bool has_player_info() const;
@@ -1539,6 +1560,24 @@ class S_MOVE final :
       ::Protocol::ObjectInfo* player_info);
   ::Protocol::ObjectInfo* unsafe_arena_release_player_info();
 
+  // .Protocol.Vec3 move_dir = 2;
+  bool has_move_dir() const;
+  private:
+  bool _internal_has_move_dir() const;
+  public:
+  void clear_move_dir();
+  const ::Protocol::Vec3& move_dir() const;
+  PROTOBUF_NODISCARD ::Protocol::Vec3* release_move_dir();
+  ::Protocol::Vec3* mutable_move_dir();
+  void set_allocated_move_dir(::Protocol::Vec3* move_dir);
+  private:
+  const ::Protocol::Vec3& _internal_move_dir() const;
+  ::Protocol::Vec3* _internal_mutable_move_dir();
+  public:
+  void unsafe_arena_set_allocated_move_dir(
+      ::Protocol::Vec3* move_dir);
+  ::Protocol::Vec3* unsafe_arena_release_move_dir();
+
   // @@protoc_insertion_point(class_scope:Protocol.S_MOVE)
  private:
   class _Internal;
@@ -1547,6 +1586,7 @@ class S_MOVE final :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   ::Protocol::ObjectInfo* player_info_;
+  ::Protocol::Vec3* move_dir_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_Protocol_2eproto;
 };
@@ -2012,6 +2052,91 @@ inline void C_MOVE::set_allocated_player_info(::Protocol::ObjectInfo* player_inf
   // @@protoc_insertion_point(field_set_allocated:Protocol.C_MOVE.player_info)
 }
 
+// .Protocol.Vec3 move_dir = 2;
+inline bool C_MOVE::_internal_has_move_dir() const {
+  return this != internal_default_instance() && move_dir_ != nullptr;
+}
+inline bool C_MOVE::has_move_dir() const {
+  return _internal_has_move_dir();
+}
+inline const ::Protocol::Vec3& C_MOVE::_internal_move_dir() const {
+  const ::Protocol::Vec3* p = move_dir_;
+  return p != nullptr ? *p : reinterpret_cast<const ::Protocol::Vec3&>(
+      ::Protocol::_Vec3_default_instance_);
+}
+inline const ::Protocol::Vec3& C_MOVE::move_dir() const {
+  // @@protoc_insertion_point(field_get:Protocol.C_MOVE.move_dir)
+  return _internal_move_dir();
+}
+inline void C_MOVE::unsafe_arena_set_allocated_move_dir(
+    ::Protocol::Vec3* move_dir) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(move_dir_);
+  }
+  move_dir_ = move_dir;
+  if (move_dir) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:Protocol.C_MOVE.move_dir)
+}
+inline ::Protocol::Vec3* C_MOVE::release_move_dir() {
+  
+  ::Protocol::Vec3* temp = move_dir_;
+  move_dir_ = nullptr;
+#ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
+  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  if (GetArenaForAllocation() == nullptr) { delete old; }
+#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return temp;
+}
+inline ::Protocol::Vec3* C_MOVE::unsafe_arena_release_move_dir() {
+  // @@protoc_insertion_point(field_release:Protocol.C_MOVE.move_dir)
+  
+  ::Protocol::Vec3* temp = move_dir_;
+  move_dir_ = nullptr;
+  return temp;
+}
+inline ::Protocol::Vec3* C_MOVE::_internal_mutable_move_dir() {
+  
+  if (move_dir_ == nullptr) {
+    auto* p = CreateMaybeMessage<::Protocol::Vec3>(GetArenaForAllocation());
+    move_dir_ = p;
+  }
+  return move_dir_;
+}
+inline ::Protocol::Vec3* C_MOVE::mutable_move_dir() {
+  ::Protocol::Vec3* _msg = _internal_mutable_move_dir();
+  // @@protoc_insertion_point(field_mutable:Protocol.C_MOVE.move_dir)
+  return _msg;
+}
+inline void C_MOVE::set_allocated_move_dir(::Protocol::Vec3* move_dir) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(move_dir_);
+  }
+  if (move_dir) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
+                reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(move_dir));
+    if (message_arena != submessage_arena) {
+      move_dir = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, move_dir, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  move_dir_ = move_dir;
+  // @@protoc_insertion_point(field_set_allocated:Protocol.C_MOVE.move_dir)
+}
+
 // -------------------------------------------------------------------
 
 // S_MOVE
@@ -2099,6 +2224,91 @@ inline void S_MOVE::set_allocated_player_info(::Protocol::ObjectInfo* player_inf
   }
   player_info_ = player_info;
   // @@protoc_insertion_point(field_set_allocated:Protocol.S_MOVE.player_info)
+}
+
+// .Protocol.Vec3 move_dir = 2;
+inline bool S_MOVE::_internal_has_move_dir() const {
+  return this != internal_default_instance() && move_dir_ != nullptr;
+}
+inline bool S_MOVE::has_move_dir() const {
+  return _internal_has_move_dir();
+}
+inline const ::Protocol::Vec3& S_MOVE::_internal_move_dir() const {
+  const ::Protocol::Vec3* p = move_dir_;
+  return p != nullptr ? *p : reinterpret_cast<const ::Protocol::Vec3&>(
+      ::Protocol::_Vec3_default_instance_);
+}
+inline const ::Protocol::Vec3& S_MOVE::move_dir() const {
+  // @@protoc_insertion_point(field_get:Protocol.S_MOVE.move_dir)
+  return _internal_move_dir();
+}
+inline void S_MOVE::unsafe_arena_set_allocated_move_dir(
+    ::Protocol::Vec3* move_dir) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(move_dir_);
+  }
+  move_dir_ = move_dir;
+  if (move_dir) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:Protocol.S_MOVE.move_dir)
+}
+inline ::Protocol::Vec3* S_MOVE::release_move_dir() {
+  
+  ::Protocol::Vec3* temp = move_dir_;
+  move_dir_ = nullptr;
+#ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
+  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  if (GetArenaForAllocation() == nullptr) { delete old; }
+#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return temp;
+}
+inline ::Protocol::Vec3* S_MOVE::unsafe_arena_release_move_dir() {
+  // @@protoc_insertion_point(field_release:Protocol.S_MOVE.move_dir)
+  
+  ::Protocol::Vec3* temp = move_dir_;
+  move_dir_ = nullptr;
+  return temp;
+}
+inline ::Protocol::Vec3* S_MOVE::_internal_mutable_move_dir() {
+  
+  if (move_dir_ == nullptr) {
+    auto* p = CreateMaybeMessage<::Protocol::Vec3>(GetArenaForAllocation());
+    move_dir_ = p;
+  }
+  return move_dir_;
+}
+inline ::Protocol::Vec3* S_MOVE::mutable_move_dir() {
+  ::Protocol::Vec3* _msg = _internal_mutable_move_dir();
+  // @@protoc_insertion_point(field_mutable:Protocol.S_MOVE.move_dir)
+  return _msg;
+}
+inline void S_MOVE::set_allocated_move_dir(::Protocol::Vec3* move_dir) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(move_dir_);
+  }
+  if (move_dir) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
+                reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(move_dir));
+    if (message_arena != submessage_arena) {
+      move_dir = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, move_dir, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  move_dir_ = move_dir;
+  // @@protoc_insertion_point(field_set_allocated:Protocol.S_MOVE.move_dir)
 }
 
 #ifdef __GNUC__

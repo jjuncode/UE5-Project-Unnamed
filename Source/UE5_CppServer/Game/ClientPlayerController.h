@@ -8,6 +8,7 @@
 #include "ClientPlayerController.generated.h"
 
 struct FInputActionValue;
+class AClientPlayer;
 
 /**
  * 
@@ -22,7 +23,7 @@ public:
 	virtual void SetupInputComponent() override;
 
 private:
-	void _HandleMoveAction(const FInputActionValue& Value, const Protocol::MoveState& State);
+	void _HandleMoveAction(const FInputActionValue& Value, const Protocol::MoveState& State, AClientPlayer* ClientPlayer);
 	void HandleMoveActionTrigerred(const FInputActionValue& Value);
 	void HandleMoveActionCompleted(const FInputActionValue& Value);
 
@@ -37,5 +38,4 @@ private:
 
 	UPROPERTY(Category = Input, EditAnywhere)
 	TObjectPtr<class UInputMappingContext> IMC;
-
 };

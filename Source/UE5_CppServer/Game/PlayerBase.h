@@ -13,4 +13,8 @@ class UE5_CPPSERVER_API APlayerBase : public ACreature
 
 public:
 	virtual void Tick(float DeltaTime) override;
+	void MoveSync();
+
+protected:
+	bool bIsMyPlayer = false;
 };

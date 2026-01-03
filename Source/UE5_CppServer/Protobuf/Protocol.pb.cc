@@ -120,7 +120,8 @@ struct S_DESPAWNDefaultTypeInternal {
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 S_DESPAWNDefaultTypeInternal _S_DESPAWN_default_instance_;
 PROTOBUF_CONSTEXPR C_MOVE::C_MOVE(
     ::_pbi::ConstantInitialized)
-  : player_info_(nullptr){}
+  : player_info_(nullptr)
+  , move_dir_(nullptr){}
 struct C_MOVEDefaultTypeInternal {
   PROTOBUF_CONSTEXPR C_MOVEDefaultTypeInternal()
       : _instance(::_pbi::ConstantInitialized{}) {}
@@ -132,7 +133,8 @@ struct C_MOVEDefaultTypeInternal {
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 C_MOVEDefaultTypeInternal _C_MOVE_default_instance_;
 PROTOBUF_CONSTEXPR S_MOVE::S_MOVE(
     ::_pbi::ConstantInitialized)
-  : player_info_(nullptr){}
+  : player_info_(nullptr)
+  , move_dir_(nullptr){}
 struct S_MOVEDefaultTypeInternal {
   PROTOBUF_CONSTEXPR S_MOVEDefaultTypeInternal()
       : _instance(::_pbi::ConstantInitialized{}) {}
@@ -211,6 +213,7 @@ const uint32_t TableStruct_Protocol_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
   PROTOBUF_FIELD_OFFSET(::Protocol::C_MOVE, player_info_),
+  PROTOBUF_FIELD_OFFSET(::Protocol::C_MOVE, move_dir_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::Protocol::S_MOVE, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -218,6 +221,7 @@ const uint32_t TableStruct_Protocol_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
   PROTOBUF_FIELD_OFFSET(::Protocol::S_MOVE, player_info_),
+  PROTOBUF_FIELD_OFFSET(::Protocol::S_MOVE, move_dir_),
 };
 static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, -1, sizeof(::Protocol::C_LOGIN)},
@@ -229,7 +233,7 @@ static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protode
   { 42, -1, -1, sizeof(::Protocol::S_SPAWN)},
   { 49, -1, -1, sizeof(::Protocol::S_DESPAWN)},
   { 56, -1, -1, sizeof(::Protocol::C_MOVE)},
-  { 63, -1, -1, sizeof(::Protocol::S_MOVE)},
+  { 64, -1, -1, sizeof(::Protocol::S_MOVE)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
@@ -255,10 +259,12 @@ const char descriptor_table_protodef_Protocol_2eproto[] PROTOBUF_SECTION_VARIABL
   "\001(\0132\024.Protocol.ObjectInfo\"\016\n\014C_LEAVE_GAM"
   "E\"\016\n\014S_LEAVE_GAME\"5\n\007S_SPAWN\022*\n\014players_"
   "info\030\001 \003(\0132\024.Protocol.ObjectInfo\"\037\n\tS_DE"
-  "SPAWN\022\022\n\nobject_ids\030\001 \003(\004\"3\n\006C_MOVE\022)\n\013p"
-  "layer_info\030\001 \001(\0132\024.Protocol.ObjectInfo\"3"
-  "\n\006S_MOVE\022)\n\013player_info\030\001 \001(\0132\024.Protocol"
-  ".ObjectInfob\006proto3"
+  "SPAWN\022\022\n\nobject_ids\030\001 \003(\004\"U\n\006C_MOVE\022)\n\013p"
+  "layer_info\030\001 \001(\0132\024.Protocol.ObjectInfo\022 "
+  "\n\010move_dir\030\002 \001(\0132\016.Protocol.Vec3\"U\n\006S_MO"
+  "VE\022)\n\013player_info\030\001 \001(\0132\024.Protocol.Objec"
+  "tInfo\022 \n\010move_dir\030\002 \001(\0132\016.Protocol.Vec3b"
+  "\006proto3"
   ;
 static const ::_pbi::DescriptorTable* const descriptor_table_Protocol_2eproto_deps[2] = {
   &::descriptor_table_Enum_2eproto,
@@ -266,7 +272,7 @@ static const ::_pbi::DescriptorTable* const descriptor_table_Protocol_2eproto_de
 };
 static ::_pbi::once_flag descriptor_table_Protocol_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_Protocol_2eproto = {
-    false, false, 499, descriptor_table_protodef_Protocol_2eproto,
+    false, false, 567, descriptor_table_protodef_Protocol_2eproto,
     "Protocol.proto",
     &descriptor_table_Protocol_2eproto_once, descriptor_table_Protocol_2eproto_deps, 2, 10,
     schemas, file_default_instances, TableStruct_Protocol_2eproto::offsets,
@@ -1521,17 +1527,28 @@ void S_DESPAWN::InternalSwap(S_DESPAWN* other) {
 class C_MOVE::_Internal {
  public:
   static const ::Protocol::ObjectInfo& player_info(const C_MOVE* msg);
+  static const ::Protocol::Vec3& move_dir(const C_MOVE* msg);
 };
 
 const ::Protocol::ObjectInfo&
 C_MOVE::_Internal::player_info(const C_MOVE* msg) {
   return *msg->player_info_;
 }
+const ::Protocol::Vec3&
+C_MOVE::_Internal::move_dir(const C_MOVE* msg) {
+  return *msg->move_dir_;
+}
 void C_MOVE::clear_player_info() {
   if (GetArenaForAllocation() == nullptr && player_info_ != nullptr) {
     delete player_info_;
   }
   player_info_ = nullptr;
+}
+void C_MOVE::clear_move_dir() {
+  if (GetArenaForAllocation() == nullptr && move_dir_ != nullptr) {
+    delete move_dir_;
+  }
+  move_dir_ = nullptr;
 }
 C_MOVE::C_MOVE(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                          bool is_message_owned)
@@ -1547,11 +1564,19 @@ C_MOVE::C_MOVE(const C_MOVE& from)
   } else {
     player_info_ = nullptr;
   }
+  if (from._internal_has_move_dir()) {
+    move_dir_ = new ::Protocol::Vec3(*from.move_dir_);
+  } else {
+    move_dir_ = nullptr;
+  }
   // @@protoc_insertion_point(copy_constructor:Protocol.C_MOVE)
 }
 
 inline void C_MOVE::SharedCtor() {
-player_info_ = nullptr;
+::memset(reinterpret_cast<char*>(this) + static_cast<size_t>(
+    reinterpret_cast<char*>(&player_info_) - reinterpret_cast<char*>(this)),
+    0, static_cast<size_t>(reinterpret_cast<char*>(&move_dir_) -
+    reinterpret_cast<char*>(&player_info_)) + sizeof(move_dir_));
 }
 
 C_MOVE::~C_MOVE() {
@@ -1566,6 +1591,7 @@ C_MOVE::~C_MOVE() {
 inline void C_MOVE::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
   if (this != internal_default_instance()) delete player_info_;
+  if (this != internal_default_instance()) delete move_dir_;
 }
 
 void C_MOVE::SetCachedSize(int size) const {
@@ -1582,6 +1608,10 @@ void C_MOVE::Clear() {
     delete player_info_;
   }
   player_info_ = nullptr;
+  if (GetArenaForAllocation() == nullptr && move_dir_ != nullptr) {
+    delete move_dir_;
+  }
+  move_dir_ = nullptr;
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -1595,6 +1625,14 @@ const char* C_MOVE::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
       case 1:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
           ptr = ctx->ParseMessage(_internal_mutable_player_info(), ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // .Protocol.Vec3 move_dir = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
+          ptr = ctx->ParseMessage(_internal_mutable_move_dir(), ptr);
           CHK_(ptr);
         } else
           goto handle_unusual;
@@ -1635,6 +1673,13 @@ uint8_t* C_MOVE::_InternalSerialize(
         _Internal::player_info(this).GetCachedSize(), target, stream);
   }
 
+  // .Protocol.Vec3 move_dir = 2;
+  if (this->_internal_has_move_dir()) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(2, _Internal::move_dir(this),
+        _Internal::move_dir(this).GetCachedSize(), target, stream);
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
@@ -1656,6 +1701,13 @@ size_t C_MOVE::ByteSizeLong() const {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
         *player_info_);
+  }
+
+  // .Protocol.Vec3 move_dir = 2;
+  if (this->_internal_has_move_dir()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *move_dir_);
   }
 
   return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
@@ -1683,6 +1735,9 @@ void C_MOVE::MergeFrom(const C_MOVE& from) {
   if (from._internal_has_player_info()) {
     _internal_mutable_player_info()->::Protocol::ObjectInfo::MergeFrom(from._internal_player_info());
   }
+  if (from._internal_has_move_dir()) {
+    _internal_mutable_move_dir()->::Protocol::Vec3::MergeFrom(from._internal_move_dir());
+  }
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
 
@@ -1700,7 +1755,12 @@ bool C_MOVE::IsInitialized() const {
 void C_MOVE::InternalSwap(C_MOVE* other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  swap(player_info_, other->player_info_);
+  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(C_MOVE, move_dir_)
+      + sizeof(C_MOVE::move_dir_)
+      - PROTOBUF_FIELD_OFFSET(C_MOVE, player_info_)>(
+          reinterpret_cast<char*>(&player_info_),
+          reinterpret_cast<char*>(&other->player_info_));
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata C_MOVE::GetMetadata() const {
@@ -1714,17 +1774,28 @@ void C_MOVE::InternalSwap(C_MOVE* other) {
 class S_MOVE::_Internal {
  public:
   static const ::Protocol::ObjectInfo& player_info(const S_MOVE* msg);
+  static const ::Protocol::Vec3& move_dir(const S_MOVE* msg);
 };
 
 const ::Protocol::ObjectInfo&
 S_MOVE::_Internal::player_info(const S_MOVE* msg) {
   return *msg->player_info_;
 }
+const ::Protocol::Vec3&
+S_MOVE::_Internal::move_dir(const S_MOVE* msg) {
+  return *msg->move_dir_;
+}
 void S_MOVE::clear_player_info() {
   if (GetArenaForAllocation() == nullptr && player_info_ != nullptr) {
     delete player_info_;
   }
   player_info_ = nullptr;
+}
+void S_MOVE::clear_move_dir() {
+  if (GetArenaForAllocation() == nullptr && move_dir_ != nullptr) {
+    delete move_dir_;
+  }
+  move_dir_ = nullptr;
 }
 S_MOVE::S_MOVE(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                          bool is_message_owned)
@@ -1740,11 +1811,19 @@ S_MOVE::S_MOVE(const S_MOVE& from)
   } else {
     player_info_ = nullptr;
   }
+  if (from._internal_has_move_dir()) {
+    move_dir_ = new ::Protocol::Vec3(*from.move_dir_);
+  } else {
+    move_dir_ = nullptr;
+  }
   // @@protoc_insertion_point(copy_constructor:Protocol.S_MOVE)
 }
 
 inline void S_MOVE::SharedCtor() {
-player_info_ = nullptr;
+::memset(reinterpret_cast<char*>(this) + static_cast<size_t>(
+    reinterpret_cast<char*>(&player_info_) - reinterpret_cast<char*>(this)),
+    0, static_cast<size_t>(reinterpret_cast<char*>(&move_dir_) -
+    reinterpret_cast<char*>(&player_info_)) + sizeof(move_dir_));
 }
 
 S_MOVE::~S_MOVE() {
@@ -1759,6 +1838,7 @@ S_MOVE::~S_MOVE() {
 inline void S_MOVE::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
   if (this != internal_default_instance()) delete player_info_;
+  if (this != internal_default_instance()) delete move_dir_;
 }
 
 void S_MOVE::SetCachedSize(int size) const {
@@ -1775,6 +1855,10 @@ void S_MOVE::Clear() {
     delete player_info_;
   }
   player_info_ = nullptr;
+  if (GetArenaForAllocation() == nullptr && move_dir_ != nullptr) {
+    delete move_dir_;
+  }
+  move_dir_ = nullptr;
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -1788,6 +1872,14 @@ const char* S_MOVE::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
       case 1:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
           ptr = ctx->ParseMessage(_internal_mutable_player_info(), ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // .Protocol.Vec3 move_dir = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
+          ptr = ctx->ParseMessage(_internal_mutable_move_dir(), ptr);
           CHK_(ptr);
         } else
           goto handle_unusual;
@@ -1828,6 +1920,13 @@ uint8_t* S_MOVE::_InternalSerialize(
         _Internal::player_info(this).GetCachedSize(), target, stream);
   }
 
+  // .Protocol.Vec3 move_dir = 2;
+  if (this->_internal_has_move_dir()) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(2, _Internal::move_dir(this),
+        _Internal::move_dir(this).GetCachedSize(), target, stream);
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
@@ -1849,6 +1948,13 @@ size_t S_MOVE::ByteSizeLong() const {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
         *player_info_);
+  }
+
+  // .Protocol.Vec3 move_dir = 2;
+  if (this->_internal_has_move_dir()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *move_dir_);
   }
 
   return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
@@ -1876,6 +1982,9 @@ void S_MOVE::MergeFrom(const S_MOVE& from) {
   if (from._internal_has_player_info()) {
     _internal_mutable_player_info()->::Protocol::ObjectInfo::MergeFrom(from._internal_player_info());
   }
+  if (from._internal_has_move_dir()) {
+    _internal_mutable_move_dir()->::Protocol::Vec3::MergeFrom(from._internal_move_dir());
+  }
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
 
@@ -1893,7 +2002,12 @@ bool S_MOVE::IsInitialized() const {
 void S_MOVE::InternalSwap(S_MOVE* other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  swap(player_info_, other->player_info_);
+  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(S_MOVE, move_dir_)
+      + sizeof(S_MOVE::move_dir_)
+      - PROTOBUF_FIELD_OFFSET(S_MOVE, player_info_)>(
+          reinterpret_cast<char*>(&player_info_),
+          reinterpret_cast<char*>(&other->player_info_));
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata S_MOVE::GetMetadata() const {

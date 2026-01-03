@@ -5,6 +5,7 @@
 #include "NetUtils.h"
 #include "ServerPacketHandler.h"
 #include "UE5_CppServer.h"
+#include "ClientPlayerController.h"
 
 void AClientPlayer::MoveSync(float DeltaTime)
 {
@@ -13,14 +14,20 @@ void AClientPlayer::MoveSync(float DeltaTime)
 	static float AccTime = 0;
 	AccTime += DeltaTime;
 
-	if (AccTime >= SendPacketTime)
+	if (bForceSendMovePkt || AccTime >= SendPacketTime)
 	{
 		Protocol::C_MOVE MovePkt;
 		Protocol::ObjectInfo* PlayerInfo = MovePkt.mutable_player_info();
 		PlayerInfo->CopyFrom(GetObjectInfo());
 
+		Protocol::Vec3* Dir = MovePkt.mutable_move_dir();
+		Dir->CopyFrom(MoveDir);
+
 		 SEND_PACKET_NO_SESSION(MovePkt);
 	}
+
+	// 자신은 자신이 움직이니까 상관없다.
+	DestnInfo = ObjectInfo;
 }
 
 void AClientPlayer::Tick(float DeltaTime)

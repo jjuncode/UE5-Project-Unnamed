@@ -7,20 +7,34 @@ void APlayerBase::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	MoveSync();
+}
+
+void APlayerBase::MoveSync()
+{
+	// ClientPlayer는 제외
+	if (bIsMyPlayer)
+		return;
+
 	if (ObjectInfo.creature_info().state() == Protocol::MOVE_STATE_RUN)
 	{
-		// ClientPlayer는 제외
-		if (auto* ClientPlayer = Cast<AClientPlayer>(this))
-			return;
-
 		// Rotate
 		{
-			SetActorRotation(FRotator(0, DestnInfo.yaw(),0));
+			SetActorRotation(FRotator(0, DestnInfo.yaw(), 0));
 		}
 
 		// Move
 		{
-			AddMovementInput(GetActorForwardVector());
+			FVector Dir{ MoveDir.x(), MoveDir.y(), MoveDir.z()};
+			Dir.Normalize();
+			AddMovementInput(Dir);
 		}
+	}
+	else
+	{
+		// 안움직이면 최신 정보와 강제 동기화
+		FVector Location{ DestnInfo.pos().x(), DestnInfo.pos().y(), DestnInfo.pos().z() };
+		SetActorLocation(Location);
+		SetActorRotation(FRotator(0, DestnInfo.yaw(), 0));
 	}
 }

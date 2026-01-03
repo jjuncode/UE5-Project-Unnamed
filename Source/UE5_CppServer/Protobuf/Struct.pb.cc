@@ -49,20 +49,20 @@ struct CreatureInfoDefaultTypeInternal {
   };
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 CreatureInfoDefaultTypeInternal _CreatureInfo_default_instance_;
-PROTOBUF_CONSTEXPR Pos::Pos(
+PROTOBUF_CONSTEXPR Vec3::Vec3(
     ::_pbi::ConstantInitialized)
   : x_(0)
   , y_(0)
   , z_(0){}
-struct PosDefaultTypeInternal {
-  PROTOBUF_CONSTEXPR PosDefaultTypeInternal()
+struct Vec3DefaultTypeInternal {
+  PROTOBUF_CONSTEXPR Vec3DefaultTypeInternal()
       : _instance(::_pbi::ConstantInitialized{}) {}
-  ~PosDefaultTypeInternal() {}
+  ~Vec3DefaultTypeInternal() {}
   union {
-    Pos _instance;
+    Vec3 _instance;
   };
 };
-PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 PosDefaultTypeInternal _Pos_default_instance_;
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 Vec3DefaultTypeInternal _Vec3_default_instance_;
 }  // namespace Protocol
 static ::_pb::Metadata file_level_metadata_Struct_2eproto[3];
 static constexpr ::_pb::EnumDescriptor const** file_level_enum_descriptors_Struct_2eproto = nullptr;
@@ -87,42 +87,42 @@ const uint32_t TableStruct_Struct_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(p
   PROTOBUF_FIELD_OFFSET(::Protocol::CreatureInfo, id_),
   PROTOBUF_FIELD_OFFSET(::Protocol::CreatureInfo, state_),
   ~0u,  // no _has_bits_
-  PROTOBUF_FIELD_OFFSET(::Protocol::Pos, _internal_metadata_),
+  PROTOBUF_FIELD_OFFSET(::Protocol::Vec3, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::Protocol::Pos, x_),
-  PROTOBUF_FIELD_OFFSET(::Protocol::Pos, y_),
-  PROTOBUF_FIELD_OFFSET(::Protocol::Pos, z_),
+  PROTOBUF_FIELD_OFFSET(::Protocol::Vec3, x_),
+  PROTOBUF_FIELD_OFFSET(::Protocol::Vec3, y_),
+  PROTOBUF_FIELD_OFFSET(::Protocol::Vec3, z_),
 };
 static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, -1, sizeof(::Protocol::ObjectInfo)},
   { 9, -1, -1, sizeof(::Protocol::CreatureInfo)},
-  { 17, -1, -1, sizeof(::Protocol::Pos)},
+  { 17, -1, -1, sizeof(::Protocol::Vec3)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
   &::Protocol::_ObjectInfo_default_instance_._instance,
   &::Protocol::_CreatureInfo_default_instance_._instance,
-  &::Protocol::_Pos_default_instance_._instance,
+  &::Protocol::_Vec3_default_instance_._instance,
 };
 
 const char descriptor_table_protodef_Struct_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
-  "\n\014Struct.proto\022\010Protocol\032\nEnum.proto\"d\n\n"
-  "ObjectInfo\022\032\n\003pos\030\001 \001(\0132\r.Protocol.Pos\022\013"
-  "\n\003yaw\030\002 \001(\002\022-\n\rcreature_info\030\003 \001(\0132\026.Pro"
-  "tocol.CreatureInfo\">\n\014CreatureInfo\022\n\n\002id"
-  "\030\001 \001(\004\022\"\n\005state\030\002 \001(\0162\023.Protocol.MoveSta"
-  "te\"&\n\003Pos\022\t\n\001x\030\001 \001(\002\022\t\n\001y\030\002 \001(\002\022\t\n\001z\030\003 \001"
-  "(\002b\006proto3"
+  "\n\014Struct.proto\022\010Protocol\032\nEnum.proto\"e\n\n"
+  "ObjectInfo\022\033\n\003pos\030\001 \001(\0132\016.Protocol.Vec3\022"
+  "\013\n\003yaw\030\002 \001(\002\022-\n\rcreature_info\030\003 \001(\0132\026.Pr"
+  "otocol.CreatureInfo\">\n\014CreatureInfo\022\n\n\002i"
+  "d\030\001 \001(\004\022\"\n\005state\030\002 \001(\0162\023.Protocol.MoveSt"
+  "ate\"\'\n\004Vec3\022\t\n\001x\030\001 \001(\002\022\t\n\001y\030\002 \001(\002\022\t\n\001z\030\003"
+  " \001(\002b\006proto3"
   ;
 static const ::_pbi::DescriptorTable* const descriptor_table_Struct_2eproto_deps[1] = {
   &::descriptor_table_Enum_2eproto,
 };
 static ::_pbi::once_flag descriptor_table_Struct_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_Struct_2eproto = {
-    false, false, 250, descriptor_table_protodef_Struct_2eproto,
+    false, false, 252, descriptor_table_protodef_Struct_2eproto,
     "Struct.proto",
     &descriptor_table_Struct_2eproto_once, descriptor_table_Struct_2eproto_deps, 1, 3,
     schemas, file_default_instances, TableStruct_Struct_2eproto::offsets,
@@ -141,11 +141,11 @@ namespace Protocol {
 
 class ObjectInfo::_Internal {
  public:
-  static const ::Protocol::Pos& pos(const ObjectInfo* msg);
+  static const ::Protocol::Vec3& pos(const ObjectInfo* msg);
   static const ::Protocol::CreatureInfo& creature_info(const ObjectInfo* msg);
 };
 
-const ::Protocol::Pos&
+const ::Protocol::Vec3&
 ObjectInfo::_Internal::pos(const ObjectInfo* msg) {
   return *msg->pos_;
 }
@@ -163,7 +163,7 @@ ObjectInfo::ObjectInfo(const ObjectInfo& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
   if (from._internal_has_pos()) {
-    pos_ = new ::Protocol::Pos(*from.pos_);
+    pos_ = new ::Protocol::Vec3(*from.pos_);
   } else {
     pos_ = nullptr;
   }
@@ -226,7 +226,7 @@ const char* ObjectInfo::_InternalParse(const char* ptr, ::_pbi::ParseContext* ct
     uint32_t tag;
     ptr = ::_pbi::ReadTag(ptr, &tag);
     switch (tag >> 3) {
-      // .Protocol.Pos pos = 1;
+      // .Protocol.Vec3 pos = 1;
       case 1:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
           ptr = ctx->ParseMessage(_internal_mutable_pos(), ptr);
@@ -279,7 +279,7 @@ uint8_t* ObjectInfo::_InternalSerialize(
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // .Protocol.Pos pos = 1;
+  // .Protocol.Vec3 pos = 1;
   if (this->_internal_has_pos()) {
     target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
       InternalWriteMessage(1, _Internal::pos(this),
@@ -319,7 +319,7 @@ size_t ObjectInfo::ByteSizeLong() const {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // .Protocol.Pos pos = 1;
+  // .Protocol.Vec3 pos = 1;
   if (this->_internal_has_pos()) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
@@ -365,7 +365,7 @@ void ObjectInfo::MergeFrom(const ObjectInfo& from) {
   (void) cached_has_bits;
 
   if (from._internal_has_pos()) {
-    _internal_mutable_pos()->::Protocol::Pos::MergeFrom(from._internal_pos());
+    _internal_mutable_pos()->::Protocol::Vec3::MergeFrom(from._internal_pos());
   }
   if (from._internal_has_creature_info()) {
     _internal_mutable_creature_info()->::Protocol::CreatureInfo::MergeFrom(from._internal_creature_info());
@@ -618,34 +618,34 @@ void CreatureInfo::InternalSwap(CreatureInfo* other) {
 
 // ===================================================================
 
-class Pos::_Internal {
+class Vec3::_Internal {
  public:
 };
 
-Pos::Pos(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+Vec3::Vec3(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                          bool is_message_owned)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
   SharedCtor();
-  // @@protoc_insertion_point(arena_constructor:Protocol.Pos)
+  // @@protoc_insertion_point(arena_constructor:Protocol.Vec3)
 }
-Pos::Pos(const Pos& from)
+Vec3::Vec3(const Vec3& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
   ::memcpy(&x_, &from.x_,
     static_cast<size_t>(reinterpret_cast<char*>(&z_) -
     reinterpret_cast<char*>(&x_)) + sizeof(z_));
-  // @@protoc_insertion_point(copy_constructor:Protocol.Pos)
+  // @@protoc_insertion_point(copy_constructor:Protocol.Vec3)
 }
 
-inline void Pos::SharedCtor() {
+inline void Vec3::SharedCtor() {
 ::memset(reinterpret_cast<char*>(this) + static_cast<size_t>(
     reinterpret_cast<char*>(&x_) - reinterpret_cast<char*>(this)),
     0, static_cast<size_t>(reinterpret_cast<char*>(&z_) -
     reinterpret_cast<char*>(&x_)) + sizeof(z_));
 }
 
-Pos::~Pos() {
-  // @@protoc_insertion_point(destructor:Protocol.Pos)
+Vec3::~Vec3() {
+  // @@protoc_insertion_point(destructor:Protocol.Vec3)
   if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
   (void)arena;
     return;
@@ -653,16 +653,16 @@ Pos::~Pos() {
   SharedDtor();
 }
 
-inline void Pos::SharedDtor() {
+inline void Vec3::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
 }
 
-void Pos::SetCachedSize(int size) const {
+void Vec3::SetCachedSize(int size) const {
   _cached_size_.Set(size);
 }
 
-void Pos::Clear() {
-// @@protoc_insertion_point(message_clear_start:Protocol.Pos)
+void Vec3::Clear() {
+// @@protoc_insertion_point(message_clear_start:Protocol.Vec3)
   uint32_t cached_has_bits = 0;
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
@@ -673,7 +673,7 @@ void Pos::Clear() {
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
-const char* Pos::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+const char* Vec3::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
 #define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
   while (!ctx->Done(&ptr)) {
     uint32_t tag;
@@ -726,9 +726,9 @@ failure:
 #undef CHK_
 }
 
-uint8_t* Pos::_InternalSerialize(
+uint8_t* Vec3::_InternalSerialize(
     uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
-  // @@protoc_insertion_point(serialize_to_array_start:Protocol.Pos)
+  // @@protoc_insertion_point(serialize_to_array_start:Protocol.Vec3)
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
@@ -766,12 +766,12 @@ uint8_t* Pos::_InternalSerialize(
     target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
   }
-  // @@protoc_insertion_point(serialize_to_array_end:Protocol.Pos)
+  // @@protoc_insertion_point(serialize_to_array_end:Protocol.Vec3)
   return target;
 }
 
-size_t Pos::ByteSizeLong() const {
-// @@protoc_insertion_point(message_byte_size_start:Protocol.Pos)
+size_t Vec3::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:Protocol.Vec3)
   size_t total_size = 0;
 
   uint32_t cached_has_bits = 0;
@@ -808,21 +808,21 @@ size_t Pos::ByteSizeLong() const {
   return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
 }
 
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData Pos::_class_data_ = {
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData Vec3::_class_data_ = {
     ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSizeCheck,
-    Pos::MergeImpl
+    Vec3::MergeImpl
 };
-const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*Pos::GetClassData() const { return &_class_data_; }
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*Vec3::GetClassData() const { return &_class_data_; }
 
-void Pos::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to,
+void Vec3::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to,
                       const ::PROTOBUF_NAMESPACE_ID::Message& from) {
-  static_cast<Pos *>(to)->MergeFrom(
-      static_cast<const Pos &>(from));
+  static_cast<Vec3 *>(to)->MergeFrom(
+      static_cast<const Vec3 &>(from));
 }
 
 
-void Pos::MergeFrom(const Pos& from) {
-// @@protoc_insertion_point(class_specific_merge_from_start:Protocol.Pos)
+void Vec3::MergeFrom(const Vec3& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:Protocol.Vec3)
   GOOGLE_DCHECK_NE(&from, this);
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
@@ -851,29 +851,29 @@ void Pos::MergeFrom(const Pos& from) {
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
 
-void Pos::CopyFrom(const Pos& from) {
-// @@protoc_insertion_point(class_specific_copy_from_start:Protocol.Pos)
+void Vec3::CopyFrom(const Vec3& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:Protocol.Vec3)
   if (&from == this) return;
   Clear();
   MergeFrom(from);
 }
 
-bool Pos::IsInitialized() const {
+bool Vec3::IsInitialized() const {
   return true;
 }
 
-void Pos::InternalSwap(Pos* other) {
+void Vec3::InternalSwap(Vec3* other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(Pos, z_)
-      + sizeof(Pos::z_)
-      - PROTOBUF_FIELD_OFFSET(Pos, x_)>(
+      PROTOBUF_FIELD_OFFSET(Vec3, z_)
+      + sizeof(Vec3::z_)
+      - PROTOBUF_FIELD_OFFSET(Vec3, x_)>(
           reinterpret_cast<char*>(&x_),
           reinterpret_cast<char*>(&other->x_));
 }
 
-::PROTOBUF_NAMESPACE_ID::Metadata Pos::GetMetadata() const {
+::PROTOBUF_NAMESPACE_ID::Metadata Vec3::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_Struct_2eproto_getter, &descriptor_table_Struct_2eproto_once,
       file_level_metadata_Struct_2eproto[2]);
@@ -890,9 +890,9 @@ template<> PROTOBUF_NOINLINE ::Protocol::CreatureInfo*
 Arena::CreateMaybeMessage< ::Protocol::CreatureInfo >(Arena* arena) {
   return Arena::CreateMessageInternal< ::Protocol::CreatureInfo >(arena);
 }
-template<> PROTOBUF_NOINLINE ::Protocol::Pos*
-Arena::CreateMaybeMessage< ::Protocol::Pos >(Arena* arena) {
-  return Arena::CreateMessageInternal< ::Protocol::Pos >(arena);
+template<> PROTOBUF_NOINLINE ::Protocol::Vec3*
+Arena::CreateMaybeMessage< ::Protocol::Vec3 >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::Protocol::Vec3 >(arena);
 }
 PROTOBUF_NAMESPACE_CLOSE
 
