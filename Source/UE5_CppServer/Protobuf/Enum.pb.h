@@ -47,6 +47,33 @@ PROTOBUF_NAMESPACE_OPEN
 PROTOBUF_NAMESPACE_CLOSE
 namespace Protocol {
 
+enum SkillInfo : int {
+  SKILL_INFO_NONE = 0,
+  SKILL_INFO_PUNCH = 1,
+  SKILL_INFO_UPPERCUT = 2,
+  SKILL_INFO_KICK = 3,
+  SkillInfo_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
+  SkillInfo_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
+};
+bool SkillInfo_IsValid(int value);
+constexpr SkillInfo SkillInfo_MIN = SKILL_INFO_NONE;
+constexpr SkillInfo SkillInfo_MAX = SKILL_INFO_KICK;
+constexpr int SkillInfo_ARRAYSIZE = SkillInfo_MAX + 1;
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* SkillInfo_descriptor();
+template<typename T>
+inline const std::string& SkillInfo_Name(T enum_t_value) {
+  static_assert(::std::is_same<T, SkillInfo>::value ||
+    ::std::is_integral<T>::value,
+    "Incorrect type passed to function SkillInfo_Name.");
+  return ::PROTOBUF_NAMESPACE_ID::internal::NameOfEnum(
+    SkillInfo_descriptor(), enum_t_value);
+}
+inline bool SkillInfo_Parse(
+    ::PROTOBUF_NAMESPACE_ID::ConstStringParam name, SkillInfo* value) {
+  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<SkillInfo>(
+    SkillInfo_descriptor(), name, value);
+}
 enum MoveState : int {
   MOVE_STATE_NONE = 0,
   MOVE_STATE_IDLE = 1,
@@ -74,6 +101,31 @@ inline bool MoveState_Parse(
   return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<MoveState>(
     MoveState_descriptor(), name, value);
 }
+enum ActionState : int {
+  ACTION_STATE_NONE = 0,
+  ACTION_STATE_SKILL = 1,
+  ActionState_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
+  ActionState_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
+};
+bool ActionState_IsValid(int value);
+constexpr ActionState ActionState_MIN = ACTION_STATE_NONE;
+constexpr ActionState ActionState_MAX = ACTION_STATE_SKILL;
+constexpr int ActionState_ARRAYSIZE = ActionState_MAX + 1;
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* ActionState_descriptor();
+template<typename T>
+inline const std::string& ActionState_Name(T enum_t_value) {
+  static_assert(::std::is_same<T, ActionState>::value ||
+    ::std::is_integral<T>::value,
+    "Incorrect type passed to function ActionState_Name.");
+  return ::PROTOBUF_NAMESPACE_ID::internal::NameOfEnum(
+    ActionState_descriptor(), enum_t_value);
+}
+inline bool ActionState_Parse(
+    ::PROTOBUF_NAMESPACE_ID::ConstStringParam name, ActionState* value) {
+  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<ActionState>(
+    ActionState_descriptor(), name, value);
+}
 // ===================================================================
 
 
@@ -96,10 +148,20 @@ inline bool MoveState_Parse(
 
 PROTOBUF_NAMESPACE_OPEN
 
+template <> struct is_proto_enum< ::Protocol::SkillInfo> : ::std::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::Protocol::SkillInfo>() {
+  return ::Protocol::SkillInfo_descriptor();
+}
 template <> struct is_proto_enum< ::Protocol::MoveState> : ::std::true_type {};
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::Protocol::MoveState>() {
   return ::Protocol::MoveState_descriptor();
+}
+template <> struct is_proto_enum< ::Protocol::ActionState> : ::std::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::Protocol::ActionState>() {
+  return ::Protocol::ActionState_descriptor();
 }
 
 PROTOBUF_NAMESPACE_CLOSE

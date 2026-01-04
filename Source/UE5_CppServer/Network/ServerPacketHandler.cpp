@@ -76,3 +76,12 @@ bool Handle_S_MOVE(PacketSessionRef& session, Protocol::S_MOVE& pkt)
 	}
 	return true;
 }
+
+bool Handle_S_SKILL(PacketSessionRef& session, Protocol::S_SKILL& pkt)
+{
+	if (auto* GameManager = GetManager<UGameManager>())
+	{
+		GameManager->HandleSkill(pkt);
+	}
+	return true;
+}

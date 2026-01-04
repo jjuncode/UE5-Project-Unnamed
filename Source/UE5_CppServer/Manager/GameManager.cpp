@@ -107,14 +107,44 @@ void UGameManager::HandleMove(const Protocol::S_MOVE& MovePkt)
 		return;
 
 	// Only About Other Player
-	Player->SetDesntInfo(MovePkt.player_info());							// 목적지 설정
-	Player->SetMoveState(MovePkt.player_info().creature_info().state());	// 상태 설정
-	Player->SetMoveDir(MovePkt.move_dir());									// 방향 설정
+	Player->SetDesntInfo(MovePkt.player_info());								// 목적지 설정
+	Player->SetMoveState(MovePkt.player_info().creature_info().move_state());	// 상태 설정
+	Player->SetMoveDir(MovePkt.move_dir());										// 방향 설정
+}
+
+void UGameManager::HandleSkill(const Protocol::S_SKILL& SkillPkt)
+{
+	// 스킬 정보 셋팅 
+	Protocol::ObjectInfo ObjectInfo = SkillPkt.object_info();
+
+	if (IsMyPlayer(ObjectInfo))
+	{
+		// ClientPlayer
+		MyPlayer->SetObjectInfo(ObjectInfo);
+	}
+	else
+	{
+		// OtherPlayer
+		TObjectPtr<APlayerBase>* OtherPlayer = Players.Find(ObjectInfo.creature_info().id());
+		ensureMsgf(OtherPlayer, TEXT("[GameManager - HandleSkill] : Can't Find Player"));
+		
+		OtherPlayer->Get()->SetObjectInfo(ObjectInfo);
+	}
 }
 
 bool UGameManager::IsMyPlayer(TObjectPtr<class APlayerBase> rhs)
 {
-	if (rhs->GetObjectInfo().creature_info().id() == MyPlayer->GetObjectInfo().creature_info().id())
+	return IsMyPlayer(rhs->GetObjectInfo());
+}
+
+bool UGameManager::IsMyPlayer(int32 Id)
+{
+	if (Id == MyPlayer->GetObjectInfo().creature_info().id())
 		return true;
 	return false;
+}
+
+bool UGameManager::IsMyPlayer(const Protocol::ObjectInfo& ObjectInfo)
+{
+	return IsMyPlayer(ObjectInfo.creature_info().id());
 }

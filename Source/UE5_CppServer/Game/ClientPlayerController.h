@@ -24,10 +24,16 @@ public:
 
 private:
 	void _HandleMoveAction(const FInputActionValue& Value, const Protocol::MoveState& State);
+
+	// IA_Move
 	void HandleMoveActionTrigerred(const FInputActionValue& Value);
 	void HandleMoveActionCompleted(const FInputActionValue& Value);
 
+	// IA_MouseLook
 	void HandleMouseLookAction(const FInputActionValue& Value);
+
+	// IA_Attack
+	void HandleSkillAction(const FInputActionValue& Value);
 
 private:
 	UPROPERTY(Category=Input, EditAnywhere)
@@ -35,6 +41,9 @@ private:
 
 	UPROPERTY(Category = Input, EditAnywhere)
 	TObjectPtr<class UInputAction> MouseLookAction;
+
+	UPROPERTY(Category = Input, EditAnywhere)
+	TObjectPtr<class UInputAction> SkillAction;
 
 	UPROPERTY(Category = Input, EditAnywhere)
 	TObjectPtr<class UInputMappingContext> IMC;

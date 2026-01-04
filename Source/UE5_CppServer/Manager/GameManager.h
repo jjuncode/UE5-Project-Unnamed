@@ -28,8 +28,11 @@ public:
 	void HandleDespawn(const Protocol::S_DESPAWN& DespawnPkt);
 
 	void HandleMove(const Protocol::S_MOVE& MovePkt);
+	void HandleSkill(const Protocol::S_SKILL& SkillPkt);
 
 	bool IsMyPlayer(TObjectPtr<class APlayerBase> rhs);
+	bool IsMyPlayer(int32 Id);
+	bool IsMyPlayer(const Protocol::ObjectInfo& ObjectInfo);
 
 public:
 	UPROPERTY(VisibleAnywhere)

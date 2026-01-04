@@ -8,6 +8,9 @@
 #include "InputActionValue.h"
 #include "GameFramework/Character.h"
 #include "ClientPlayer.h"
+#include "NetUtils.h"
+#include "ServerPacketHandler.h"
+#include "UE5_CppServer.h"
 
 void AClientPlayerController::BeginPlay()
 {
@@ -37,11 +40,16 @@ void AClientPlayerController::SetupInputComponent()
 		UEnhancedInputComponent* EIC = Cast<UEnhancedInputComponent>(InputComponent);
 		check(EIC);
 
+		// MOVE
 		EIC->BindAction(MoveAction, ETriggerEvent::Triggered, this, &AClientPlayerController::HandleMoveActionTrigerred);
 		EIC->BindAction(MoveAction, ETriggerEvent::Completed, this, &AClientPlayerController::HandleMoveActionCompleted);
 	
+		// Mouse Look
 		EIC->BindAction(MouseLookAction, ETriggerEvent::Triggered, this, &AClientPlayerController::HandleMouseLookAction);
 		EIC->BindAction(MouseLookAction, ETriggerEvent::Completed, this, &AClientPlayerController::HandleMouseLookAction);
+	
+		// Skill 
+		EIC->BindAction(SkillAction, ETriggerEvent::Started, this, &AClientPlayerController::HandleSkillAction);
 	}
 }
 
@@ -78,4 +86,15 @@ void AClientPlayerController::HandleMouseLookAction(const FInputActionValue& Val
 
 	AddYawInput(InputValue.X);
 	AddPitchInput(InputValue.Y);
+}
+
+void AClientPlayerController::HandleSkillAction(const FInputActionValue& Value)
+{
+	const int SkillIndex = Value.Get<float>();
+
+	Protocol::C_SKILL SkillPkt;
+	Protocol::SkillInfo SkillInfo = static_cast<Protocol::SkillInfo>(SkillIndex);
+	SkillPkt.set_skill_info(SkillInfo);
+
+	SEND_PACKET_NO_SESSION(SkillPkt);
 }

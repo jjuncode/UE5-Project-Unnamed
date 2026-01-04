@@ -16,7 +16,7 @@ void ACreature::BeginPlay()
 	// Idle
 	{
 		Protocol::CreatureInfo* CreatureInfo = ObjectInfo.mutable_creature_info();
-		CreatureInfo->set_state(Protocol::MOVE_STATE_IDLE);
+		CreatureInfo->set_move_state(Protocol::MOVE_STATE_IDLE);
 	}
 
 	// 정보 동기화
@@ -61,7 +61,7 @@ void ACreature::Tick(float DeltaTime)
 void ACreature::SetMoveState(const Protocol::MoveState& rhs)
 {
 	Protocol::CreatureInfo* CreatureInfo = ObjectInfo.mutable_creature_info();
-	CreatureInfo->set_state(rhs);
+	CreatureInfo->set_move_state(rhs);
 }
 void ACreature::SetMoveDir(const FVector& Vec)
 {

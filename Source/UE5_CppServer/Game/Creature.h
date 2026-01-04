@@ -24,7 +24,7 @@ public:
 	const Protocol::ObjectInfo& GetObjectInfo() { return ObjectInfo; }
 
 	void SetMoveState(const Protocol::MoveState& rhs);
-	Protocol::MoveState GetMoveState() { return ObjectInfo.creature_info().state(); }
+	Protocol::MoveState GetMoveState() { return ObjectInfo.creature_info().move_state(); }
 
 	void SetDesntInfo(const Protocol::ObjectInfo& rhs){ DestnInfo.CopyFrom(rhs); }
 	void SetMoveDir(const FVector& Vec);

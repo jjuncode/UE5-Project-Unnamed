@@ -16,7 +16,7 @@ void APlayerBase::MoveSync()
 	if (bIsMyPlayer)
 		return;
 
-	if (ObjectInfo.creature_info().state() == Protocol::MOVE_STATE_RUN)
+	if (ObjectInfo.creature_info().move_state() == Protocol::MOVE_STATE_RUN)
 	{
 		// Rotate
 		{
