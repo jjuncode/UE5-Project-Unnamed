@@ -23,7 +23,7 @@ public:
 	virtual void SetupInputComponent() override;
 
 private:
-	void _HandleMoveAction(const FInputActionValue& Value, const Protocol::MoveState& State, AClientPlayer* ClientPlayer);
+	void _HandleMoveAction(const FInputActionValue& Value, const Protocol::MoveState& State);
 	void HandleMoveActionTrigerred(const FInputActionValue& Value);
 	void HandleMoveActionCompleted(const FInputActionValue& Value);
 
@@ -38,4 +38,7 @@ private:
 
 	UPROPERTY(Category = Input, EditAnywhere)
 	TObjectPtr<class UInputMappingContext> IMC;
+
+	UPROPERTY(Category = Character, VisibleAnywhere)
+	TObjectPtr<class AClientPlayer> ClientPlayer;
 };
