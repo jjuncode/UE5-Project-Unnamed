@@ -4,23 +4,44 @@
 
 #include "CoreMinimal.h"
 #include "Animation/AnimInstance.h"
-#include "ClientPlayerAnimInstance.generated.h"
+#include "protocol.pb.h"
+#include "PlayerAnimInstance.generated.h"
 
 /**
  * 
  */
 UCLASS()
-class UE5_CPPSERVER_API UClientPlayerAnimInstance : public UAnimInstance
+class UE5_CPPSERVER_API UPlayerAnimInstance : public UAnimInstance
 {
 	GENERATED_BODY()
 
 public:
 	virtual void NativeInitializeAnimation() override;
 	virtual void NativeUpdateAnimation(float DeltaSeconds) override;
+
+private:
+	void ClearAttackState(UAnimMontage* Montage, bool bInterrupted);
 	
 protected:
+	// ------------------
+	//		Montage
+	// ------------------
+	UPROPERTY(Category = Animation, EditAnywhere, BlueprintReadOnly)
+	TObjectPtr<class UAnimMontage> PunchAttackMontage;
+
+	UPROPERTY(Category = Animation, EditAnywhere, BlueprintReadOnly)
+	TObjectPtr<class UAnimMontage> UppercutAttackMontage;
+
+	UPROPERTY(Category = Animation, EditAnywhere, BlueprintReadOnly)
+	TObjectPtr<class UAnimMontage> KickAttackMontage;
+	
+	Protocol::SkillInfo CurPlayingSkill = Protocol::SKILL_INFO_NONE;
+
+	// -------------------------------
+	//		AnimGraph Caching
+	// -------------------------------
 	UPROPERTY(Category = Character,VisibleAnywhere, BlueprintReadOnly)
-	TObjectPtr<class AClientPlayer> ClientPlayer;
+	TObjectPtr<class APlayerBase> OwnerCharacter;
 
 	UPROPERTY(Category = Character,VisibleAnywhere, BlueprintReadOnly)
 	TObjectPtr<class UCharacterMovementComponent> MovementComponent;

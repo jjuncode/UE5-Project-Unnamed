@@ -8,11 +8,10 @@
 UGameManager::UGameManager()
 	:Super()
 {
-	static ConstructorHelpers::FClassFinder<AActor> PlayerBPClass(TEXT("/Game/Blueprints/BP_PlayerBase"));
-	if (PlayerBPClass.Succeeded())
-	{
-		OtherPlayerClass = PlayerBPClass.Class;
-	}
+	static ConstructorHelpers::FClassFinder<AActor> PlayerBPClass(TEXT("/Game/Blueprints/Object/BP_PlayerBase"));
+	check(PlayerBPClass.Succeeded())
+
+	OtherPlayerClass = PlayerBPClass.Class;
 }
 
 void UGameManager::HandleSpawn(const Protocol::ObjectInfo& PlayerInfo, bool IsMine)
@@ -31,8 +30,7 @@ void UGameManager::HandleSpawn(const Protocol::ObjectInfo& PlayerInfo, bool IsMi
 
 	if (IsMine)
 	{
-		// 기본 스폰 character 이용했음
-		// TODO : ? 지우고 내가 스폰시키기
+		// GameMode -> Default Pawn 이용한 spawn
 		AClientPlayer* ClientPlayer = Cast<AClientPlayer>(World->GetFirstPlayerController()->GetCharacter());
 		if (ClientPlayer == nullptr)
 			return;
@@ -114,22 +112,13 @@ void UGameManager::HandleMove(const Protocol::S_MOVE& MovePkt)
 
 void UGameManager::HandleSkill(const Protocol::S_SKILL& SkillPkt)
 {
-	// 스킬 정보 셋팅 
 	Protocol::ObjectInfo ObjectInfo = SkillPkt.object_info();
 
-	if (IsMyPlayer(ObjectInfo))
-	{
-		// ClientPlayer
-		MyPlayer->SetObjectInfo(ObjectInfo);
-	}
-	else
-	{
-		// OtherPlayer
-		TObjectPtr<APlayerBase>* OtherPlayer = Players.Find(ObjectInfo.creature_info().id());
-		ensureMsgf(OtherPlayer, TEXT("[GameManager - HandleSkill] : Can't Find Player"));
-		
-		OtherPlayer->Get()->SetObjectInfo(ObjectInfo);
-	}
+	// 스킬 쓴 애 정보 셋팅 
+	TObjectPtr<APlayerBase>* SkillUsePlayer = Players.Find(ObjectInfo.creature_info().id());
+	ensureMsgf(SkillUsePlayer, TEXT("[GameManager - HandleSkill] : Can't Find Player"));
+
+	(*SkillUsePlayer)->SetObjectInfo(ObjectInfo);
 }
 
 bool UGameManager::IsMyPlayer(TObjectPtr<class APlayerBase> rhs)

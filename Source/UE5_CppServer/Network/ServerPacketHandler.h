@@ -52,10 +52,6 @@ public:
 	static bool HandlePacket(PacketSessionRef& session, BYTE* buffer, int32 len)
 	{
 		PacketHeader* header = reinterpret_cast<PacketHeader*>(buffer);
-#if WITH_ENGINE
-#else
-		cout << "ID : " << header->id << " , Size : " << header->size << endl;
-#endif
 		return GPacketHandler[header->id](session, buffer, len);
 	}
 	static SendBufferRef MakePKTSendBuffer(Protocol::C_LOGIN&pkt) { return _MakeSendBuffer(pkt, PKT_C_LOGIN); }

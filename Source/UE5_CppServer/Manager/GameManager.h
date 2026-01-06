@@ -41,5 +41,5 @@ public:
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<class AClientPlayer> MyPlayer;
 	UPROPERTY()
-	TMap<uint64, TObjectPtr<class APlayerBase>> Players;
+	TMap<uint64, TObjectPtr<class APlayerBase>> Players; // 전체 목록 ( My포함 )  
 };

@@ -40,6 +40,8 @@ void ACreature::BeginPlay()
 
 void ACreature::Tick(float DeltaTime)
 {
+	Super::Tick(DeltaTime);
+
 	// 정보 동기화
 	{
 		auto Location = GetActorLocation();
@@ -63,6 +65,12 @@ void ACreature::SetMoveState(const Protocol::MoveState& rhs)
 	Protocol::CreatureInfo* CreatureInfo = ObjectInfo.mutable_creature_info();
 	CreatureInfo->set_move_state(rhs);
 }
+void ACreature::SetActionState(const Protocol::ActionState& rhs)
+{
+	Protocol::CreatureInfo* CreatureInfo = ObjectInfo.mutable_creature_info();
+	CreatureInfo->set_action_state(rhs);
+}
+
 void ACreature::SetMoveDir(const FVector& Vec)
 {
 	MoveDir.set_x(Vec.X);

@@ -67,7 +67,6 @@ bool RecvWorker::RecvPacket(TArray<uint8>& OutPacket)
 
 	// ID, Size √ﬂ√‚
 	PacketHeader Header = *reinterpret_cast<PacketHeader*>(HeaderBuffer.GetData());
-	UE_LOG(LogTemp, Log, TEXT("Recv Packet ID : %d, Size : %d"), Header.id, Header.size);
 
 	OutPacket = HeaderBuffer;
 
