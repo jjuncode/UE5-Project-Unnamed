@@ -85,3 +85,12 @@ bool Handle_S_SKILL(PacketSessionRef& session, Protocol::S_SKILL& pkt)
 	}
 	return true;
 }
+
+bool Handle_S_DEBUG(PacketSessionRef& session, Protocol::S_DEBUG& pkt)
+{
+	if (auto* GameManager = GetManager<UGameManager>())
+	{
+		GameManager->HandleDebugMessage(pkt);
+	}
+	return true;
+}

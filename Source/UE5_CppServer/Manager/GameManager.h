@@ -30,6 +30,8 @@ public:
 	void HandleMove(const Protocol::S_MOVE& MovePkt);
 	void HandleSkill(const Protocol::S_SKILL& SkillPkt);
 
+	void HandleDebugMessage(const Protocol::S_DEBUG& DebugPkt);
+
 	bool IsMyPlayer(TObjectPtr<class APlayerBase> rhs);
 	bool IsMyPlayer(int32 Id);
 	bool IsMyPlayer(const Protocol::ObjectInfo& ObjectInfo);

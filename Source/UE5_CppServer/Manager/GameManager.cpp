@@ -121,6 +121,25 @@ void UGameManager::HandleSkill(const Protocol::S_SKILL& SkillPkt)
 	(*SkillUsePlayer)->SetObjectInfo(ObjectInfo);
 }
 
+void UGameManager::HandleDebugMessage(const Protocol::S_DEBUG& DebugPkt)
+{
+	// debug Message Rendering
+	UWorld* World = GetWorld();
+	if (World == nullptr)
+		return;
+
+	DrawDebugBox(World,
+		FVector(DebugPkt.info().center().x(), DebugPkt.info().center().y(), DebugPkt.info().center().z()),     // Center
+		FVector(DebugPkt.info().radius().x(), DebugPkt.info().radius().y(), DebugPkt.info().radius().z()),     // Extent (반지름)
+		FQuat::Identity,                            // 회전 없음
+		FColor::Green,                              // 색상
+		false,                                      // persistentLines
+		DebugPkt.info().duration(),                 // duration
+		0,                                          // depth priority
+		5.0f                                        // line thickness
+	);
+}
+
 bool UGameManager::IsMyPlayer(TObjectPtr<class APlayerBase> rhs)
 {
 	return IsMyPlayer(rhs->GetObjectInfo());

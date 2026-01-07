@@ -22,6 +22,7 @@ enum :uint16
 	PKT_S_MOVE = 1009,
 	PKT_C_SKILL = 1010,
 	PKT_S_SKILL = 1011,
+	PKT_S_DEBUG = 1012,
 };
 
 bool Handle_INVALID(PacketSessionRef& session, BYTE* buffer, int32 len);
@@ -32,6 +33,7 @@ bool Handle_S_SPAWN(PacketSessionRef& session, Protocol::S_SPAWN&pkt);
 bool Handle_S_DESPAWN(PacketSessionRef& session, Protocol::S_DESPAWN&pkt);
 bool Handle_S_MOVE(PacketSessionRef& session, Protocol::S_MOVE&pkt);
 bool Handle_S_SKILL(PacketSessionRef& session, Protocol::S_SKILL&pkt);
+bool Handle_S_DEBUG(PacketSessionRef& session, Protocol::S_DEBUG&pkt);
 
 class ServerPacketHandler
 {
@@ -47,6 +49,7 @@ public:
 		GPacketHandler[PKT_S_DESPAWN] = [](PacketSessionRef& session, BYTE* buffer, int32 len) { return HandlePacket<Protocol::S_DESPAWN >(Handle_S_DESPAWN, session, buffer, len); };
 		GPacketHandler[PKT_S_MOVE] = [](PacketSessionRef& session, BYTE* buffer, int32 len) { return HandlePacket<Protocol::S_MOVE >(Handle_S_MOVE, session, buffer, len); };
 		GPacketHandler[PKT_S_SKILL] = [](PacketSessionRef& session, BYTE* buffer, int32 len) { return HandlePacket<Protocol::S_SKILL >(Handle_S_SKILL, session, buffer, len); };
+		GPacketHandler[PKT_S_DEBUG] = [](PacketSessionRef& session, BYTE* buffer, int32 len) { return HandlePacket<Protocol::S_DEBUG >(Handle_S_DEBUG, session, buffer, len); };
 	}
 
 	static bool HandlePacket(PacketSessionRef& session, BYTE* buffer, int32 len)
