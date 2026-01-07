@@ -71,7 +71,8 @@ PROTOBUF_CONSTEXPR DebugInfo::DebugInfo(
     ::_pbi::ConstantInitialized)
   : center_(nullptr)
   , radius_(nullptr)
-  , duration_(0){}
+  , duration_(0)
+  , color_(0){}
 struct DebugInfoDefaultTypeInternal {
   PROTOBUF_CONSTEXPR DebugInfoDefaultTypeInternal()
       : _instance(::_pbi::ConstantInitialized{}) {}
@@ -124,6 +125,7 @@ const uint32_t TableStruct_Struct_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(p
   PROTOBUF_FIELD_OFFSET(::Protocol::DebugInfo, center_),
   PROTOBUF_FIELD_OFFSET(::Protocol::DebugInfo, radius_),
   PROTOBUF_FIELD_OFFSET(::Protocol::DebugInfo, duration_),
+  PROTOBUF_FIELD_OFFSET(::Protocol::DebugInfo, color_),
 };
 static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, -1, sizeof(::Protocol::ObjectInfo)},
@@ -148,16 +150,17 @@ const char descriptor_table_protodef_Struct_2eproto[] PROTOBUF_SECTION_VARIABLE(
   "MoveState\022+\n\014action_state\030\003 \001(\0162\025.Protoc"
   "ol.ActionState\022\'\n\nskill_info\030\004 \001(\0162\023.Pro"
   "tocol.SkillInfo\"\'\n\004Vec3\022\t\n\001x\030\001 \001(\002\022\t\n\001y\030"
-  "\002 \001(\002\022\t\n\001z\030\003 \001(\002\"]\n\tDebugInfo\022\036\n\006center\030"
+  "\002 \001(\002\022\t\n\001z\030\003 \001(\002\"l\n\tDebugInfo\022\036\n\006center\030"
   "\001 \001(\0132\016.Protocol.Vec3\022\036\n\006radius\030\002 \001(\0132\016."
-  "Protocol.Vec3\022\020\n\010duration\030\003 \001(\002b\006proto3"
+  "Protocol.Vec3\022\020\n\010duration\030\003 \001(\002\022\r\n\005color"
+  "\030\004 \001(\005b\006proto3"
   ;
 static const ::_pbi::DescriptorTable* const descriptor_table_Struct_2eproto_deps[1] = {
   &::descriptor_table_Enum_2eproto,
 };
 static ::_pbi::once_flag descriptor_table_Struct_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_Struct_2eproto = {
-    false, false, 439, descriptor_table_protodef_Struct_2eproto,
+    false, false, 454, descriptor_table_protodef_Struct_2eproto,
     "Struct.proto",
     &descriptor_table_Struct_2eproto_once, descriptor_table_Struct_2eproto_deps, 1, 4,
     schemas, file_default_instances, TableStruct_Struct_2eproto::offsets,
@@ -999,15 +1002,17 @@ DebugInfo::DebugInfo(const DebugInfo& from)
   } else {
     radius_ = nullptr;
   }
-  duration_ = from.duration_;
+  ::memcpy(&duration_, &from.duration_,
+    static_cast<size_t>(reinterpret_cast<char*>(&color_) -
+    reinterpret_cast<char*>(&duration_)) + sizeof(color_));
   // @@protoc_insertion_point(copy_constructor:Protocol.DebugInfo)
 }
 
 inline void DebugInfo::SharedCtor() {
 ::memset(reinterpret_cast<char*>(this) + static_cast<size_t>(
     reinterpret_cast<char*>(&center_) - reinterpret_cast<char*>(this)),
-    0, static_cast<size_t>(reinterpret_cast<char*>(&duration_) -
-    reinterpret_cast<char*>(&center_)) + sizeof(duration_));
+    0, static_cast<size_t>(reinterpret_cast<char*>(&color_) -
+    reinterpret_cast<char*>(&center_)) + sizeof(color_));
 }
 
 DebugInfo::~DebugInfo() {
@@ -1043,7 +1048,9 @@ void DebugInfo::Clear() {
     delete radius_;
   }
   radius_ = nullptr;
-  duration_ = 0;
+  ::memset(&duration_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&color_) -
+      reinterpret_cast<char*>(&duration_)) + sizeof(color_));
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -1074,6 +1081,14 @@ const char* DebugInfo::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 29)) {
           duration_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<float>(ptr);
           ptr += sizeof(float);
+        } else
+          goto handle_unusual;
+        continue;
+      // int32 color = 4;
+      case 4:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 32)) {
+          color_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          CHK_(ptr);
         } else
           goto handle_unusual;
         continue;
@@ -1130,6 +1145,12 @@ uint8_t* DebugInfo::_InternalSerialize(
     target = ::_pbi::WireFormatLite::WriteFloatToArray(3, this->_internal_duration(), target);
   }
 
+  // int32 color = 4;
+  if (this->_internal_color() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteInt32ToArray(4, this->_internal_color(), target);
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
@@ -1169,6 +1190,11 @@ size_t DebugInfo::ByteSizeLong() const {
     total_size += 1 + 4;
   }
 
+  // int32 color = 4;
+  if (this->_internal_color() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_color());
+  }
+
   return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
 }
 
@@ -1204,6 +1230,9 @@ void DebugInfo::MergeFrom(const DebugInfo& from) {
   if (raw_duration != 0) {
     _internal_set_duration(from._internal_duration());
   }
+  if (from._internal_color() != 0) {
+    _internal_set_color(from._internal_color());
+  }
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
 
@@ -1222,8 +1251,8 @@ void DebugInfo::InternalSwap(DebugInfo* other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(DebugInfo, duration_)
-      + sizeof(DebugInfo::duration_)
+      PROTOBUF_FIELD_OFFSET(DebugInfo, color_)
+      + sizeof(DebugInfo::color_)
       - PROTOBUF_FIELD_OFFSET(DebugInfo, center_)>(
           reinterpret_cast<char*>(&center_),
           reinterpret_cast<char*>(&other->center_));

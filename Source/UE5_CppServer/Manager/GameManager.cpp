@@ -128,11 +128,27 @@ void UGameManager::HandleDebugMessage(const Protocol::S_DEBUG& DebugPkt)
 	if (World == nullptr)
 		return;
 
+	FColor color;
+	switch (DebugPkt.info().color())
+	{
+	case 0:
+		color = FColor::Red;
+		break;
+	case 1:
+		color = FColor::Green;
+		break;
+	case 2:
+		color = FColor::Blue;
+		break;
+	default:
+		break;
+	}
+
 	DrawDebugBox(World,
 		FVector(DebugPkt.info().center().x(), DebugPkt.info().center().y(), DebugPkt.info().center().z()),     // Center
 		FVector(DebugPkt.info().radius().x(), DebugPkt.info().radius().y(), DebugPkt.info().radius().z()),     // Extent (반지름)
 		FQuat::Identity,                            // 회전 없음
-		FColor::Green,                              // 색상
+		color,                         // 색상
 		false,                                      // persistentLines
 		DebugPkt.info().duration(),                 // duration
 		0,                                          // depth priority

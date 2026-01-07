@@ -715,6 +715,7 @@ class DebugInfo final :
     kCenterFieldNumber = 1,
     kRadiusFieldNumber = 2,
     kDurationFieldNumber = 3,
+    kColorFieldNumber = 4,
   };
   // .Protocol.Vec3 center = 1;
   bool has_center() const;
@@ -761,6 +762,15 @@ class DebugInfo final :
   void _internal_set_duration(float value);
   public:
 
+  // int32 color = 4;
+  void clear_color();
+  int32_t color() const;
+  void set_color(int32_t value);
+  private:
+  int32_t _internal_color() const;
+  void _internal_set_color(int32_t value);
+  public:
+
   // @@protoc_insertion_point(class_scope:Protocol.DebugInfo)
  private:
   class _Internal;
@@ -771,6 +781,7 @@ class DebugInfo final :
   ::Protocol::Vec3* center_;
   ::Protocol::Vec3* radius_;
   float duration_;
+  int32_t color_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_Struct_2eproto;
 };
@@ -1335,6 +1346,26 @@ inline void DebugInfo::_internal_set_duration(float value) {
 inline void DebugInfo::set_duration(float value) {
   _internal_set_duration(value);
   // @@protoc_insertion_point(field_set:Protocol.DebugInfo.duration)
+}
+
+// int32 color = 4;
+inline void DebugInfo::clear_color() {
+  color_ = 0;
+}
+inline int32_t DebugInfo::_internal_color() const {
+  return color_;
+}
+inline int32_t DebugInfo::color() const {
+  // @@protoc_insertion_point(field_get:Protocol.DebugInfo.color)
+  return _internal_color();
+}
+inline void DebugInfo::_internal_set_color(int32_t value) {
+  
+  color_ = value;
+}
+inline void DebugInfo::set_color(int32_t value) {
+  _internal_set_color(value);
+  // @@protoc_insertion_point(field_set:Protocol.DebugInfo.color)
 }
 
 #ifdef __GNUC__
