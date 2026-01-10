@@ -144,16 +144,35 @@ void UGameManager::HandleDebugMessage(const Protocol::S_DEBUG& DebugPkt)
 		break;
 	}
 
-	DrawDebugBox(World,
-		FVector(DebugPkt.info().center().x(), DebugPkt.info().center().y(), DebugPkt.info().center().z()),     // Center
-		FVector(DebugPkt.info().radius().x(), DebugPkt.info().radius().y(), DebugPkt.info().radius().z()),     // Extent (반지름)
-		FQuat::Identity,                            // 회전 없음
-		color,                         // 색상
-		false,                                      // persistentLines
-		DebugPkt.info().duration(),                 // duration
-		0,                                          // depth priority
-		5.0f                                        // line thickness
-	);
+	FVector center(DebugPkt.info().center().x(), DebugPkt.info().center().y(), DebugPkt.info().center().z());
+	FVector extent(DebugPkt.info().radius().x(), DebugPkt.info().radius().y(), DebugPkt.info().radius().z());
+	float duration = DebugPkt.info().duration();
+
+	// Shape 구분
+	switch (DebugPkt.info().shape()) // 예: 0=Box, 1=Sphere, 2=Line
+	{
+	case Protocol::DEBUG_SHAPE_BOX: // Box
+		DrawDebugBox(World, center, extent, FQuat::Identity, color, false, duration, 0, 5.0f);
+		break;
+
+	case Protocol::DEBUG_SHAPE_CIRCLE: // Sphere
+		DrawDebugCircle(World, center, extent.X, 16, color, false, duration, 0, 5.0f);
+		break;
+
+	case Protocol::DEBUG_SHAPE_LINE: // Line
+	{
+		// center = start
+		FVector start = center;
+		FVector end = center + extent;
+
+		DrawDebugLine(World, start, end, color, false, duration, 0, 5.0f);
+	}
+	break;
+
+	default: // Box fallback
+		DrawDebugBox(World, center, extent, FQuat::Identity, color, false, duration, 0, 5.0f);
+		break;
+	}
 }
 
 bool UGameManager::IsMyPlayer(TObjectPtr<class APlayerBase> rhs)

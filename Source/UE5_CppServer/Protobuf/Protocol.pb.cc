@@ -146,8 +146,7 @@ struct S_MOVEDefaultTypeInternal {
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 S_MOVEDefaultTypeInternal _S_MOVE_default_instance_;
 PROTOBUF_CONSTEXPR C_SKILL::C_SKILL(
     ::_pbi::ConstantInitialized)
-  : skill_info_(0)
-{}
+  : skill_data_(nullptr){}
 struct C_SKILLDefaultTypeInternal {
   PROTOBUF_CONSTEXPR C_SKILLDefaultTypeInternal()
       : _instance(::_pbi::ConstantInitialized{}) {}
@@ -265,7 +264,7 @@ const uint32_t TableStruct_Protocol_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::Protocol::C_SKILL, skill_info_),
+  PROTOBUF_FIELD_OFFSET(::Protocol::C_SKILL, skill_data_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::Protocol::S_SKILL, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -328,8 +327,8 @@ const char descriptor_table_protodef_Protocol_2eproto[] PROTOBUF_SECTION_VARIABL
   "\n\010move_dir\030\002 \001(\0132\016.Protocol.Vec3\"U\n\006S_MO"
   "VE\022)\n\013player_info\030\001 \001(\0132\024.Protocol.Objec"
   "tInfo\022 \n\010move_dir\030\002 \001(\0132\016.Protocol.Vec3\""
-  "2\n\007C_SKILL\022\'\n\nskill_info\030\001 \001(\0162\023.Protoco"
-  "l.SkillInfo\"4\n\007S_SKILL\022)\n\013object_info\030\001 "
+  "2\n\007C_SKILL\022\'\n\nskill_data\030\001 \001(\0132\023.Protoco"
+  "l.SkillData\"4\n\007S_SKILL\022)\n\013object_info\030\001 "
   "\001(\0132\024.Protocol.ObjectInfo\",\n\007S_DEBUG\022!\n\004"
   "info\030\001 \001(\0132\023.Protocol.DebugInfob\006proto3"
   ;
@@ -2087,8 +2086,19 @@ void S_MOVE::InternalSwap(S_MOVE* other) {
 
 class C_SKILL::_Internal {
  public:
+  static const ::Protocol::SkillData& skill_data(const C_SKILL* msg);
 };
 
+const ::Protocol::SkillData&
+C_SKILL::_Internal::skill_data(const C_SKILL* msg) {
+  return *msg->skill_data_;
+}
+void C_SKILL::clear_skill_data() {
+  if (GetArenaForAllocation() == nullptr && skill_data_ != nullptr) {
+    delete skill_data_;
+  }
+  skill_data_ = nullptr;
+}
 C_SKILL::C_SKILL(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                          bool is_message_owned)
   : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
@@ -2098,12 +2108,16 @@ C_SKILL::C_SKILL(::PROTOBUF_NAMESPACE_ID::Arena* arena,
 C_SKILL::C_SKILL(const C_SKILL& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  skill_info_ = from.skill_info_;
+  if (from._internal_has_skill_data()) {
+    skill_data_ = new ::Protocol::SkillData(*from.skill_data_);
+  } else {
+    skill_data_ = nullptr;
+  }
   // @@protoc_insertion_point(copy_constructor:Protocol.C_SKILL)
 }
 
 inline void C_SKILL::SharedCtor() {
-skill_info_ = 0;
+skill_data_ = nullptr;
 }
 
 C_SKILL::~C_SKILL() {
@@ -2117,6 +2131,7 @@ C_SKILL::~C_SKILL() {
 
 inline void C_SKILL::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  if (this != internal_default_instance()) delete skill_data_;
 }
 
 void C_SKILL::SetCachedSize(int size) const {
@@ -2129,7 +2144,10 @@ void C_SKILL::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  skill_info_ = 0;
+  if (GetArenaForAllocation() == nullptr && skill_data_ != nullptr) {
+    delete skill_data_;
+  }
+  skill_data_ = nullptr;
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -2139,12 +2157,11 @@ const char* C_SKILL::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) 
     uint32_t tag;
     ptr = ::_pbi::ReadTag(ptr, &tag);
     switch (tag >> 3) {
-      // .Protocol.SkillInfo skill_info = 1;
+      // .Protocol.SkillData skill_data = 1;
       case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
-          uint64_t val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
+          ptr = ctx->ParseMessage(_internal_mutable_skill_data(), ptr);
           CHK_(ptr);
-          _internal_set_skill_info(static_cast<::Protocol::SkillInfo>(val));
         } else
           goto handle_unusual;
         continue;
@@ -2177,11 +2194,11 @@ uint8_t* C_SKILL::_InternalSerialize(
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // .Protocol.SkillInfo skill_info = 1;
-  if (this->_internal_skill_info() != 0) {
-    target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteEnumToArray(
-      1, this->_internal_skill_info(), target);
+  // .Protocol.SkillData skill_data = 1;
+  if (this->_internal_has_skill_data()) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(1, _Internal::skill_data(this),
+        _Internal::skill_data(this).GetCachedSize(), target, stream);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -2200,10 +2217,11 @@ size_t C_SKILL::ByteSizeLong() const {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // .Protocol.SkillInfo skill_info = 1;
-  if (this->_internal_skill_info() != 0) {
+  // .Protocol.SkillData skill_data = 1;
+  if (this->_internal_has_skill_data()) {
     total_size += 1 +
-      ::_pbi::WireFormatLite::EnumSize(this->_internal_skill_info());
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *skill_data_);
   }
 
   return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
@@ -2228,8 +2246,8 @@ void C_SKILL::MergeFrom(const C_SKILL& from) {
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  if (from._internal_skill_info() != 0) {
-    _internal_set_skill_info(from._internal_skill_info());
+  if (from._internal_has_skill_data()) {
+    _internal_mutable_skill_data()->::Protocol::SkillData::MergeFrom(from._internal_skill_data());
   }
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
@@ -2248,7 +2266,7 @@ bool C_SKILL::IsInitialized() const {
 void C_SKILL::InternalSwap(C_SKILL* other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  swap(skill_info_, other->skill_info_);
+  swap(skill_data_, other->skill_data_);
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata C_SKILL::GetMetadata() const {

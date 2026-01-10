@@ -94,7 +94,8 @@ void AClientPlayerController::HandleSkillAction(const FInputActionValue& Value)
 
 	Protocol::C_SKILL SkillPkt;
 	Protocol::SkillInfo SkillInfo = static_cast<Protocol::SkillInfo>(SkillIndex);
-	SkillPkt.set_skill_info(SkillInfo);
+
+	SkillPkt.mutable_skill_data()->set_id(SkillInfo);
 
 	SEND_PACKET_NO_SESSION(SkillPkt);
 }

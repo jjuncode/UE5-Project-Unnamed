@@ -72,7 +72,9 @@ PROTOBUF_CONSTEXPR DebugInfo::DebugInfo(
   : center_(nullptr)
   , radius_(nullptr)
   , duration_(0)
-  , color_(0){}
+  , color_(0)
+  , shape_(0)
+{}
 struct DebugInfoDefaultTypeInternal {
   PROTOBUF_CONSTEXPR DebugInfoDefaultTypeInternal()
       : _instance(::_pbi::ConstantInitialized{}) {}
@@ -82,8 +84,26 @@ struct DebugInfoDefaultTypeInternal {
   };
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 DebugInfoDefaultTypeInternal _DebugInfo_default_instance_;
+PROTOBUF_CONSTEXPR SkillData::SkillData(
+    ::_pbi::ConstantInitialized)
+  : name_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{})
+  , id_(0)
+
+  , angle_(0)
+  , range_(0)
+  , hit_window_start_(0)
+  , hit_window_end_(0){}
+struct SkillDataDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR SkillDataDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
+  ~SkillDataDefaultTypeInternal() {}
+  union {
+    SkillData _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 SkillDataDefaultTypeInternal _SkillData_default_instance_;
 }  // namespace Protocol
-static ::_pb::Metadata file_level_metadata_Struct_2eproto[4];
+static ::_pb::Metadata file_level_metadata_Struct_2eproto[5];
 static constexpr ::_pb::EnumDescriptor const** file_level_enum_descriptors_Struct_2eproto = nullptr;
 static constexpr ::_pb::ServiceDescriptor const** file_level_service_descriptors_Struct_2eproto = nullptr;
 
@@ -126,12 +146,26 @@ const uint32_t TableStruct_Struct_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(p
   PROTOBUF_FIELD_OFFSET(::Protocol::DebugInfo, radius_),
   PROTOBUF_FIELD_OFFSET(::Protocol::DebugInfo, duration_),
   PROTOBUF_FIELD_OFFSET(::Protocol::DebugInfo, color_),
+  PROTOBUF_FIELD_OFFSET(::Protocol::DebugInfo, shape_),
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::Protocol::SkillData, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::Protocol::SkillData, id_),
+  PROTOBUF_FIELD_OFFSET(::Protocol::SkillData, name_),
+  PROTOBUF_FIELD_OFFSET(::Protocol::SkillData, angle_),
+  PROTOBUF_FIELD_OFFSET(::Protocol::SkillData, range_),
+  PROTOBUF_FIELD_OFFSET(::Protocol::SkillData, hit_window_start_),
+  PROTOBUF_FIELD_OFFSET(::Protocol::SkillData, hit_window_end_),
 };
 static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, -1, sizeof(::Protocol::ObjectInfo)},
   { 9, -1, -1, sizeof(::Protocol::CreatureInfo)},
   { 19, -1, -1, sizeof(::Protocol::Vec3)},
   { 28, -1, -1, sizeof(::Protocol::DebugInfo)},
+  { 39, -1, -1, sizeof(::Protocol::SkillData)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
@@ -139,6 +173,7 @@ static const ::_pb::Message* const file_default_instances[] = {
   &::Protocol::_CreatureInfo_default_instance_._instance,
   &::Protocol::_Vec3_default_instance_._instance,
   &::Protocol::_DebugInfo_default_instance_._instance,
+  &::Protocol::_SkillData_default_instance_._instance,
 };
 
 const char descriptor_table_protodef_Struct_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
@@ -150,19 +185,23 @@ const char descriptor_table_protodef_Struct_2eproto[] PROTOBUF_SECTION_VARIABLE(
   "MoveState\022+\n\014action_state\030\003 \001(\0162\025.Protoc"
   "ol.ActionState\022\'\n\nskill_info\030\004 \001(\0162\023.Pro"
   "tocol.SkillInfo\"\'\n\004Vec3\022\t\n\001x\030\001 \001(\002\022\t\n\001y\030"
-  "\002 \001(\002\022\t\n\001z\030\003 \001(\002\"l\n\tDebugInfo\022\036\n\006center\030"
-  "\001 \001(\0132\016.Protocol.Vec3\022\036\n\006radius\030\002 \001(\0132\016."
-  "Protocol.Vec3\022\020\n\010duration\030\003 \001(\002\022\r\n\005color"
-  "\030\004 \001(\005b\006proto3"
+  "\002 \001(\002\022\t\n\001z\030\003 \001(\002\"\221\001\n\tDebugInfo\022\036\n\006center"
+  "\030\001 \001(\0132\016.Protocol.Vec3\022\036\n\006radius\030\002 \001(\0132\016"
+  ".Protocol.Vec3\022\020\n\010duration\030\003 \001(\002\022\r\n\005colo"
+  "r\030\004 \001(\005\022#\n\005shape\030\005 \001(\0162\024.Protocol.DebugS"
+  "hape\"\212\001\n\tSkillData\022\037\n\002id\030\001 \001(\0162\023.Protoco"
+  "l.SkillInfo\022\014\n\004name\030\002 \001(\t\022\r\n\005angle\030\003 \001(\005"
+  "\022\r\n\005range\030\004 \001(\005\022\030\n\020hit_window_start\030\005 \001("
+  "\002\022\026\n\016hit_window_end\030\006 \001(\002b\006proto3"
   ;
 static const ::_pbi::DescriptorTable* const descriptor_table_Struct_2eproto_deps[1] = {
   &::descriptor_table_Enum_2eproto,
 };
 static ::_pbi::once_flag descriptor_table_Struct_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_Struct_2eproto = {
-    false, false, 454, descriptor_table_protodef_Struct_2eproto,
+    false, false, 633, descriptor_table_protodef_Struct_2eproto,
     "Struct.proto",
-    &descriptor_table_Struct_2eproto_once, descriptor_table_Struct_2eproto_deps, 1, 4,
+    &descriptor_table_Struct_2eproto_once, descriptor_table_Struct_2eproto_deps, 1, 5,
     schemas, file_default_instances, TableStruct_Struct_2eproto::offsets,
     file_level_metadata_Struct_2eproto, file_level_enum_descriptors_Struct_2eproto,
     file_level_service_descriptors_Struct_2eproto,
@@ -1003,16 +1042,16 @@ DebugInfo::DebugInfo(const DebugInfo& from)
     radius_ = nullptr;
   }
   ::memcpy(&duration_, &from.duration_,
-    static_cast<size_t>(reinterpret_cast<char*>(&color_) -
-    reinterpret_cast<char*>(&duration_)) + sizeof(color_));
+    static_cast<size_t>(reinterpret_cast<char*>(&shape_) -
+    reinterpret_cast<char*>(&duration_)) + sizeof(shape_));
   // @@protoc_insertion_point(copy_constructor:Protocol.DebugInfo)
 }
 
 inline void DebugInfo::SharedCtor() {
 ::memset(reinterpret_cast<char*>(this) + static_cast<size_t>(
     reinterpret_cast<char*>(&center_) - reinterpret_cast<char*>(this)),
-    0, static_cast<size_t>(reinterpret_cast<char*>(&color_) -
-    reinterpret_cast<char*>(&center_)) + sizeof(color_));
+    0, static_cast<size_t>(reinterpret_cast<char*>(&shape_) -
+    reinterpret_cast<char*>(&center_)) + sizeof(shape_));
 }
 
 DebugInfo::~DebugInfo() {
@@ -1049,8 +1088,8 @@ void DebugInfo::Clear() {
   }
   radius_ = nullptr;
   ::memset(&duration_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&color_) -
-      reinterpret_cast<char*>(&duration_)) + sizeof(color_));
+      reinterpret_cast<char*>(&shape_) -
+      reinterpret_cast<char*>(&duration_)) + sizeof(shape_));
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -1089,6 +1128,15 @@ const char* DebugInfo::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 32)) {
           color_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
           CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // .Protocol.DebugShape shape = 5;
+      case 5:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 40)) {
+          uint64_t val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+          _internal_set_shape(static_cast<::Protocol::DebugShape>(val));
         } else
           goto handle_unusual;
         continue;
@@ -1151,6 +1199,13 @@ uint8_t* DebugInfo::_InternalSerialize(
     target = ::_pbi::WireFormatLite::WriteInt32ToArray(4, this->_internal_color(), target);
   }
 
+  // .Protocol.DebugShape shape = 5;
+  if (this->_internal_shape() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteEnumToArray(
+      5, this->_internal_shape(), target);
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
@@ -1195,6 +1250,12 @@ size_t DebugInfo::ByteSizeLong() const {
     total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_color());
   }
 
+  // .Protocol.DebugShape shape = 5;
+  if (this->_internal_shape() != 0) {
+    total_size += 1 +
+      ::_pbi::WireFormatLite::EnumSize(this->_internal_shape());
+  }
+
   return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
 }
 
@@ -1233,6 +1294,9 @@ void DebugInfo::MergeFrom(const DebugInfo& from) {
   if (from._internal_color() != 0) {
     _internal_set_color(from._internal_color());
   }
+  if (from._internal_shape() != 0) {
+    _internal_set_shape(from._internal_shape());
+  }
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
 
@@ -1251,8 +1315,8 @@ void DebugInfo::InternalSwap(DebugInfo* other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(DebugInfo, color_)
-      + sizeof(DebugInfo::color_)
+      PROTOBUF_FIELD_OFFSET(DebugInfo, shape_)
+      + sizeof(DebugInfo::shape_)
       - PROTOBUF_FIELD_OFFSET(DebugInfo, center_)>(
           reinterpret_cast<char*>(&center_),
           reinterpret_cast<char*>(&other->center_));
@@ -1262,6 +1326,354 @@ void DebugInfo::InternalSwap(DebugInfo* other) {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_Struct_2eproto_getter, &descriptor_table_Struct_2eproto_once,
       file_level_metadata_Struct_2eproto[3]);
+}
+
+// ===================================================================
+
+class SkillData::_Internal {
+ public:
+};
+
+SkillData::SkillData(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor();
+  // @@protoc_insertion_point(arena_constructor:Protocol.SkillData)
+}
+SkillData::SkillData(const SkillData& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  name_.InitDefault();
+  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+    name_.Set("", GetArenaForAllocation());
+  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  if (!from._internal_name().empty()) {
+    name_.Set(from._internal_name(), 
+      GetArenaForAllocation());
+  }
+  ::memcpy(&id_, &from.id_,
+    static_cast<size_t>(reinterpret_cast<char*>(&hit_window_end_) -
+    reinterpret_cast<char*>(&id_)) + sizeof(hit_window_end_));
+  // @@protoc_insertion_point(copy_constructor:Protocol.SkillData)
+}
+
+inline void SkillData::SharedCtor() {
+name_.InitDefault();
+#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
+  name_.Set("", GetArenaForAllocation());
+#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
+::memset(reinterpret_cast<char*>(this) + static_cast<size_t>(
+    reinterpret_cast<char*>(&id_) - reinterpret_cast<char*>(this)),
+    0, static_cast<size_t>(reinterpret_cast<char*>(&hit_window_end_) -
+    reinterpret_cast<char*>(&id_)) + sizeof(hit_window_end_));
+}
+
+SkillData::~SkillData() {
+  // @@protoc_insertion_point(destructor:Protocol.SkillData)
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
+  SharedDtor();
+}
+
+inline void SkillData::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  name_.Destroy();
+}
+
+void SkillData::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+
+void SkillData::Clear() {
+// @@protoc_insertion_point(message_clear_start:Protocol.SkillData)
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  name_.ClearToEmpty();
+  ::memset(&id_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&hit_window_end_) -
+      reinterpret_cast<char*>(&id_)) + sizeof(hit_window_end_));
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* SkillData::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    uint32_t tag;
+    ptr = ::_pbi::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // .Protocol.SkillInfo id = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
+          uint64_t val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+          _internal_set_id(static_cast<::Protocol::SkillInfo>(val));
+        } else
+          goto handle_unusual;
+        continue;
+      // string name = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
+          auto str = _internal_mutable_name();
+          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
+          CHK_(ptr);
+          CHK_(::_pbi::VerifyUTF8(str, "Protocol.SkillData.name"));
+        } else
+          goto handle_unusual;
+        continue;
+      // int32 angle = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 24)) {
+          angle_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // int32 range = 4;
+      case 4:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 32)) {
+          range_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // float hit_window_start = 5;
+      case 5:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 45)) {
+          hit_window_start_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<float>(ptr);
+          ptr += sizeof(float);
+        } else
+          goto handle_unusual;
+        continue;
+      // float hit_window_end = 6;
+      case 6:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 53)) {
+          hit_window_end_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<float>(ptr);
+          ptr += sizeof(float);
+        } else
+          goto handle_unusual;
+        continue;
+      default:
+        goto handle_unusual;
+    }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
+  }  // while
+message_done:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto message_done;
+#undef CHK_
+}
+
+uint8_t* SkillData::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:Protocol.SkillData)
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // .Protocol.SkillInfo id = 1;
+  if (this->_internal_id() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteEnumToArray(
+      1, this->_internal_id(), target);
+  }
+
+  // string name = 2;
+  if (!this->_internal_name().empty()) {
+    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
+      this->_internal_name().data(), static_cast<int>(this->_internal_name().length()),
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
+      "Protocol.SkillData.name");
+    target = stream->WriteStringMaybeAliased(
+        2, this->_internal_name(), target);
+  }
+
+  // int32 angle = 3;
+  if (this->_internal_angle() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteInt32ToArray(3, this->_internal_angle(), target);
+  }
+
+  // int32 range = 4;
+  if (this->_internal_range() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteInt32ToArray(4, this->_internal_range(), target);
+  }
+
+  // float hit_window_start = 5;
+  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
+  float tmp_hit_window_start = this->_internal_hit_window_start();
+  uint32_t raw_hit_window_start;
+  memcpy(&raw_hit_window_start, &tmp_hit_window_start, sizeof(tmp_hit_window_start));
+  if (raw_hit_window_start != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteFloatToArray(5, this->_internal_hit_window_start(), target);
+  }
+
+  // float hit_window_end = 6;
+  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
+  float tmp_hit_window_end = this->_internal_hit_window_end();
+  uint32_t raw_hit_window_end;
+  memcpy(&raw_hit_window_end, &tmp_hit_window_end, sizeof(tmp_hit_window_end));
+  if (raw_hit_window_end != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteFloatToArray(6, this->_internal_hit_window_end(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:Protocol.SkillData)
+  return target;
+}
+
+size_t SkillData::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:Protocol.SkillData)
+  size_t total_size = 0;
+
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // string name = 2;
+  if (!this->_internal_name().empty()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
+        this->_internal_name());
+  }
+
+  // .Protocol.SkillInfo id = 1;
+  if (this->_internal_id() != 0) {
+    total_size += 1 +
+      ::_pbi::WireFormatLite::EnumSize(this->_internal_id());
+  }
+
+  // int32 angle = 3;
+  if (this->_internal_angle() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_angle());
+  }
+
+  // int32 range = 4;
+  if (this->_internal_range() != 0) {
+    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_range());
+  }
+
+  // float hit_window_start = 5;
+  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
+  float tmp_hit_window_start = this->_internal_hit_window_start();
+  uint32_t raw_hit_window_start;
+  memcpy(&raw_hit_window_start, &tmp_hit_window_start, sizeof(tmp_hit_window_start));
+  if (raw_hit_window_start != 0) {
+    total_size += 1 + 4;
+  }
+
+  // float hit_window_end = 6;
+  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
+  float tmp_hit_window_end = this->_internal_hit_window_end();
+  uint32_t raw_hit_window_end;
+  memcpy(&raw_hit_window_end, &tmp_hit_window_end, sizeof(tmp_hit_window_end));
+  if (raw_hit_window_end != 0) {
+    total_size += 1 + 4;
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData SkillData::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSizeCheck,
+    SkillData::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*SkillData::GetClassData() const { return &_class_data_; }
+
+void SkillData::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to,
+                      const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+  static_cast<SkillData *>(to)->MergeFrom(
+      static_cast<const SkillData &>(from));
+}
+
+
+void SkillData::MergeFrom(const SkillData& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:Protocol.SkillData)
+  GOOGLE_DCHECK_NE(&from, this);
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (!from._internal_name().empty()) {
+    _internal_set_name(from._internal_name());
+  }
+  if (from._internal_id() != 0) {
+    _internal_set_id(from._internal_id());
+  }
+  if (from._internal_angle() != 0) {
+    _internal_set_angle(from._internal_angle());
+  }
+  if (from._internal_range() != 0) {
+    _internal_set_range(from._internal_range());
+  }
+  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
+  float tmp_hit_window_start = from._internal_hit_window_start();
+  uint32_t raw_hit_window_start;
+  memcpy(&raw_hit_window_start, &tmp_hit_window_start, sizeof(tmp_hit_window_start));
+  if (raw_hit_window_start != 0) {
+    _internal_set_hit_window_start(from._internal_hit_window_start());
+  }
+  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
+  float tmp_hit_window_end = from._internal_hit_window_end();
+  uint32_t raw_hit_window_end;
+  memcpy(&raw_hit_window_end, &tmp_hit_window_end, sizeof(tmp_hit_window_end));
+  if (raw_hit_window_end != 0) {
+    _internal_set_hit_window_end(from._internal_hit_window_end());
+  }
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void SkillData::CopyFrom(const SkillData& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:Protocol.SkillData)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool SkillData::IsInitialized() const {
+  return true;
+}
+
+void SkillData::InternalSwap(SkillData* other) {
+  using std::swap;
+  auto* lhs_arena = GetArenaForAllocation();
+  auto* rhs_arena = other->GetArenaForAllocation();
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
+      &name_, lhs_arena,
+      &other->name_, rhs_arena
+  );
+  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(SkillData, hit_window_end_)
+      + sizeof(SkillData::hit_window_end_)
+      - PROTOBUF_FIELD_OFFSET(SkillData, id_)>(
+          reinterpret_cast<char*>(&id_),
+          reinterpret_cast<char*>(&other->id_));
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata SkillData::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_Struct_2eproto_getter, &descriptor_table_Struct_2eproto_once,
+      file_level_metadata_Struct_2eproto[4]);
 }
 
 // @@protoc_insertion_point(namespace_scope)
@@ -1282,6 +1694,10 @@ Arena::CreateMaybeMessage< ::Protocol::Vec3 >(Arena* arena) {
 template<> PROTOBUF_NOINLINE ::Protocol::DebugInfo*
 Arena::CreateMaybeMessage< ::Protocol::DebugInfo >(Arena* arena) {
   return Arena::CreateMessageInternal< ::Protocol::DebugInfo >(arena);
+}
+template<> PROTOBUF_NOINLINE ::Protocol::SkillData*
+Arena::CreateMaybeMessage< ::Protocol::SkillData >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::Protocol::SkillData >(arena);
 }
 PROTOBUF_NAMESPACE_CLOSE
 

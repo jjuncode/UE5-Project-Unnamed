@@ -47,6 +47,33 @@ PROTOBUF_NAMESPACE_OPEN
 PROTOBUF_NAMESPACE_CLOSE
 namespace Protocol {
 
+enum DebugShape : int {
+  DEBUG_SHAPE_NONE = 0,
+  DEBUG_SHAPE_BOX = 1,
+  DEBUG_SHAPE_CIRCLE = 2,
+  DEBUG_SHAPE_LINE = 3,
+  DebugShape_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
+  DebugShape_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
+};
+bool DebugShape_IsValid(int value);
+constexpr DebugShape DebugShape_MIN = DEBUG_SHAPE_NONE;
+constexpr DebugShape DebugShape_MAX = DEBUG_SHAPE_LINE;
+constexpr int DebugShape_ARRAYSIZE = DebugShape_MAX + 1;
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* DebugShape_descriptor();
+template<typename T>
+inline const std::string& DebugShape_Name(T enum_t_value) {
+  static_assert(::std::is_same<T, DebugShape>::value ||
+    ::std::is_integral<T>::value,
+    "Incorrect type passed to function DebugShape_Name.");
+  return ::PROTOBUF_NAMESPACE_ID::internal::NameOfEnum(
+    DebugShape_descriptor(), enum_t_value);
+}
+inline bool DebugShape_Parse(
+    ::PROTOBUF_NAMESPACE_ID::ConstStringParam name, DebugShape* value) {
+  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<DebugShape>(
+    DebugShape_descriptor(), name, value);
+}
 enum SkillInfo : int {
   SKILL_INFO_NONE = 0,
   SKILL_INFO_PUNCH = 1,
@@ -148,6 +175,11 @@ inline bool ActionState_Parse(
 
 PROTOBUF_NAMESPACE_OPEN
 
+template <> struct is_proto_enum< ::Protocol::DebugShape> : ::std::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::Protocol::DebugShape>() {
+  return ::Protocol::DebugShape_descriptor();
+}
 template <> struct is_proto_enum< ::Protocol::SkillInfo> : ::std::true_type {};
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::Protocol::SkillInfo>() {

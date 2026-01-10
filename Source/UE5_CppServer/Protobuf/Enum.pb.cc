@@ -22,25 +22,27 @@ namespace _pbi = _pb::internal;
 
 namespace Protocol {
 }  // namespace Protocol
-static const ::_pb::EnumDescriptor* file_level_enum_descriptors_Enum_2eproto[3];
+static const ::_pb::EnumDescriptor* file_level_enum_descriptors_Enum_2eproto[4];
 static constexpr ::_pb::ServiceDescriptor const** file_level_service_descriptors_Enum_2eproto = nullptr;
 const uint32_t TableStruct_Enum_2eproto::offsets[1] = {};
 static constexpr ::_pbi::MigrationSchema* schemas = nullptr;
 static constexpr ::_pb::Message* const* file_default_instances = nullptr;
 
 const char descriptor_table_protodef_Enum_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
-  "\n\nEnum.proto\022\010Protocol*d\n\tSkillInfo\022\023\n\017S"
-  "KILL_INFO_NONE\020\000\022\024\n\020SKILL_INFO_PUNCH\020\001\022\027"
-  "\n\023SKILL_INFO_UPPERCUT\020\002\022\023\n\017SKILL_INFO_KI"
-  "CK\020\003*^\n\tMoveState\022\023\n\017MOVE_STATE_NONE\020\000\022\023"
-  "\n\017MOVE_STATE_IDLE\020\001\022\022\n\016MOVE_STATE_RUN\020\002\022"
-  "\023\n\017MOVE_STATE_JUMP\020\003*<\n\013ActionState\022\025\n\021A"
-  "CTION_STATE_NONE\020\000\022\026\n\022ACTION_STATE_SKILL"
-  "\020\001b\006proto3"
+  "\n\nEnum.proto\022\010Protocol*e\n\nDebugShape\022\024\n\020"
+  "DEBUG_SHAPE_NONE\020\000\022\023\n\017DEBUG_SHAPE_BOX\020\001\022"
+  "\026\n\022DEBUG_SHAPE_CIRCLE\020\002\022\024\n\020DEBUG_SHAPE_L"
+  "INE\020\003*d\n\tSkillInfo\022\023\n\017SKILL_INFO_NONE\020\000\022"
+  "\024\n\020SKILL_INFO_PUNCH\020\001\022\027\n\023SKILL_INFO_UPPE"
+  "RCUT\020\002\022\023\n\017SKILL_INFO_KICK\020\003*^\n\tMoveState"
+  "\022\023\n\017MOVE_STATE_NONE\020\000\022\023\n\017MOVE_STATE_IDLE"
+  "\020\001\022\022\n\016MOVE_STATE_RUN\020\002\022\023\n\017MOVE_STATE_JUM"
+  "P\020\003*<\n\013ActionState\022\025\n\021ACTION_STATE_NONE\020"
+  "\000\022\026\n\022ACTION_STATE_SKILL\020\001b\006proto3"
   ;
 static ::_pbi::once_flag descriptor_table_Enum_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_Enum_2eproto = {
-    false, false, 290, descriptor_table_protodef_Enum_2eproto,
+    false, false, 393, descriptor_table_protodef_Enum_2eproto,
     "Enum.proto",
     &descriptor_table_Enum_2eproto_once, nullptr, 0, 0,
     schemas, file_default_instances, TableStruct_Enum_2eproto::offsets,
@@ -54,9 +56,25 @@ PROTOBUF_ATTRIBUTE_WEAK const ::_pbi::DescriptorTable* descriptor_table_Enum_2ep
 // Force running AddDescriptors() at dynamic initialization time.
 PROTOBUF_ATTRIBUTE_INIT_PRIORITY2 static ::_pbi::AddDescriptorsRunner dynamic_init_dummy_Enum_2eproto(&descriptor_table_Enum_2eproto);
 namespace Protocol {
-const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* SkillInfo_descriptor() {
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* DebugShape_descriptor() {
   ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&descriptor_table_Enum_2eproto);
   return file_level_enum_descriptors_Enum_2eproto[0];
+}
+bool DebugShape_IsValid(int value) {
+  switch (value) {
+    case 0:
+    case 1:
+    case 2:
+    case 3:
+      return true;
+    default:
+      return false;
+  }
+}
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* SkillInfo_descriptor() {
+  ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&descriptor_table_Enum_2eproto);
+  return file_level_enum_descriptors_Enum_2eproto[1];
 }
 bool SkillInfo_IsValid(int value) {
   switch (value) {
@@ -72,7 +90,7 @@ bool SkillInfo_IsValid(int value) {
 
 const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* MoveState_descriptor() {
   ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&descriptor_table_Enum_2eproto);
-  return file_level_enum_descriptors_Enum_2eproto[1];
+  return file_level_enum_descriptors_Enum_2eproto[2];
 }
 bool MoveState_IsValid(int value) {
   switch (value) {
@@ -88,7 +106,7 @@ bool MoveState_IsValid(int value) {
 
 const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* ActionState_descriptor() {
   ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&descriptor_table_Enum_2eproto);
-  return file_level_enum_descriptors_Enum_2eproto[2];
+  return file_level_enum_descriptors_Enum_2eproto[3];
 }
 bool ActionState_IsValid(int value) {
   switch (value) {

@@ -1,7 +1,9 @@
 #include "ServerPacketHandler.h"
 #include "UE5_CppServer.h"
+#include "atomic"
 
 extern PacketHandlerFunc GPacketHandler[UINT16_MAX]{};
+static std::atomic<int32> PlayerId = 0;
 
 bool Handle_INVALID(PacketSessionRef& session, BYTE* buffer, int32 len)
 {
@@ -19,8 +21,7 @@ bool Handle_S_LOGIN(PacketSessionRef& session, Protocol::S_LOGIN& pkt)
 	// 입장 UI버튼 눌러서 게임 입장
 	Protocol::C_ENTER_GAME enterGamePkt;
 
-	static int32 PlayerId = 0;
-	enterGamePkt.set_player_id(PlayerId++);	// 첫번째 캐릭터로 강제입장  -> fuck
+	enterGamePkt.set_player_id(PlayerId.fetch_add(1));	// 첫번째 캐릭터로 강제입장  -> fuck
 
 	SEND_PACKET(session, enterGamePkt);
 
@@ -45,6 +46,7 @@ bool Handle_S_LEAVE_GAME(PacketSessionRef& session, Protocol::S_LEAVE_GAME& pkt)
 	if (auto* GameManager = GetManager<UGameManager>())
 	{
 		// TODO : 종료 로직
+		PlayerId.store(0);
 	}
 
 	return true;
