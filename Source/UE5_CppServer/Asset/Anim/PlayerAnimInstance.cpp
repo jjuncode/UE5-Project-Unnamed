@@ -74,13 +74,13 @@ void UPlayerAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 	switch (ActionState)
 	{
 	case Protocol::ACTION_STATE_NONE:
-		State = EActionState::None;
+		State = StateTags::State_Action_None;
 		break;
 	case Protocol::ACTION_STATE_SKILL:
-		State = EActionState::Skill;
+		State = StateTags::State_Action_Skill;
 		break;
 	case Protocol::ACTION_STATE_DAMAGED:
-		State = EActionState::Damaged;
+		State = StateTags::State_Action_OnDamaged;
 		break;
 	default:
 		break;

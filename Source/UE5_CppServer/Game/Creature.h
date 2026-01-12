@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Character.h"
 #include "Protocol.pb.h"
+#include "GameplayTagsClasses.h"
 #include "Creature.generated.h"
 
 UCLASS()
@@ -30,14 +31,27 @@ public:
 	void SetActionState(const Protocol::ActionState& rhs);
 	Protocol::ActionState GetActionState() { return ObjectInfo.creature_info().action_state(); }
 
-	// MoveSync
+	// ----------------------
+	//		Event Handle
+	// ----------------------
+	virtual void HandleEvent(FGameplayTag EventTag);
+
+	// -------------------
+	//		MoveSync
+	// -------------------
 	void SetDesntInfo(const Protocol::ObjectInfo& rhs){ DestnInfo.CopyFrom(rhs); }
 	void SetMoveDir(const FVector& Vec);
 	void SetMoveDir(const Protocol::Vec3& Dir) { MoveDir.CopyFrom(Dir); }
 
 protected:
 	Protocol::ObjectInfo ObjectInfo;
-	
+
+	// ----------------
+	//		Cache
+	// ----------------
+	// Controller 
+	TObjectPtr< class AController> Controller;
+
 	// MoveSync
 	Protocol::ObjectInfo DestnInfo;
 	Protocol::Vec3 MoveDir;

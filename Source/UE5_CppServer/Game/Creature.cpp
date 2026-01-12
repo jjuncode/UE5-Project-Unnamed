@@ -71,6 +71,11 @@ void ACreature::SetActionState(const Protocol::ActionState& rhs)
 	CreatureInfo->set_action_state(rhs);
 }
 
+void ACreature::HandleEvent(FGameplayTag EventTag)
+{
+	// °¢ÀÚ override
+}
+
 void ACreature::SetMoveDir(const FVector& Vec)
 {
 	MoveDir.set_x(Vec.X);

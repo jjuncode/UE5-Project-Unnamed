@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/PlayerController.h"
 #include "Protocol.pb.h"
+#include "GameplayTagsClasses.h"
 #include "ClientPlayerController.generated.h"
 
 struct FInputActionValue;
@@ -22,10 +23,17 @@ public:
 	virtual void BeginPlay() override;
 	virtual void SetupInputComponent() override;
 
-private:
-	void _HandleMoveAction(const FInputActionValue& Value, const Protocol::MoveState& State);
+	// -----------------------
+	//		Handle Event 
+	// -----------------------
+	void HandleEvent(FGameplayTag EventTag);
 
+private:
+	// -----------------------
+	//		Handle IA 
+	// -----------------------
 	// IA_Move
+	void _HandleMoveAction(const FInputActionValue& Value, const Protocol::MoveState& State);
 	void HandleMoveActionTrigerred(const FInputActionValue& Value);
 	void HandleMoveActionCompleted(const FInputActionValue& Value);
 

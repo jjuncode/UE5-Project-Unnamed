@@ -36,7 +36,7 @@ void UGameManager::HandleSpawn(const Protocol::ObjectInfo& PlayerInfo, bool IsMi
 			return;
 	
 		MyPlayer = ClientPlayer;
-		MyPlayer->SetMyPlayer();
+		MyPlayer->Caching();
 
 		MyPlayer->SetActorLocation(SpawnLocation);
 		MyPlayer->SetObjectInfo(PlayerInfo);
@@ -51,6 +51,8 @@ void UGameManager::HandleSpawn(const Protocol::ObjectInfo& PlayerInfo, bool IsMi
 		
 		Player->SetObjectInfo(PlayerInfo);
 		Players.Add(ObjectId, Player);
+
+		Player->Caching();
 	}
 }
 

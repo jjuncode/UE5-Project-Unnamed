@@ -7,6 +7,11 @@
 #include "UE5_CppServer.h"
 #include "ClientPlayerController.h"
 
+void AClientPlayer::HandleEvent(FGameplayTag EventTag)
+{
+	Controller->HandleEvent(EventTag);
+}
+
 void AClientPlayer::MoveSync(float DeltaTime)
 {
 	// Send Move Packet
@@ -30,9 +35,27 @@ void AClientPlayer::MoveSync(float DeltaTime)
 	DestnInfo = ObjectInfo;
 }
 
+void AClientPlayer::BeginPlay()
+{
+	Super::BeginPlay();
+
+	AutoPossessAI = EAutoPossessAI::Disabled;
+}
+
 void AClientPlayer::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
 	MoveSync(DeltaTime);
+}
+
+void AClientPlayer::Caching()
+{
+	bIsMyPlayer = true;
+
+	// Controller ¼ÂÆÃ
+	{
+		Controller = Cast<AClientPlayerController>(GetController());
+		check(Controller);
+	}
 }

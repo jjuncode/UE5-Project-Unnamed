@@ -2,12 +2,32 @@
 
 #include "Game/PlayerBase.h"
 #include "ClientPlayer.h"
+#include "BasePlayerController.h"
+
+void APlayerBase::HandleEvent(FGameplayTag EventTag)
+{
+	Controller->HandleEvent(EventTag);
+}
+
+void APlayerBase::BeginPlay()
+{
+	Super::BeginPlay();
+	AutoPossessAI = EAutoPossessAI::PlacedInWorldOrSpawned;
+}
 
 void APlayerBase::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
 	MoveSync();
+}
+
+void APlayerBase::Caching()
+{
+	bIsMyPlayer = false;
+
+	// Set Controller
+	Controller = Cast<ABasePlayerController>(GetController());
+	check(Controller);
 }
 
 void APlayerBase::MoveSync()

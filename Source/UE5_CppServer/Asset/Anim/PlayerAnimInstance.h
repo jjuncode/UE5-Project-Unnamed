@@ -5,15 +5,8 @@
 #include "CoreMinimal.h"
 #include "Animation/AnimInstance.h"
 #include "protocol.pb.h"
+#include "Tags.h"
 #include "PlayerAnimInstance.generated.h"
-
-UENUM(BlueprintType)
-enum class EActionState : uint8
-{
-	None,
-	Skill,
-	Damaged
-};
 
 UCLASS()
 class UE5_CPPSERVER_API UPlayerAnimInstance : public UAnimInstance
@@ -67,5 +60,5 @@ protected:
 	bool bIsFalling;
 
 	UPROPERTY(Category = Character, VisibleAnywhere, BlueprintReadOnly)
-	EActionState State;
+	FGameplayTag State;
 };

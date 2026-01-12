@@ -7,10 +7,12 @@
 #include "InputMappingContext.h"
 #include "InputActionValue.h"
 #include "GameFramework/Character.h"
+
 #include "ClientPlayer.h"
 #include "NetUtils.h"
 #include "ServerPacketHandler.h"
 #include "UE5_CppServer.h"
+#include "Tags.h"
 
 void AClientPlayerController::BeginPlay()
 {
@@ -50,6 +52,14 @@ void AClientPlayerController::SetupInputComponent()
 	
 		// Skill 
 		EIC->BindAction(SkillAction, ETriggerEvent::Started, this, &AClientPlayerController::HandleSkillAction);
+	}
+}
+
+void AClientPlayerController::HandleEvent(FGameplayTag EventTag)
+{
+	if (EventTag.MatchesTag(EventTags::Event_SetActionState_None))
+	{
+		ClientPlayer->SetActionState(Protocol::ACTION_STATE_NONE);
 	}
 }
 
