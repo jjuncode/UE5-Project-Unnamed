@@ -29,6 +29,7 @@ public:
 
 	void HandleMove(const Protocol::S_MOVE& MovePkt);
 	void HandleSkill(const Protocol::S_SKILL& SkillPkt);
+	void HandleDamaged(const Protocol::S_DAMAGED& DamagePkt);
 
 	void HandleDebugMessage(const Protocol::S_DEBUG& DebugPkt);
 

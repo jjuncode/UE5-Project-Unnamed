@@ -7,9 +7,14 @@
 #include "protocol.pb.h"
 #include "PlayerAnimInstance.generated.h"
 
-/**
- * 
- */
+UENUM(BlueprintType)
+enum class EActionState : uint8
+{
+	None,
+	Skill,
+	Damaged
+};
+
 UCLASS()
 class UE5_CPPSERVER_API UPlayerAnimInstance : public UAnimInstance
 {
@@ -60,4 +65,7 @@ protected:
 
 	UPROPERTY(Category = Character, VisibleAnywhere, BlueprintReadOnly)
 	bool bIsFalling;
+
+	UPROPERTY(Category = Character, VisibleAnywhere, BlueprintReadOnly)
+	EActionState State;
 };

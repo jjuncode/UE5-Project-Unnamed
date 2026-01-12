@@ -121,6 +121,18 @@ void UGameManager::HandleSkill(const Protocol::S_SKILL& SkillPkt)
 	(*SkillUsePlayer)->SetObjectInfo(ObjectInfo);
 }
 
+void UGameManager::HandleDamaged(const Protocol::S_DAMAGED& DamagePkt)
+{
+	Protocol::ObjectInfo ObjectInfo = DamagePkt.object_info();
+
+	// Damage받은 애 정보 셋팅 
+	// TODO : 나중에 creature로 확장 
+	TObjectPtr<APlayerBase>* DamagedCreature = Players.Find(ObjectInfo.creature_info().id());
+	ensureMsgf(DamagedCreature, TEXT("[GameManager - HandleDamaged] : Can't Find Player"));
+
+	(*DamagedCreature)->SetObjectInfo(ObjectInfo);
+}
+
 void UGameManager::HandleDebugMessage(const Protocol::S_DEBUG& DebugPkt)
 {
 	// debug Message Rendering
@@ -155,9 +167,24 @@ void UGameManager::HandleDebugMessage(const Protocol::S_DEBUG& DebugPkt)
 		DrawDebugBox(World, center, extent, FQuat::Identity, color, false, duration, 0, 5.0f);
 		break;
 
-	case Protocol::DEBUG_SHAPE_CIRCLE: // Sphere
-		DrawDebugCircle(World, center, extent.X, 16, color, false, duration, 0, 5.0f);
-		break;
+	case Protocol::DEBUG_SHAPE_CIRCLE:
+	{
+		DrawDebugCircle(
+			World,
+			center,
+			extent.X,            // Radius
+			16,                  // Segments
+			color,
+			false,
+			duration,
+			0,
+			5.0f,
+			FVector::RightVector, // YAxis (0,1,0)
+			FVector::UpVector,    // ZAxis (0,0,1)
+			false
+		);
+	}
+	break;
 
 	case Protocol::DEBUG_SHAPE_LINE: // Line
 	{
@@ -165,7 +192,7 @@ void UGameManager::HandleDebugMessage(const Protocol::S_DEBUG& DebugPkt)
 		FVector start = center;
 		FVector end = center + extent;
 
-		DrawDebugLine(World, start, end, color, false, duration, 0, 5.0f);
+		DrawDebugLine(World, start, end, color, false, duration, 0, 1.0f);
 	}
 	break;
 

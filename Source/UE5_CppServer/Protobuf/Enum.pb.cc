@@ -37,12 +37,13 @@ const char descriptor_table_protodef_Enum_2eproto[] PROTOBUF_SECTION_VARIABLE(pr
   "RCUT\020\002\022\023\n\017SKILL_INFO_KICK\020\003*^\n\tMoveState"
   "\022\023\n\017MOVE_STATE_NONE\020\000\022\023\n\017MOVE_STATE_IDLE"
   "\020\001\022\022\n\016MOVE_STATE_RUN\020\002\022\023\n\017MOVE_STATE_JUM"
-  "P\020\003*<\n\013ActionState\022\025\n\021ACTION_STATE_NONE\020"
-  "\000\022\026\n\022ACTION_STATE_SKILL\020\001b\006proto3"
+  "P\020\003*V\n\013ActionState\022\025\n\021ACTION_STATE_NONE\020"
+  "\000\022\026\n\022ACTION_STATE_SKILL\020\001\022\030\n\024ACTION_STAT"
+  "E_DAMAGED\020\002b\006proto3"
   ;
 static ::_pbi::once_flag descriptor_table_Enum_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_Enum_2eproto = {
-    false, false, 393, descriptor_table_protodef_Enum_2eproto,
+    false, false, 419, descriptor_table_protodef_Enum_2eproto,
     "Enum.proto",
     &descriptor_table_Enum_2eproto_once, nullptr, 0, 0,
     schemas, file_default_instances, TableStruct_Enum_2eproto::offsets,
@@ -112,6 +113,7 @@ bool ActionState_IsValid(int value) {
   switch (value) {
     case 0:
     case 1:
+    case 2:
       return true;
     default:
       return false;

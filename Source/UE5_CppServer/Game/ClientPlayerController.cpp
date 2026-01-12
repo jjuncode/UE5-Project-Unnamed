@@ -93,9 +93,18 @@ void AClientPlayerController::HandleSkillAction(const FInputActionValue& Value)
 	const int SkillIndex = Value.Get<float>();
 
 	Protocol::C_SKILL SkillPkt;
-	Protocol::SkillInfo SkillInfo = static_cast<Protocol::SkillInfo>(SkillIndex);
 
+	// 스킬 idx 설정 
+	Protocol::SkillInfo SkillInfo = static_cast<Protocol::SkillInfo>(SkillIndex);
 	SkillPkt.mutable_skill_data()->set_id(SkillInfo);
+
+	// 위치, yaw설정 
+	Protocol::Vec3* Pos = SkillPkt.mutable_pos();
+	FVector Location = ClientPlayer->GetActorLocation();
+	Pos->set_x(Location.X);
+	Pos->set_y(Location.Y);
+	Pos->set_z(Location.Z);
+	SkillPkt.set_yaw(ClientPlayer->GetObjectInfo().yaw());
 
 	SEND_PACKET_NO_SESSION(SkillPkt);
 }

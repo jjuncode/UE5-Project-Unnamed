@@ -69,9 +69,24 @@ void UPlayerAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 		Direction = ret;
 	}
 
-	// Skill Animation
 	Protocol::ActionState ActionState = OwnerCharacter->GetObjectInfo().creature_info().action_state();
 
+	switch (ActionState)
+	{
+	case Protocol::ACTION_STATE_NONE:
+		State = EActionState::None;
+		break;
+	case Protocol::ACTION_STATE_SKILL:
+		State = EActionState::Skill;
+		break;
+	case Protocol::ACTION_STATE_DAMAGED:
+		State = EActionState::Damaged;
+		break;
+	default:
+		break;
+	}
+
+	// Skill Animation
 	if (ActionState == Protocol::ACTION_STATE_SKILL)
 	{
 		if (CurPlayingSkill != OwnerCharacter->GetObjectInfo().creature_info().skill_info() )// 다른 스킬이면 갱신 
@@ -107,6 +122,7 @@ void UPlayerAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 			CurPlayingSkill = Protocol::SKILL_INFO_NONE;
 		}
 	}
+
 }
 
 void UPlayerAnimInstance::ClearAttackState(UAnimMontage* Montage, bool bInterrupted)

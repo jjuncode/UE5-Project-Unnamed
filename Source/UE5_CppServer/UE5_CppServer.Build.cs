@@ -9,7 +9,7 @@ public class UE5_CppServer : ModuleRules
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 
 		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "EnhancedInput", "Sockets", "Networking",
-															/*"AIModule", "GameplayTasks","NavigationSystem", "StateTreeModule",  "UMG"*/});
+															"GameplayTags"});
 
 
 		PrivateDependencyModuleNames.AddRange(new string[] { "ProtobufCore" });
@@ -21,6 +21,8 @@ public class UE5_CppServer : ModuleRules
 			"UE5_CppServer/Network/",
 			"UE5_CppServer/Game/",
 			"UE5_CppServer/Manager/",
+			"UE5_CppServer/Asset/",
+			"UE5_CppServer/Asset/Anim",
         });
     }
 }

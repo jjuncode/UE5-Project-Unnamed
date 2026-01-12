@@ -1,7 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 
-#include "Game/ClientPlayer.h"
+#include "ClientPlayer.h"
 #include "NetUtils.h"
 #include "ServerPacketHandler.h"
 #include "UE5_CppServer.h"

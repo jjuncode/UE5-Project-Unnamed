@@ -923,10 +923,11 @@ class SkillData final :
   enum : int {
     kNameFieldNumber = 2,
     kIdFieldNumber = 1,
-    kAngleFieldNumber = 3,
-    kRangeFieldNumber = 4,
-    kHitWindowStartFieldNumber = 5,
-    kHitWindowEndFieldNumber = 6,
+    kAngleLeftFieldNumber = 3,
+    kAngleRightFieldNumber = 4,
+    kRangeFieldNumber = 5,
+    kHitWindowStartFieldNumber = 6,
+    kHitWindowEndFieldNumber = 7,
   };
   // string name = 2;
   void clear_name();
@@ -951,16 +952,25 @@ class SkillData final :
   void _internal_set_id(::Protocol::SkillInfo value);
   public:
 
-  // int32 angle = 3;
-  void clear_angle();
-  int32_t angle() const;
-  void set_angle(int32_t value);
+  // int32 angle_left = 3;
+  void clear_angle_left();
+  int32_t angle_left() const;
+  void set_angle_left(int32_t value);
   private:
-  int32_t _internal_angle() const;
-  void _internal_set_angle(int32_t value);
+  int32_t _internal_angle_left() const;
+  void _internal_set_angle_left(int32_t value);
   public:
 
-  // int32 range = 4;
+  // int32 angle_right = 4;
+  void clear_angle_right();
+  int32_t angle_right() const;
+  void set_angle_right(int32_t value);
+  private:
+  int32_t _internal_angle_right() const;
+  void _internal_set_angle_right(int32_t value);
+  public:
+
+  // int32 range = 5;
   void clear_range();
   int32_t range() const;
   void set_range(int32_t value);
@@ -969,7 +979,7 @@ class SkillData final :
   void _internal_set_range(int32_t value);
   public:
 
-  // float hit_window_start = 5;
+  // float hit_window_start = 6;
   void clear_hit_window_start();
   float hit_window_start() const;
   void set_hit_window_start(float value);
@@ -978,7 +988,7 @@ class SkillData final :
   void _internal_set_hit_window_start(float value);
   public:
 
-  // float hit_window_end = 6;
+  // float hit_window_end = 7;
   void clear_hit_window_end();
   float hit_window_end() const;
   void set_hit_window_end(float value);
@@ -996,7 +1006,8 @@ class SkillData final :
   typedef void DestructorSkippable_;
   ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr name_;
   int id_;
-  int32_t angle_;
+  int32_t angle_left_;
+  int32_t angle_right_;
   int32_t range_;
   float hit_window_start_;
   float hit_window_end_;
@@ -1680,27 +1691,47 @@ inline void SkillData::set_allocated_name(std::string* name) {
   // @@protoc_insertion_point(field_set_allocated:Protocol.SkillData.name)
 }
 
-// int32 angle = 3;
-inline void SkillData::clear_angle() {
-  angle_ = 0;
+// int32 angle_left = 3;
+inline void SkillData::clear_angle_left() {
+  angle_left_ = 0;
 }
-inline int32_t SkillData::_internal_angle() const {
-  return angle_;
+inline int32_t SkillData::_internal_angle_left() const {
+  return angle_left_;
 }
-inline int32_t SkillData::angle() const {
-  // @@protoc_insertion_point(field_get:Protocol.SkillData.angle)
-  return _internal_angle();
+inline int32_t SkillData::angle_left() const {
+  // @@protoc_insertion_point(field_get:Protocol.SkillData.angle_left)
+  return _internal_angle_left();
 }
-inline void SkillData::_internal_set_angle(int32_t value) {
+inline void SkillData::_internal_set_angle_left(int32_t value) {
   
-  angle_ = value;
+  angle_left_ = value;
 }
-inline void SkillData::set_angle(int32_t value) {
-  _internal_set_angle(value);
-  // @@protoc_insertion_point(field_set:Protocol.SkillData.angle)
+inline void SkillData::set_angle_left(int32_t value) {
+  _internal_set_angle_left(value);
+  // @@protoc_insertion_point(field_set:Protocol.SkillData.angle_left)
 }
 
-// int32 range = 4;
+// int32 angle_right = 4;
+inline void SkillData::clear_angle_right() {
+  angle_right_ = 0;
+}
+inline int32_t SkillData::_internal_angle_right() const {
+  return angle_right_;
+}
+inline int32_t SkillData::angle_right() const {
+  // @@protoc_insertion_point(field_get:Protocol.SkillData.angle_right)
+  return _internal_angle_right();
+}
+inline void SkillData::_internal_set_angle_right(int32_t value) {
+  
+  angle_right_ = value;
+}
+inline void SkillData::set_angle_right(int32_t value) {
+  _internal_set_angle_right(value);
+  // @@protoc_insertion_point(field_set:Protocol.SkillData.angle_right)
+}
+
+// int32 range = 5;
 inline void SkillData::clear_range() {
   range_ = 0;
 }
@@ -1720,7 +1751,7 @@ inline void SkillData::set_range(int32_t value) {
   // @@protoc_insertion_point(field_set:Protocol.SkillData.range)
 }
 
-// float hit_window_start = 5;
+// float hit_window_start = 6;
 inline void SkillData::clear_hit_window_start() {
   hit_window_start_ = 0;
 }
@@ -1740,7 +1771,7 @@ inline void SkillData::set_hit_window_start(float value) {
   // @@protoc_insertion_point(field_set:Protocol.SkillData.hit_window_start)
 }
 
-// float hit_window_end = 6;
+// float hit_window_end = 7;
 inline void SkillData::clear_hit_window_end() {
   hit_window_end_ = 0;
 }

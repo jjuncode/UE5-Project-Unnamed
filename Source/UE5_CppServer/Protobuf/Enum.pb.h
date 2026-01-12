@@ -131,12 +131,13 @@ inline bool MoveState_Parse(
 enum ActionState : int {
   ACTION_STATE_NONE = 0,
   ACTION_STATE_SKILL = 1,
+  ACTION_STATE_DAMAGED = 2,
   ActionState_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
   ActionState_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
 };
 bool ActionState_IsValid(int value);
 constexpr ActionState ActionState_MIN = ACTION_STATE_NONE;
-constexpr ActionState ActionState_MAX = ACTION_STATE_SKILL;
+constexpr ActionState ActionState_MAX = ACTION_STATE_DAMAGED;
 constexpr int ActionState_ARRAYSIZE = ActionState_MAX + 1;
 
 const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* ActionState_descriptor();
