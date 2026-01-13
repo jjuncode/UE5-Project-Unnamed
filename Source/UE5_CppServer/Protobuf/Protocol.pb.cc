@@ -172,7 +172,8 @@ struct S_SKILLDefaultTypeInternal {
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 S_SKILLDefaultTypeInternal _S_SKILL_default_instance_;
 PROTOBUF_CONSTEXPR S_DAMAGED::S_DAMAGED(
     ::_pbi::ConstantInitialized)
-  : object_info_(nullptr){}
+  : object_info_(nullptr)
+  , skill_data_(nullptr){}
 struct S_DAMAGEDDefaultTypeInternal {
   PROTOBUF_CONSTEXPR S_DAMAGEDDefaultTypeInternal()
       : _instance(::_pbi::ConstantInitialized{}) {}
@@ -295,6 +296,7 @@ const uint32_t TableStruct_Protocol_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
   PROTOBUF_FIELD_OFFSET(::Protocol::S_DAMAGED, object_info_),
+  PROTOBUF_FIELD_OFFSET(::Protocol::S_DAMAGED, skill_data_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::Protocol::S_DEBUG, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -317,7 +319,7 @@ static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protode
   { 72, -1, -1, sizeof(::Protocol::C_SKILL)},
   { 81, -1, -1, sizeof(::Protocol::S_SKILL)},
   { 88, -1, -1, sizeof(::Protocol::S_DAMAGED)},
-  { 95, -1, -1, sizeof(::Protocol::S_DEBUG)},
+  { 96, -1, -1, sizeof(::Protocol::S_DEBUG)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
@@ -355,10 +357,11 @@ const char descriptor_table_protodef_Protocol_2eproto[] PROTOBUF_SECTION_VARIABL
   "\\\n\007C_SKILL\022\'\n\nskill_data\030\001 \001(\0132\023.Protoco"
   "l.SkillData\022\033\n\003pos\030\002 \001(\0132\016.Protocol.Vec3"
   "\022\013\n\003yaw\030\003 \001(\002\"4\n\007S_SKILL\022)\n\013object_info\030"
-  "\001 \001(\0132\024.Protocol.ObjectInfo\"6\n\tS_DAMAGED"
+  "\001 \001(\0132\024.Protocol.ObjectInfo\"_\n\tS_DAMAGED"
   "\022)\n\013object_info\030\001 \001(\0132\024.Protocol.ObjectI"
-  "nfo\",\n\007S_DEBUG\022!\n\004info\030\001 \001(\0132\023.Protocol."
-  "DebugInfob\006proto3"
+  "nfo\022\'\n\nskill_data\030\002 \001(\0132\023.Protocol.Skill"
+  "Data\",\n\007S_DEBUG\022!\n\004info\030\001 \001(\0132\023.Protocol"
+  ".DebugInfob\006proto3"
   ;
 static const ::_pbi::DescriptorTable* const descriptor_table_Protocol_2eproto_deps[2] = {
   &::descriptor_table_Enum_2eproto,
@@ -366,7 +369,7 @@ static const ::_pbi::DescriptorTable* const descriptor_table_Protocol_2eproto_de
 };
 static ::_pbi::once_flag descriptor_table_Protocol_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_Protocol_2eproto = {
-    false, false, 817, descriptor_table_protodef_Protocol_2eproto,
+    false, false, 858, descriptor_table_protodef_Protocol_2eproto,
     "Protocol.proto",
     &descriptor_table_Protocol_2eproto_once, descriptor_table_Protocol_2eproto_deps, 2, 14,
     schemas, file_default_instances, TableStruct_Protocol_2eproto::offsets,
@@ -2591,17 +2594,28 @@ void S_SKILL::InternalSwap(S_SKILL* other) {
 class S_DAMAGED::_Internal {
  public:
   static const ::Protocol::ObjectInfo& object_info(const S_DAMAGED* msg);
+  static const ::Protocol::SkillData& skill_data(const S_DAMAGED* msg);
 };
 
 const ::Protocol::ObjectInfo&
 S_DAMAGED::_Internal::object_info(const S_DAMAGED* msg) {
   return *msg->object_info_;
 }
+const ::Protocol::SkillData&
+S_DAMAGED::_Internal::skill_data(const S_DAMAGED* msg) {
+  return *msg->skill_data_;
+}
 void S_DAMAGED::clear_object_info() {
   if (GetArenaForAllocation() == nullptr && object_info_ != nullptr) {
     delete object_info_;
   }
   object_info_ = nullptr;
+}
+void S_DAMAGED::clear_skill_data() {
+  if (GetArenaForAllocation() == nullptr && skill_data_ != nullptr) {
+    delete skill_data_;
+  }
+  skill_data_ = nullptr;
 }
 S_DAMAGED::S_DAMAGED(::PROTOBUF_NAMESPACE_ID::Arena* arena,
                          bool is_message_owned)
@@ -2617,11 +2631,19 @@ S_DAMAGED::S_DAMAGED(const S_DAMAGED& from)
   } else {
     object_info_ = nullptr;
   }
+  if (from._internal_has_skill_data()) {
+    skill_data_ = new ::Protocol::SkillData(*from.skill_data_);
+  } else {
+    skill_data_ = nullptr;
+  }
   // @@protoc_insertion_point(copy_constructor:Protocol.S_DAMAGED)
 }
 
 inline void S_DAMAGED::SharedCtor() {
-object_info_ = nullptr;
+::memset(reinterpret_cast<char*>(this) + static_cast<size_t>(
+    reinterpret_cast<char*>(&object_info_) - reinterpret_cast<char*>(this)),
+    0, static_cast<size_t>(reinterpret_cast<char*>(&skill_data_) -
+    reinterpret_cast<char*>(&object_info_)) + sizeof(skill_data_));
 }
 
 S_DAMAGED::~S_DAMAGED() {
@@ -2636,6 +2658,7 @@ S_DAMAGED::~S_DAMAGED() {
 inline void S_DAMAGED::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
   if (this != internal_default_instance()) delete object_info_;
+  if (this != internal_default_instance()) delete skill_data_;
 }
 
 void S_DAMAGED::SetCachedSize(int size) const {
@@ -2652,6 +2675,10 @@ void S_DAMAGED::Clear() {
     delete object_info_;
   }
   object_info_ = nullptr;
+  if (GetArenaForAllocation() == nullptr && skill_data_ != nullptr) {
+    delete skill_data_;
+  }
+  skill_data_ = nullptr;
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -2665,6 +2692,14 @@ const char* S_DAMAGED::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx
       case 1:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
           ptr = ctx->ParseMessage(_internal_mutable_object_info(), ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // .Protocol.SkillData skill_data = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
+          ptr = ctx->ParseMessage(_internal_mutable_skill_data(), ptr);
           CHK_(ptr);
         } else
           goto handle_unusual;
@@ -2705,6 +2740,13 @@ uint8_t* S_DAMAGED::_InternalSerialize(
         _Internal::object_info(this).GetCachedSize(), target, stream);
   }
 
+  // .Protocol.SkillData skill_data = 2;
+  if (this->_internal_has_skill_data()) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(2, _Internal::skill_data(this),
+        _Internal::skill_data(this).GetCachedSize(), target, stream);
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
@@ -2726,6 +2768,13 @@ size_t S_DAMAGED::ByteSizeLong() const {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
         *object_info_);
+  }
+
+  // .Protocol.SkillData skill_data = 2;
+  if (this->_internal_has_skill_data()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *skill_data_);
   }
 
   return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
@@ -2753,6 +2802,9 @@ void S_DAMAGED::MergeFrom(const S_DAMAGED& from) {
   if (from._internal_has_object_info()) {
     _internal_mutable_object_info()->::Protocol::ObjectInfo::MergeFrom(from._internal_object_info());
   }
+  if (from._internal_has_skill_data()) {
+    _internal_mutable_skill_data()->::Protocol::SkillData::MergeFrom(from._internal_skill_data());
+  }
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
 
@@ -2770,7 +2822,12 @@ bool S_DAMAGED::IsInitialized() const {
 void S_DAMAGED::InternalSwap(S_DAMAGED* other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  swap(object_info_, other->object_info_);
+  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(S_DAMAGED, skill_data_)
+      + sizeof(S_DAMAGED::skill_data_)
+      - PROTOBUF_FIELD_OFFSET(S_DAMAGED, object_info_)>(
+          reinterpret_cast<char*>(&object_info_),
+          reinterpret_cast<char*>(&other->object_info_));
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata S_DAMAGED::GetMetadata() const {

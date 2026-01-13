@@ -132,7 +132,7 @@ void UGameManager::HandleDamaged(const Protocol::S_DAMAGED& DamagePkt)
 	TObjectPtr<APlayerBase>* DamagedCreature = Players.Find(ObjectInfo.creature_info().id());
 	ensureMsgf(DamagedCreature, TEXT("[GameManager - HandleDamaged] : Can't Find Player"));
 
-	(*DamagedCreature)->SetObjectInfo(ObjectInfo);
+	(*DamagedCreature)->OnDamaged(DamagePkt);
 }
 
 void UGameManager::HandleDebugMessage(const Protocol::S_DEBUG& DebugPkt)

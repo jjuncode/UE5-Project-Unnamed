@@ -30,6 +30,17 @@ void APlayerBase::Caching()
 	check(Controller);
 }
 
+void APlayerBase::OnDamaged(const Protocol::S_DAMAGED& DamagePkt)
+{
+	SetObjectInfo(DamagePkt.object_info());
+
+	// TODO : 피격된 거에 따른 hp 감소 등 처리
+	Protocol::SkillData DamagingSkill = DamagePkt.skill_data();
+
+	// 피격 방향 Cache
+	DamagedDir = DamagingSkill.attack_dir();
+}
+
 void APlayerBase::MoveSync()
 {
 	// ClientPlayer는 제외

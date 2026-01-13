@@ -80,8 +80,36 @@ void UPlayerAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 		State = StateTags::State_Action_Skill;
 		break;
 	case Protocol::ACTION_STATE_DAMAGED:
-		State = StateTags::State_Action_OnDamaged;
+	{
+		Protocol::AttackDir DamageDir = OwnerCharacter->GetDamagedDir();
+
+		switch (DamageDir)
+		{
+		case Protocol::DIR_NONE:
+			break;
+		case Protocol::DIR_UP_TO_DOWN:
+			State = StateTags::State_Action_OnDamaged_DOWN;	// 아래로 피격당함
+			break;
+		case Protocol::DIR_DOWN_TO_UP:
+			State = StateTags::State_Action_OnDamaged_UP;	// 위로 피격당함 
+			break;
+		case Protocol::DIR_RIGHT_TO_LEFT:
+			State = StateTags::State_Action_OnDamaged_RIGHT;// 공격방향이 좌측이니 
+			break;
+		case Protocol::DIR_LEFT_TO_RIGHT:
+			State = StateTags::State_Action_OnDamaged_LEFT;	// 공격방향이 좌측이니 
+			break;
+		case Protocol::DIR_FRONT:
+			State = StateTags::State_Action_OnDamaged_FRONT;
+			break;
+		default:
+			GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, TEXT("[ UPlayerAnimInstance ] : Error - Invalid Damaged Dir"));
+			break;
+		}
+
+
 		break;
+	}
 	default:
 		break;
 	}
@@ -89,26 +117,35 @@ void UPlayerAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 	// Skill Animation
 	if (ActionState == Protocol::ACTION_STATE_SKILL)
 	{
-		if (CurPlayingSkill != OwnerCharacter->GetObjectInfo().creature_info().skill_info() )// 다른 스킬이면 갱신 
+		Protocol::SkillInfo CurSkill = OwnerCharacter->GetCurPlayingSkill();
+		
+		if (CurSkill != PlayingSkillInfo) // 한 스킬만 시전 가능 
 		{
 			// 재생
-			CurPlayingSkill = OwnerCharacter->GetObjectInfo().creature_info().skill_info();
-			switch (CurPlayingSkill)
+			switch (CurSkill)
 			{
-			case Protocol::SKILL_INFO_PUNCH:
-				OwnerCharacter->PlayAnimMontage(PunchAttackMontage, 1.0, "PUNCH");
+			case Protocol::SKILL_INFO_SLASH_UP:
+				OwnerCharacter->PlayAnimMontage(AttackMontage, 1.0, "SLASH_UP");
 				break;
-			case Protocol::SKILL_INFO_UPPERCUT:
-				OwnerCharacter->PlayAnimMontage(UppercutAttackMontage, 1.0, "UPPERCUT");
+			case Protocol::SKILL_INFO_SLASH_DOWN:
+				OwnerCharacter->PlayAnimMontage(AttackMontage, 1.0, "SLASH_DOWN");
+				break;
+			case Protocol::SKILL_INFO_SLASH_LEFT:
+				OwnerCharacter->PlayAnimMontage(AttackMontage, 1.0, "SLASH_LEFT");
+				break;
+			case Protocol::SKILL_INFO_SLASH_RIGHT:
+				OwnerCharacter->PlayAnimMontage(AttackMontage, 1.0, "SLASH_RIGHT");
 				break;
 			case Protocol::SKILL_INFO_KICK:
-				OwnerCharacter->PlayAnimMontage(KickAttackMontage, 1.0, "KICK");
+				OwnerCharacter->PlayAnimMontage(AttackMontage, 1.0, "KICK");
 				break;
 
 			default:
 				GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, TEXT("[ UPlayerAnimInstance ] : Error - Incorrect Skill Info"));
 				break;
 			}
+
+			PlayingSkillInfo = CurSkill;
 		}
 
 		if (IsAnyMontagePlaying() == false )
@@ -117,14 +154,9 @@ void UPlayerAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 			OwnerCharacter->SetActionState(Protocol::ACTION_STATE_NONE);
 
 			// 스킬정보 밀어버림
-			OwnerCharacter->SetObjectInfoRef().mutable_creature_info()->set_skill_info(Protocol::SKILL_INFO_NONE);
-
-			CurPlayingSkill = Protocol::SKILL_INFO_NONE;
+			OwnerCharacter->SetCurPlayingSkill(Protocol::SKILL_INFO_NONE);
+			PlayingSkillInfo = Protocol::SKILL_INFO_NONE;
 		}
 	}
 
-}
-
-void UPlayerAnimInstance::ClearAttackState(UAnimMontage* Montage, bool bInterrupted)
-{
 }

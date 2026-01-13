@@ -22,7 +22,7 @@ namespace _pbi = _pb::internal;
 
 namespace Protocol {
 }  // namespace Protocol
-static const ::_pb::EnumDescriptor* file_level_enum_descriptors_Enum_2eproto[4];
+static const ::_pb::EnumDescriptor* file_level_enum_descriptors_Enum_2eproto[5];
 static constexpr ::_pb::ServiceDescriptor const** file_level_service_descriptors_Enum_2eproto = nullptr;
 const uint32_t TableStruct_Enum_2eproto::offsets[1] = {};
 static constexpr ::_pbi::MigrationSchema* schemas = nullptr;
@@ -32,18 +32,23 @@ const char descriptor_table_protodef_Enum_2eproto[] PROTOBUF_SECTION_VARIABLE(pr
   "\n\nEnum.proto\022\010Protocol*e\n\nDebugShape\022\024\n\020"
   "DEBUG_SHAPE_NONE\020\000\022\023\n\017DEBUG_SHAPE_BOX\020\001\022"
   "\026\n\022DEBUG_SHAPE_CIRCLE\020\002\022\024\n\020DEBUG_SHAPE_L"
-  "INE\020\003*d\n\tSkillInfo\022\023\n\017SKILL_INFO_NONE\020\000\022"
-  "\024\n\020SKILL_INFO_PUNCH\020\001\022\027\n\023SKILL_INFO_UPPE"
-  "RCUT\020\002\022\023\n\017SKILL_INFO_KICK\020\003*^\n\tMoveState"
-  "\022\023\n\017MOVE_STATE_NONE\020\000\022\023\n\017MOVE_STATE_IDLE"
-  "\020\001\022\022\n\016MOVE_STATE_RUN\020\002\022\023\n\017MOVE_STATE_JUM"
-  "P\020\003*V\n\013ActionState\022\025\n\021ACTION_STATE_NONE\020"
-  "\000\022\026\n\022ACTION_STATE_SKILL\020\001\022\030\n\024ACTION_STAT"
-  "E_DAMAGED\020\002b\006proto3"
+  "INE\020\003*\240\001\n\tSkillInfo\022\023\n\017SKILL_INFO_NONE\020\000"
+  "\022\027\n\023SKILL_INFO_SLASH_UP\020\001\022\031\n\025SKILL_INFO_"
+  "SLASH_DOWN\020\002\022\031\n\025SKILL_INFO_SLASH_LEFT\020\003\022"
+  "\032\n\026SKILL_INFO_SLASH_RIGHT\020\004\022\023\n\017SKILL_INF"
+  "O_KICK\020\005*~\n\tAttackDir\022\014\n\010DIR_NONE\020\000\022\022\n\016D"
+  "IR_DOWN_TO_UP\020\001\022\022\n\016DIR_UP_TO_DOWN\020\002\022\025\n\021D"
+  "IR_RIGHT_TO_LEFT\020\003\022\025\n\021DIR_LEFT_TO_RIGHT\020"
+  "\004\022\r\n\tDIR_FRONT\020\005*^\n\tMoveState\022\023\n\017MOVE_ST"
+  "ATE_NONE\020\000\022\023\n\017MOVE_STATE_IDLE\020\001\022\022\n\016MOVE_"
+  "STATE_RUN\020\002\022\023\n\017MOVE_STATE_JUMP\020\003*V\n\013Acti"
+  "onState\022\025\n\021ACTION_STATE_NONE\020\000\022\026\n\022ACTION"
+  "_STATE_SKILL\020\001\022\030\n\024ACTION_STATE_DAMAGED\020\002"
+  "b\006proto3"
   ;
 static ::_pbi::once_flag descriptor_table_Enum_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_Enum_2eproto = {
-    false, false, 419, descriptor_table_protodef_Enum_2eproto,
+    false, false, 608, descriptor_table_protodef_Enum_2eproto,
     "Enum.proto",
     &descriptor_table_Enum_2eproto_once, nullptr, 0, 0,
     schemas, file_default_instances, TableStruct_Enum_2eproto::offsets,
@@ -83,6 +88,26 @@ bool SkillInfo_IsValid(int value) {
     case 1:
     case 2:
     case 3:
+    case 4:
+    case 5:
+      return true;
+    default:
+      return false;
+  }
+}
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* AttackDir_descriptor() {
+  ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&descriptor_table_Enum_2eproto);
+  return file_level_enum_descriptors_Enum_2eproto[2];
+}
+bool AttackDir_IsValid(int value) {
+  switch (value) {
+    case 0:
+    case 1:
+    case 2:
+    case 3:
+    case 4:
+    case 5:
       return true;
     default:
       return false;
@@ -91,7 +116,7 @@ bool SkillInfo_IsValid(int value) {
 
 const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* MoveState_descriptor() {
   ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&descriptor_table_Enum_2eproto);
-  return file_level_enum_descriptors_Enum_2eproto[2];
+  return file_level_enum_descriptors_Enum_2eproto[3];
 }
 bool MoveState_IsValid(int value) {
   switch (value) {
@@ -107,7 +132,7 @@ bool MoveState_IsValid(int value) {
 
 const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* ActionState_descriptor() {
   ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&descriptor_table_Enum_2eproto);
-  return file_level_enum_descriptors_Enum_2eproto[3];
+  return file_level_enum_descriptors_Enum_2eproto[4];
 }
 bool ActionState_IsValid(int value) {
   switch (value) {

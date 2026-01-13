@@ -100,6 +100,9 @@ void AClientPlayerController::HandleMouseLookAction(const FInputActionValue& Val
 
 void AClientPlayerController::HandleSkillAction(const FInputActionValue& Value)
 {
+	if (ClientPlayer->GetCurPlayingSkill() != Protocol::SKILL_INFO_NONE)
+		return;
+
 	const int SkillIndex = Value.Get<float>();
 
 	Protocol::C_SKILL SkillPkt;

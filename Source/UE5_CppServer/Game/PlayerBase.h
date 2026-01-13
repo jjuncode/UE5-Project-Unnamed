@@ -17,6 +17,16 @@ public:
 
 	void Caching();
 
+	void SetCurPlayingSkill(const Protocol::SkillInfo& Info) { ObjectInfo.mutable_creature_info()->set_skill_info(Info); }
+	Protocol::SkillInfo GetCurPlayingSkill() { return  ObjectInfo.creature_info().skill_info(); }
+
+	// ----------------------
+	//		  Battle
+	// ----------------------
+	void OnDamaged(const Protocol::S_DAMAGED& DamagePkt);
+
+	Protocol::AttackDir GetDamagedDir() const { return DamagedDir; }
+
 	// ----------------------
 	//		Event Handle
 	// ----------------------
@@ -30,6 +40,7 @@ public:
 protected:
 	// Caching 
 	TObjectPtr<class ABasePlayerController> Controller;
+	Protocol::AttackDir DamagedDir;	// 데미지 받은 방향 
 
 	bool bIsMyPlayer = false;
 };

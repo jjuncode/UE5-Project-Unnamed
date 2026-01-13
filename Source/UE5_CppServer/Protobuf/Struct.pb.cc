@@ -89,6 +89,8 @@ PROTOBUF_CONSTEXPR SkillData::SkillData(
   : name_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{})
   , id_(0)
 
+  , attack_dir_(0)
+
   , angle_left_(0)
   , angle_right_(0)
   , range_(0)
@@ -156,6 +158,7 @@ const uint32_t TableStruct_Struct_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(p
   ~0u,  // no _inlined_string_donated_
   PROTOBUF_FIELD_OFFSET(::Protocol::SkillData, id_),
   PROTOBUF_FIELD_OFFSET(::Protocol::SkillData, name_),
+  PROTOBUF_FIELD_OFFSET(::Protocol::SkillData, attack_dir_),
   PROTOBUF_FIELD_OFFSET(::Protocol::SkillData, angle_left_),
   PROTOBUF_FIELD_OFFSET(::Protocol::SkillData, angle_right_),
   PROTOBUF_FIELD_OFFSET(::Protocol::SkillData, range_),
@@ -191,18 +194,19 @@ const char descriptor_table_protodef_Struct_2eproto[] PROTOBUF_SECTION_VARIABLE(
   "\030\001 \001(\0132\016.Protocol.Vec3\022\036\n\006radius\030\002 \001(\0132\016"
   ".Protocol.Vec3\022\020\n\010duration\030\003 \001(\002\022\r\n\005colo"
   "r\030\004 \001(\005\022#\n\005shape\030\005 \001(\0162\024.Protocol.DebugS"
-  "hape\"\244\001\n\tSkillData\022\037\n\002id\030\001 \001(\0162\023.Protoco"
-  "l.SkillInfo\022\014\n\004name\030\002 \001(\t\022\022\n\nangle_left\030"
-  "\003 \001(\005\022\023\n\013angle_right\030\004 \001(\005\022\r\n\005range\030\005 \001("
-  "\005\022\030\n\020hit_window_start\030\006 \001(\002\022\026\n\016hit_windo"
-  "w_end\030\007 \001(\002b\006proto3"
+  "hape\"\315\001\n\tSkillData\022\037\n\002id\030\001 \001(\0162\023.Protoco"
+  "l.SkillInfo\022\014\n\004name\030\002 \001(\t\022\'\n\nattack_dir\030"
+  "\003 \001(\0162\023.Protocol.AttackDir\022\022\n\nangle_left"
+  "\030\004 \001(\005\022\023\n\013angle_right\030\005 \001(\005\022\r\n\005range\030\006 \001"
+  "(\005\022\030\n\020hit_window_start\030\007 \001(\002\022\026\n\016hit_wind"
+  "ow_end\030\010 \001(\002b\006proto3"
   ;
 static const ::_pbi::DescriptorTable* const descriptor_table_Struct_2eproto_deps[1] = {
   &::descriptor_table_Enum_2eproto,
 };
 static ::_pbi::once_flag descriptor_table_Struct_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_Struct_2eproto = {
-    false, false, 659, descriptor_table_protodef_Struct_2eproto,
+    false, false, 700, descriptor_table_protodef_Struct_2eproto,
     "Struct.proto",
     &descriptor_table_Struct_2eproto_once, descriptor_table_Struct_2eproto_deps, 1, 5,
     schemas, file_default_instances, TableStruct_Struct_2eproto::offsets,
@@ -1427,41 +1431,50 @@ const char* SkillData::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx
         } else
           goto handle_unusual;
         continue;
-      // int32 angle_left = 3;
+      // .Protocol.AttackDir attack_dir = 3;
       case 3:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 24)) {
+          uint64_t val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+          _internal_set_attack_dir(static_cast<::Protocol::AttackDir>(val));
+        } else
+          goto handle_unusual;
+        continue;
+      // int32 angle_left = 4;
+      case 4:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 32)) {
           angle_left_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
           CHK_(ptr);
         } else
           goto handle_unusual;
         continue;
-      // int32 angle_right = 4;
-      case 4:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 32)) {
+      // int32 angle_right = 5;
+      case 5:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 40)) {
           angle_right_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
           CHK_(ptr);
         } else
           goto handle_unusual;
         continue;
-      // int32 range = 5;
-      case 5:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 40)) {
+      // int32 range = 6;
+      case 6:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 48)) {
           range_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
           CHK_(ptr);
         } else
           goto handle_unusual;
         continue;
-      // float hit_window_start = 6;
-      case 6:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 53)) {
+      // float hit_window_start = 7;
+      case 7:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 61)) {
           hit_window_start_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<float>(ptr);
           ptr += sizeof(float);
         } else
           goto handle_unusual;
         continue;
-      // float hit_window_end = 7;
-      case 7:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 61)) {
+      // float hit_window_end = 8;
+      case 8:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 69)) {
           hit_window_end_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<float>(ptr);
           ptr += sizeof(float);
         } else
@@ -1513,42 +1526,49 @@ uint8_t* SkillData::_InternalSerialize(
         2, this->_internal_name(), target);
   }
 
-  // int32 angle_left = 3;
+  // .Protocol.AttackDir attack_dir = 3;
+  if (this->_internal_attack_dir() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteEnumToArray(
+      3, this->_internal_attack_dir(), target);
+  }
+
+  // int32 angle_left = 4;
   if (this->_internal_angle_left() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteInt32ToArray(3, this->_internal_angle_left(), target);
+    target = ::_pbi::WireFormatLite::WriteInt32ToArray(4, this->_internal_angle_left(), target);
   }
 
-  // int32 angle_right = 4;
+  // int32 angle_right = 5;
   if (this->_internal_angle_right() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteInt32ToArray(4, this->_internal_angle_right(), target);
+    target = ::_pbi::WireFormatLite::WriteInt32ToArray(5, this->_internal_angle_right(), target);
   }
 
-  // int32 range = 5;
+  // int32 range = 6;
   if (this->_internal_range() != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteInt32ToArray(5, this->_internal_range(), target);
+    target = ::_pbi::WireFormatLite::WriteInt32ToArray(6, this->_internal_range(), target);
   }
 
-  // float hit_window_start = 6;
+  // float hit_window_start = 7;
   static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
   float tmp_hit_window_start = this->_internal_hit_window_start();
   uint32_t raw_hit_window_start;
   memcpy(&raw_hit_window_start, &tmp_hit_window_start, sizeof(tmp_hit_window_start));
   if (raw_hit_window_start != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteFloatToArray(6, this->_internal_hit_window_start(), target);
+    target = ::_pbi::WireFormatLite::WriteFloatToArray(7, this->_internal_hit_window_start(), target);
   }
 
-  // float hit_window_end = 7;
+  // float hit_window_end = 8;
   static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
   float tmp_hit_window_end = this->_internal_hit_window_end();
   uint32_t raw_hit_window_end;
   memcpy(&raw_hit_window_end, &tmp_hit_window_end, sizeof(tmp_hit_window_end));
   if (raw_hit_window_end != 0) {
     target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteFloatToArray(7, this->_internal_hit_window_end(), target);
+    target = ::_pbi::WireFormatLite::WriteFloatToArray(8, this->_internal_hit_window_end(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -1580,22 +1600,28 @@ size_t SkillData::ByteSizeLong() const {
       ::_pbi::WireFormatLite::EnumSize(this->_internal_id());
   }
 
-  // int32 angle_left = 3;
+  // .Protocol.AttackDir attack_dir = 3;
+  if (this->_internal_attack_dir() != 0) {
+    total_size += 1 +
+      ::_pbi::WireFormatLite::EnumSize(this->_internal_attack_dir());
+  }
+
+  // int32 angle_left = 4;
   if (this->_internal_angle_left() != 0) {
     total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_angle_left());
   }
 
-  // int32 angle_right = 4;
+  // int32 angle_right = 5;
   if (this->_internal_angle_right() != 0) {
     total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_angle_right());
   }
 
-  // int32 range = 5;
+  // int32 range = 6;
   if (this->_internal_range() != 0) {
     total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_range());
   }
 
-  // float hit_window_start = 6;
+  // float hit_window_start = 7;
   static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
   float tmp_hit_window_start = this->_internal_hit_window_start();
   uint32_t raw_hit_window_start;
@@ -1604,7 +1630,7 @@ size_t SkillData::ByteSizeLong() const {
     total_size += 1 + 4;
   }
 
-  // float hit_window_end = 7;
+  // float hit_window_end = 8;
   static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
   float tmp_hit_window_end = this->_internal_hit_window_end();
   uint32_t raw_hit_window_end;
@@ -1640,6 +1666,9 @@ void SkillData::MergeFrom(const SkillData& from) {
   }
   if (from._internal_id() != 0) {
     _internal_set_id(from._internal_id());
+  }
+  if (from._internal_attack_dir() != 0) {
+    _internal_set_attack_dir(from._internal_attack_dir());
   }
   if (from._internal_angle_left() != 0) {
     _internal_set_angle_left(from._internal_angle_left());

@@ -2063,6 +2063,7 @@ class S_DAMAGED final :
 
   enum : int {
     kObjectInfoFieldNumber = 1,
+    kSkillDataFieldNumber = 2,
   };
   // .Protocol.ObjectInfo object_info = 1;
   bool has_object_info() const;
@@ -2082,6 +2083,24 @@ class S_DAMAGED final :
       ::Protocol::ObjectInfo* object_info);
   ::Protocol::ObjectInfo* unsafe_arena_release_object_info();
 
+  // .Protocol.SkillData skill_data = 2;
+  bool has_skill_data() const;
+  private:
+  bool _internal_has_skill_data() const;
+  public:
+  void clear_skill_data();
+  const ::Protocol::SkillData& skill_data() const;
+  PROTOBUF_NODISCARD ::Protocol::SkillData* release_skill_data();
+  ::Protocol::SkillData* mutable_skill_data();
+  void set_allocated_skill_data(::Protocol::SkillData* skill_data);
+  private:
+  const ::Protocol::SkillData& _internal_skill_data() const;
+  ::Protocol::SkillData* _internal_mutable_skill_data();
+  public:
+  void unsafe_arena_set_allocated_skill_data(
+      ::Protocol::SkillData* skill_data);
+  ::Protocol::SkillData* unsafe_arena_release_skill_data();
+
   // @@protoc_insertion_point(class_scope:Protocol.S_DAMAGED)
  private:
   class _Internal;
@@ -2090,6 +2109,7 @@ class S_DAMAGED final :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   ::Protocol::ObjectInfo* object_info_;
+  ::Protocol::SkillData* skill_data_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_Protocol_2eproto;
 };
@@ -3336,6 +3356,91 @@ inline void S_DAMAGED::set_allocated_object_info(::Protocol::ObjectInfo* object_
   }
   object_info_ = object_info;
   // @@protoc_insertion_point(field_set_allocated:Protocol.S_DAMAGED.object_info)
+}
+
+// .Protocol.SkillData skill_data = 2;
+inline bool S_DAMAGED::_internal_has_skill_data() const {
+  return this != internal_default_instance() && skill_data_ != nullptr;
+}
+inline bool S_DAMAGED::has_skill_data() const {
+  return _internal_has_skill_data();
+}
+inline const ::Protocol::SkillData& S_DAMAGED::_internal_skill_data() const {
+  const ::Protocol::SkillData* p = skill_data_;
+  return p != nullptr ? *p : reinterpret_cast<const ::Protocol::SkillData&>(
+      ::Protocol::_SkillData_default_instance_);
+}
+inline const ::Protocol::SkillData& S_DAMAGED::skill_data() const {
+  // @@protoc_insertion_point(field_get:Protocol.S_DAMAGED.skill_data)
+  return _internal_skill_data();
+}
+inline void S_DAMAGED::unsafe_arena_set_allocated_skill_data(
+    ::Protocol::SkillData* skill_data) {
+  if (GetArenaForAllocation() == nullptr) {
+    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(skill_data_);
+  }
+  skill_data_ = skill_data;
+  if (skill_data) {
+    
+  } else {
+    
+  }
+  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:Protocol.S_DAMAGED.skill_data)
+}
+inline ::Protocol::SkillData* S_DAMAGED::release_skill_data() {
+  
+  ::Protocol::SkillData* temp = skill_data_;
+  skill_data_ = nullptr;
+#ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
+  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
+  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  if (GetArenaForAllocation() == nullptr) { delete old; }
+#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
+  if (GetArenaForAllocation() != nullptr) {
+    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
+  }
+#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
+  return temp;
+}
+inline ::Protocol::SkillData* S_DAMAGED::unsafe_arena_release_skill_data() {
+  // @@protoc_insertion_point(field_release:Protocol.S_DAMAGED.skill_data)
+  
+  ::Protocol::SkillData* temp = skill_data_;
+  skill_data_ = nullptr;
+  return temp;
+}
+inline ::Protocol::SkillData* S_DAMAGED::_internal_mutable_skill_data() {
+  
+  if (skill_data_ == nullptr) {
+    auto* p = CreateMaybeMessage<::Protocol::SkillData>(GetArenaForAllocation());
+    skill_data_ = p;
+  }
+  return skill_data_;
+}
+inline ::Protocol::SkillData* S_DAMAGED::mutable_skill_data() {
+  ::Protocol::SkillData* _msg = _internal_mutable_skill_data();
+  // @@protoc_insertion_point(field_mutable:Protocol.S_DAMAGED.skill_data)
+  return _msg;
+}
+inline void S_DAMAGED::set_allocated_skill_data(::Protocol::SkillData* skill_data) {
+  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
+  if (message_arena == nullptr) {
+    delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(skill_data_);
+  }
+  if (skill_data) {
+    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
+        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
+                reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(skill_data));
+    if (message_arena != submessage_arena) {
+      skill_data = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
+          message_arena, skill_data, submessage_arena);
+    }
+    
+  } else {
+    
+  }
+  skill_data_ = skill_data;
+  // @@protoc_insertion_point(field_set_allocated:Protocol.S_DAMAGED.skill_data)
 }
 
 // -------------------------------------------------------------------

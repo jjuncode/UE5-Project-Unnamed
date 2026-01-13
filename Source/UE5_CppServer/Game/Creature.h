@@ -23,13 +23,13 @@ public:
 public:
 	void SetObjectInfo(const Protocol::ObjectInfo& rhs) { ObjectInfo.CopyFrom(rhs); }
 	Protocol::ObjectInfo& SetObjectInfoRef() { return ObjectInfo; }
-	const Protocol::ObjectInfo& GetObjectInfo() { return ObjectInfo; }
+	const Protocol::ObjectInfo& GetObjectInfo() const { return ObjectInfo; }
 
 	void SetMoveState(const Protocol::MoveState& rhs);
-	Protocol::MoveState GetMoveState() { return ObjectInfo.creature_info().move_state(); }
+	Protocol::MoveState GetMoveState() const { return ObjectInfo.creature_info().move_state(); }
 
 	void SetActionState(const Protocol::ActionState& rhs);
-	Protocol::ActionState GetActionState() { return ObjectInfo.creature_info().action_state(); }
+	Protocol::ActionState GetActionState() const { return ObjectInfo.creature_info().action_state(); }
 
 	// ----------------------
 	//		Event Handle

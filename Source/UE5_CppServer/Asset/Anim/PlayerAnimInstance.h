@@ -17,24 +17,18 @@ public:
 	virtual void NativeInitializeAnimation() override;
 	virtual void NativeUpdateAnimation(float DeltaSeconds) override;
 
-private:
-	void ClearAttackState(UAnimMontage* Montage, bool bInterrupted);
-	
 protected:
+	// ------------------
+	//		Caching
+	// ------------------
+	Protocol::SkillInfo PlayingSkillInfo = Protocol::SKILL_INFO_NONE;
+
 	// ------------------
 	//		Montage
 	// ------------------
 	UPROPERTY(Category = Animation, EditAnywhere, BlueprintReadOnly)
-	TObjectPtr<class UAnimMontage> PunchAttackMontage;
-
-	UPROPERTY(Category = Animation, EditAnywhere, BlueprintReadOnly)
-	TObjectPtr<class UAnimMontage> UppercutAttackMontage;
-
-	UPROPERTY(Category = Animation, EditAnywhere, BlueprintReadOnly)
-	TObjectPtr<class UAnimMontage> KickAttackMontage;
+	TObjectPtr<class UAnimMontage> AttackMontage;
 	
-	Protocol::SkillInfo CurPlayingSkill = Protocol::SKILL_INFO_NONE;
-
 	// -------------------------------
 	//		AnimGraph Caching
 	// -------------------------------
