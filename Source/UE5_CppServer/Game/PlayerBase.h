@@ -26,6 +26,7 @@ public:
 	void OnDamaged(const Protocol::S_DAMAGED& DamagePkt);
 
 	Protocol::AttackDir GetDamagedDir() const { return DamagedDir; }
+	void ResetDamageDir() { DamagedDir = Protocol::DIR_NONE; }
 
 	// ----------------------
 	//		Event Handle

@@ -17,6 +17,10 @@ public:
 	virtual void NativeInitializeAnimation() override;
 	virtual void NativeUpdateAnimation(float DeltaSeconds) override;
 
+private:
+	void PlaySkillAnimation();
+	void PlayHittedAnimation();
+
 protected:
 	// ------------------
 	//		Caching
@@ -28,6 +32,10 @@ protected:
 	// ------------------
 	UPROPERTY(Category = Animation, EditAnywhere, BlueprintReadOnly)
 	TObjectPtr<class UAnimMontage> AttackMontage;
+	
+	UPROPERTY(Category = Animation, EditAnywhere, BlueprintReadOnly)
+	TObjectPtr<class UAnimMontage> HittedMontage;
+
 	
 	// -------------------------------
 	//		AnimGraph Caching

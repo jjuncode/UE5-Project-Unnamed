@@ -57,7 +57,7 @@ void AClientPlayerController::SetupInputComponent()
 
 void AClientPlayerController::HandleEvent(FGameplayTag EventTag)
 {
-	if (EventTag.MatchesTag(EventTags::Event_SetActionState_None))
+	if (EventTag.MatchesTagExact(EventTags::Event_SetActionState_None))
 	{
 		ClientPlayer->SetActionState(Protocol::ACTION_STATE_NONE);
 	}

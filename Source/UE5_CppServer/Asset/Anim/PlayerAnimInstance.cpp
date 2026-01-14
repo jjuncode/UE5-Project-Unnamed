@@ -77,86 +77,106 @@ void UPlayerAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 		State = StateTags::State_Action_None;
 		break;
 	case Protocol::ACTION_STATE_SKILL:
-		State = StateTags::State_Action_Skill;
+	{
+		PlaySkillAnimation();
 		break;
+	}
 	case Protocol::ACTION_STATE_DAMAGED:
 	{
-		Protocol::AttackDir DamageDir = OwnerCharacter->GetDamagedDir();
-
-		switch (DamageDir)
-		{
-		case Protocol::DIR_NONE:
-			break;
-		case Protocol::DIR_UP_TO_DOWN:
-			State = StateTags::State_Action_OnDamaged_DOWN;	// 아래로 피격당함
-			break;
-		case Protocol::DIR_DOWN_TO_UP:
-			State = StateTags::State_Action_OnDamaged_UP;	// 위로 피격당함 
-			break;
-		case Protocol::DIR_RIGHT_TO_LEFT:
-			State = StateTags::State_Action_OnDamaged_RIGHT;// 공격방향이 좌측이니 
-			break;
-		case Protocol::DIR_LEFT_TO_RIGHT:
-			State = StateTags::State_Action_OnDamaged_LEFT;	// 공격방향이 좌측이니 
-			break;
-		case Protocol::DIR_FRONT:
-			State = StateTags::State_Action_OnDamaged_FRONT;
-			break;
-		default:
-			GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, TEXT("[ UPlayerAnimInstance ] : Error - Invalid Damaged Dir"));
-			break;
-		}
-
-
+		PlayHittedAnimation();
 		break;
 	}
 	default:
 		break;
 	}
+}
+
+void UPlayerAnimInstance::PlaySkillAnimation()
+{
+	State = StateTags::State_Action_Skill;
 
 	// Skill Animation
-	if (ActionState == Protocol::ACTION_STATE_SKILL)
+	Protocol::SkillInfo CurSkill = OwnerCharacter->GetCurPlayingSkill();
+
+	if (CurSkill != PlayingSkillInfo) // 한 스킬만 시전 가능 
 	{
-		Protocol::SkillInfo CurSkill = OwnerCharacter->GetCurPlayingSkill();
-		
-		if (CurSkill != PlayingSkillInfo) // 한 스킬만 시전 가능 
+		// 재생
+		switch (CurSkill)
 		{
-			// 재생
-			switch (CurSkill)
-			{
-			case Protocol::SKILL_INFO_SLASH_UP:
-				OwnerCharacter->PlayAnimMontage(AttackMontage, 1.0, "SLASH_UP");
-				break;
-			case Protocol::SKILL_INFO_SLASH_DOWN:
-				OwnerCharacter->PlayAnimMontage(AttackMontage, 1.0, "SLASH_DOWN");
-				break;
-			case Protocol::SKILL_INFO_SLASH_LEFT:
-				OwnerCharacter->PlayAnimMontage(AttackMontage, 1.0, "SLASH_LEFT");
-				break;
-			case Protocol::SKILL_INFO_SLASH_RIGHT:
-				OwnerCharacter->PlayAnimMontage(AttackMontage, 1.0, "SLASH_RIGHT");
-				break;
-			case Protocol::SKILL_INFO_KICK:
-				OwnerCharacter->PlayAnimMontage(AttackMontage, 1.0, "KICK");
-				break;
+		case Protocol::SKILL_INFO_SLASH_UP:
+			OwnerCharacter->PlayAnimMontage(AttackMontage, 1.0, "SLASH_UP");
+			break;
+		case Protocol::SKILL_INFO_SLASH_DOWN:
+			OwnerCharacter->PlayAnimMontage(AttackMontage, 1.0, "SLASH_DOWN");
+			break;
+		case Protocol::SKILL_INFO_SLASH_LEFT:
+			OwnerCharacter->PlayAnimMontage(AttackMontage, 1.0, "SLASH_LEFT");
+			break;
+		case Protocol::SKILL_INFO_SLASH_RIGHT:
+			OwnerCharacter->PlayAnimMontage(AttackMontage, 1.0, "SLASH_RIGHT");
+			break;
+		case Protocol::SKILL_INFO_KICK:
+			OwnerCharacter->PlayAnimMontage(AttackMontage, 1.0, "KICK");
+			break;
 
-			default:
-				GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, TEXT("[ UPlayerAnimInstance ] : Error - Incorrect Skill Info"));
-				break;
-			}
-
-			PlayingSkillInfo = CurSkill;
+		default:
+			GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, TEXT("[ UPlayerAnimInstance ] : Error - Incorrect Skill Info"));
+			break;
 		}
 
-		if (IsAnyMontagePlaying() == false )
-		{
-			// 재생 종료
-			OwnerCharacter->SetActionState(Protocol::ACTION_STATE_NONE);
-
-			// 스킬정보 밀어버림
-			OwnerCharacter->SetCurPlayingSkill(Protocol::SKILL_INFO_NONE);
-			PlayingSkillInfo = Protocol::SKILL_INFO_NONE;
-		}
+		PlayingSkillInfo = CurSkill;
 	}
 
+	if (IsAnyMontagePlaying() == false)
+	{
+		// 재생 종료
+		OwnerCharacter->SetActionState(Protocol::ACTION_STATE_NONE);
+
+		// 스킬정보 밀어버림
+		OwnerCharacter->SetCurPlayingSkill(Protocol::SKILL_INFO_NONE);
+		PlayingSkillInfo = Protocol::SKILL_INFO_NONE;
+	}
+}
+
+void UPlayerAnimInstance::PlayHittedAnimation()
+{
+	Protocol::AttackDir DamageDir = OwnerCharacter->GetDamagedDir();
+	OwnerCharacter->ResetDamageDir();
+
+	switch (DamageDir)
+	{
+	case Protocol::DIR_NONE:
+		break;
+	case Protocol::DIR_UP_TO_DOWN:
+		State = StateTags::State_Action_OnDamaged_DOWN;	// 아래로 피격당함
+		OwnerCharacter->PlayAnimMontage(HittedMontage, 1.0, "UP_TO_DOWN");
+		break;
+	case Protocol::DIR_DOWN_TO_UP:
+		State = StateTags::State_Action_OnDamaged_UP;	// 위로 피격당함 
+		OwnerCharacter->PlayAnimMontage(HittedMontage, 1.0, "DOWN_TO_UP");
+		break;
+	case Protocol::DIR_RIGHT_TO_LEFT:
+		State = StateTags::State_Action_OnDamaged_RIGHT;// 공격방향이 좌측이니 
+		OwnerCharacter->PlayAnimMontage(HittedMontage, 1.0, "RIGHT");
+		break;
+	case Protocol::DIR_LEFT_TO_RIGHT:
+		State = StateTags::State_Action_OnDamaged_LEFT;	// 공격방향이 좌측이니 
+		OwnerCharacter->PlayAnimMontage(HittedMontage, 1.0, "LEFT");
+		break;
+	case Protocol::DIR_FRONT:
+		State = StateTags::State_Action_OnDamaged_FRONT;
+		OwnerCharacter->PlayAnimMontage(HittedMontage, 1.0, "FRONT");
+		break;
+	default:
+		GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, TEXT("[ UPlayerAnimInstance ] : Error - Invalid Damaged Dir"));
+		break;
+	}
+
+	if (IsAnyMontagePlaying() == false)
+	{
+		// 재생 종료
+		OwnerCharacter->SetActionState(Protocol::ACTION_STATE_NONE);
+		OwnerCharacter->ResetDamageDir();
+		State = StateTags::State_Action_None;
+	}
 }

@@ -15,7 +15,8 @@ void ABasePlayerController::OnPossess(APawn* aPawn)
 
 void ABasePlayerController::HandleEvent(FGameplayTag EventTag)
 {
-	if (EventTag.MatchesTag(EventTags::Event_SetActionState_None))
+	if (EventTag.MatchesTagExact(EventTags::Event_SetActionState_None))
+
 	{
 		BasePlayer->SetActionState(Protocol::ACTION_STATE_NONE);
 	}
