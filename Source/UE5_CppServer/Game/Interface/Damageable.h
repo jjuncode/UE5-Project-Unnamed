@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "UObject/Interface.h"
+#include "Protocol.pb.h"
 #include "Damageable.generated.h"
 
 // This class does not need to be modified.
@@ -22,4 +23,8 @@ class UE5_CPPSERVER_API IDamageable
 
 	// Add interface functions to this class. This is the class that will be inherited to implement this interface.
 public:
+	virtual void OnDamaged(const Protocol::S_DAMAGED& DamagePkt) = 0;
+
+	virtual Protocol::AttackDir GetDamagedDir() const = 0;
+	virtual void ResetDamageDir() = 0;
 };

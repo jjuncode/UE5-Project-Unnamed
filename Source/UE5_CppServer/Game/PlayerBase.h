@@ -5,10 +5,11 @@
 #include "CoreMinimal.h"
 #include "Creature.h"
 #include "Interface/Weaponable.h"
+#include "Interface/Damageable.h"
 #include "PlayerBase.generated.h"
 
 UCLASS()
-class UE5_CPPSERVER_API APlayerBase : public ACreature, public IWeaponable
+class UE5_CPPSERVER_API APlayerBase : public ACreature, public IWeaponable, public IDamageable
 {
 	GENERATED_BODY()
 
@@ -21,19 +22,19 @@ public:
 	void SetCurPlayingSkill(const Protocol::SkillInfo& Info) { ObjectInfo.mutable_creature_info()->set_skill_info(Info); }
 	Protocol::SkillInfo GetCurPlayingSkill() { return  ObjectInfo.creature_info().skill_info(); }
 
-	// ----------------------
-	//		Interface
-	// ----------------------
+	// --------------------------------
+	//		Interface - Weaponable
+	// --------------------------------
 	UFUNCTION(BlueprintCallable)
 	virtual void AttachWeapon(TSubclassOf<class AWeapon> WeaponInfo) override;
 
-	// ----------------------
-	//		  Battle
-	// ----------------------
-	void OnDamaged(const Protocol::S_DAMAGED& DamagePkt);
+	// --------------------------------
+	//		Interface - Damageble
+	// --------------------------------
+	virtual void OnDamaged(const Protocol::S_DAMAGED& DamagePkt) override;
 
-	Protocol::AttackDir GetDamagedDir() const { return DamagedDir; }
-	void ResetDamageDir() { DamagedDir = Protocol::DIR_NONE; }
+	virtual Protocol::AttackDir GetDamagedDir() const override { return DamagedDir; }
+	virtual void ResetDamageDir() override { DamagedDir = Protocol::DIR_NONE; }
 
 	// ----------------------
 	//		Event Handle

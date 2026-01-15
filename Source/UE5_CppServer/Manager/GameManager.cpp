@@ -128,11 +128,14 @@ void UGameManager::HandleDamaged(const Protocol::S_DAMAGED& DamagePkt)
 	Protocol::ObjectInfo ObjectInfo = DamagePkt.object_info();
 
 	// Damage받은 애 정보 셋팅 
-	// TODO : 나중에 creature로 확장 
 	TObjectPtr<APlayerBase>* DamagedCreature = Players.Find(ObjectInfo.creature_info().id());
 	ensureMsgf(DamagedCreature, TEXT("[GameManager - HandleDamaged] : Can't Find Player"));
 
-	(*DamagedCreature)->OnDamaged(DamagePkt);
+	IDamageable* DC = Cast<IDamageable>(*DamagedCreature);
+	if (DC)
+	{
+		DC->OnDamaged(DamagePkt);
+	}
 }
 
 void UGameManager::HandleDebugMessage(const Protocol::S_DEBUG& DebugPkt)
