@@ -16,11 +16,7 @@ namespace StateTags
      UE_DEFINE_GAMEPLAY_TAG(State_Action_None       , "State.Action.None");
      UE_DEFINE_GAMEPLAY_TAG(State_Action_Skill      , "State.Action.Skill");
 
-     UE_DEFINE_GAMEPLAY_TAG(State_Action_OnDamaged_UP, "State.Action.OnDamaged.Up");
-     UE_DEFINE_GAMEPLAY_TAG(State_Action_OnDamaged_DOWN, "State.Action.OnDamaged.Down");
-     UE_DEFINE_GAMEPLAY_TAG(State_Action_OnDamaged_LEFT, "State.Action.OnDamaged.Left");
-     UE_DEFINE_GAMEPLAY_TAG(State_Action_OnDamaged_RIGHT, "State.Action.OnDamaged.Right");
-     UE_DEFINE_GAMEPLAY_TAG(State_Action_OnDamaged_FRONT, "State.Action.OnDamaged.Front");
+     UE_DEFINE_GAMEPLAY_TAG(State_Action_OnDamaged, "State.Action.OnDamaged");
 }
 
 namespace EventTags

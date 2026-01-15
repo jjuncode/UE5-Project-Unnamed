@@ -8,7 +8,7 @@
 UGameManager::UGameManager()
 	:Super()
 {
-	static ConstructorHelpers::FClassFinder<AActor> PlayerBPClass(TEXT("/Game/Blueprints/Object/BP_PlayerBase"));
+	static ConstructorHelpers::FClassFinder<AActor> PlayerBPClass(TEXT("/Game/Blueprints/Object/Creature/BP_PlayerBase"));
 	check(PlayerBPClass.Succeeded())
 
 	OtherPlayerClass = PlayerBPClass.Class;

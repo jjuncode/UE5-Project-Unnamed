@@ -143,28 +143,24 @@ void UPlayerAnimInstance::PlayHittedAnimation()
 	Protocol::AttackDir DamageDir = OwnerCharacter->GetDamagedDir();
 	OwnerCharacter->ResetDamageDir();
 
+	State = StateTags::State_Action_OnDamaged;	// 피격 상태 
 	switch (DamageDir)
 	{
 	case Protocol::DIR_NONE:
 		break;
 	case Protocol::DIR_UP_TO_DOWN:
-		State = StateTags::State_Action_OnDamaged_DOWN;	// 아래로 피격당함
 		OwnerCharacter->PlayAnimMontage(HittedMontage, 1.0, "UP_TO_DOWN");
 		break;
 	case Protocol::DIR_DOWN_TO_UP:
-		State = StateTags::State_Action_OnDamaged_UP;	// 위로 피격당함 
 		OwnerCharacter->PlayAnimMontage(HittedMontage, 1.0, "DOWN_TO_UP");
 		break;
 	case Protocol::DIR_RIGHT_TO_LEFT:
-		State = StateTags::State_Action_OnDamaged_RIGHT;// 공격방향이 좌측이니 
 		OwnerCharacter->PlayAnimMontage(HittedMontage, 1.0, "RIGHT");
 		break;
 	case Protocol::DIR_LEFT_TO_RIGHT:
-		State = StateTags::State_Action_OnDamaged_LEFT;	// 공격방향이 좌측이니 
 		OwnerCharacter->PlayAnimMontage(HittedMontage, 1.0, "LEFT");
 		break;
 	case Protocol::DIR_FRONT:
-		State = StateTags::State_Action_OnDamaged_FRONT;
 		OwnerCharacter->PlayAnimMontage(HittedMontage, 1.0, "FRONT");
 		break;
 	default:

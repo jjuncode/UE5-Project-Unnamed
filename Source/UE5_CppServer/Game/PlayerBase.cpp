@@ -3,6 +3,8 @@
 #include "Game/PlayerBase.h"
 #include "ClientPlayer.h"
 #include "BasePlayerController.h"
+#include "Engine/SkeletalMeshSocket.h"
+#include "Weapon/Weapon.h"
 
 void APlayerBase::HandleEvent(FGameplayTag EventTag)
 {
@@ -28,6 +30,30 @@ void APlayerBase::Caching()
 	// Set Controller
 	Controller = Cast<ABasePlayerController>(GetController());
 	check(Controller);
+}
+
+void APlayerBase::AttachWeapon(TSubclassOf<class AWeapon> WeaponInfo)
+{
+	if (WeaponInfo)
+	{
+		Weapon = WeaponInfo;
+
+		// Spawn Weapon
+		AWeapon* spawnWeapon = GetWorld()->SpawnActor<AWeapon>(Weapon);
+
+		// 소켓 이름을 통해 현재 메시에서 소켓을 참조
+		const USkeletalMeshSocket* weaponSocket = GetMesh()->GetSocketByName("WeaponSocket");
+
+		if (spawnWeapon && weaponSocket)
+		{
+			// 소켓에 액터를 할당
+			spawnWeapon->AttachToComponent(
+				GetMesh(),
+				FAttachmentTransformRules::SnapToTargetIncludingScale,
+				TEXT("WeaponSocket")
+			);
+		}
+	}
 }
 
 void APlayerBase::OnDamaged(const Protocol::S_DAMAGED& DamagePkt)
