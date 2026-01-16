@@ -20,9 +20,10 @@ public:
 	UGameManager();
 
 public:
-	void HandleSpawn(const Protocol::ObjectInfo& PlayerInfo, bool IsMine);
+	void HandleSpawn(const Protocol::ObjectInfo& PlayerInfo, bool IsMine, bool IsDummy);
 	void HandleSpawn(const Protocol::S_ENTER_GAME& EnterGamePkt);
 	void HandleSpawn(const Protocol::S_SPAWN& SpawnPkt);
+	void HandleSpawn(const Protocol::S_SPAWNDUMMY& SpawnDummyPkt);
 
 	void HandleDespawn(uint64 ObjectId);
 	void HandleDespawn(const Protocol::S_DESPAWN& DespawnPkt);
@@ -30,6 +31,7 @@ public:
 	void HandleMove(const Protocol::S_MOVE& MovePkt);
 	void HandleSkill(const Protocol::S_SKILL& SkillPkt);
 	void HandleDamaged(const Protocol::S_DAMAGED& DamagePkt);
+	void HandleParry(const Protocol::S_PARRY& ParryPkt);
 
 	void HandleDebugMessage(const Protocol::S_DEBUG& DebugPkt);
 
@@ -40,6 +42,9 @@ public:
 public:
 	UPROPERTY(VisibleAnywhere)
 	TSubclassOf<AActor> OtherPlayerClass;
+
+	UPROPERTY(VisibleAnywhere)
+	TSubclassOf<AActor> DummyPlayerClass;
 
 	UPROPERTY(VisibleAnywhere)
 	TObjectPtr<class AClientPlayer> MyPlayer;

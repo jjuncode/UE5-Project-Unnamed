@@ -15,8 +15,8 @@ namespace StateTags
      // Action State
      UE_DEFINE_GAMEPLAY_TAG(State_Action_None       , "State.Action.None");
      UE_DEFINE_GAMEPLAY_TAG(State_Action_Skill      , "State.Action.Skill");
-
-     UE_DEFINE_GAMEPLAY_TAG(State_Action_OnDamaged, "State.Action.OnDamaged");
+     UE_DEFINE_GAMEPLAY_TAG(State_Action_OnDamaged  , "State.Action.OnDamaged");
+     UE_DEFINE_GAMEPLAY_TAG(State_Action_Parry      , "State.Action.Parry");
 }
 
 namespace EventTags

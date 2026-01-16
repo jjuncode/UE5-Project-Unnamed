@@ -21,7 +21,7 @@ bool Handle_S_LOGIN(PacketSessionRef& session, Protocol::S_LOGIN& pkt)
 	// 입장 UI버튼 눌러서 게임 입장
 	Protocol::C_ENTER_GAME enterGamePkt;
 
-	enterGamePkt.set_player_id(PlayerId.fetch_add(1));	// 첫번째 캐릭터로 강제입장  -> fuck
+	enterGamePkt.set_player_id(PlayerId.fetch_add(1));	// 임시 ID로 입장중 -> 서버에서 발급해줄거임
 
 	SEND_PACKET(session, enterGamePkt);
 
@@ -53,6 +53,15 @@ bool Handle_S_LEAVE_GAME(PacketSessionRef& session, Protocol::S_LEAVE_GAME& pkt)
 }
 
 bool Handle_S_SPAWN(PacketSessionRef& session, Protocol::S_SPAWN& pkt)
+{
+	if (auto* GameManager = GetManager<UGameManager>())
+	{
+		GameManager->HandleSpawn(pkt);
+	}
+	return true;
+}
+
+bool Handle_S_SPAWNDUMMY(PacketSessionRef& session, Protocol::S_SPAWNDUMMY& pkt)
 {
 	if (auto* GameManager = GetManager<UGameManager>())
 	{
@@ -93,6 +102,15 @@ bool Handle_S_DAMAGED(PacketSessionRef& session, Protocol::S_DAMAGED& pkt)
 	if (auto* GameManager = GetManager<UGameManager>())
 	{
 		GameManager->HandleDamaged(pkt);
+	}
+	return true;
+}
+
+bool Handle_S_PARRY(PacketSessionRef& session, Protocol::S_PARRY& pkt)
+{
+	if (auto* GameManager = GetManager<UGameManager>())
+	{
+		GameManager->HandleParry(pkt);
 	}
 	return true;
 }

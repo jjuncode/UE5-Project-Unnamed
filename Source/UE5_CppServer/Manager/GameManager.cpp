@@ -12,9 +12,15 @@ UGameManager::UGameManager()
 	check(PlayerBPClass.Succeeded())
 
 	OtherPlayerClass = PlayerBPClass.Class;
+	
+	// Dummy
+	static ConstructorHelpers::FClassFinder<AActor> DummyPlayerBPClass(TEXT("/Game/Blueprints/Object/Creature/BP_DummyPlayer"));
+	check(DummyPlayerBPClass.Succeeded())
+
+	DummyPlayerClass = DummyPlayerBPClass.Class;
 }
 
-void UGameManager::HandleSpawn(const Protocol::ObjectInfo& PlayerInfo, bool IsMine)
+void UGameManager::HandleSpawn(const Protocol::ObjectInfo& PlayerInfo, bool IsMine, bool IsDummy)
 {
 	auto* World = GetWorld();
 	if (World == nullptr)
@@ -44,28 +50,54 @@ void UGameManager::HandleSpawn(const Protocol::ObjectInfo& PlayerInfo, bool IsMi
 	}
 	else
 	{
-		// Spawn Other
-		AActor* SpawnPlayer = World->SpawnActor(OtherPlayerClass, &SpawnLocation);
-		APlayerBase* Player = Cast<APlayerBase>(SpawnPlayer);
-		check(Player);
-		
-		Player->SetObjectInfo(PlayerInfo);
-		Players.Add(ObjectId, Player);
+		if (IsDummy == false )
+		{
+			// Spawn Other
+			AActor* SpawnPlayer = World->SpawnActor(OtherPlayerClass, &SpawnLocation);
+			APlayerBase* Player = Cast<APlayerBase>(SpawnPlayer);
+			check(Player);
 
-		Player->Caching();
+			Player->SetObjectInfo(PlayerInfo);
+			Players.Add(ObjectId, Player);
+
+			Player->Caching();
+		}
+		else
+		{
+			// Spawn Dummy
+			AActor* Dummy = World->SpawnActor(DummyPlayerClass, &SpawnLocation);
+			APlayerBase* DummyPlayer = Cast<APlayerBase>(Dummy);
+			check(DummyPlayer);
+
+			DummyPlayer->SetObjectInfo(PlayerInfo);
+			Players.Add(ObjectId, DummyPlayer);
+
+			DummyPlayer->Caching();
+		}
+
 	}
 }
 
 void UGameManager::HandleSpawn(const Protocol::S_ENTER_GAME& EnterGamePkt)
 {
 	// sucess 체크 이미 했음
-	HandleSpawn(EnterGamePkt.player_info(), true);
+	HandleSpawn(EnterGamePkt.player_info(), true, false);
 }
 
 void UGameManager::HandleSpawn(const Protocol::S_SPAWN& SpawnPkt)
 {
 	for (auto& Player : SpawnPkt.players_info())
-		HandleSpawn(Player, false);
+	{
+		HandleSpawn(Player, false, false);
+	}
+}
+
+void UGameManager::HandleSpawn(const Protocol::S_SPAWNDUMMY& SpawnDummyPkt)
+{
+	for (auto& Player : SpawnDummyPkt.players_info())
+	{
+		HandleSpawn(Player, false, true);
+	}
 }
 
 void UGameManager::HandleDespawn(uint64 ObjectId)
@@ -136,6 +168,12 @@ void UGameManager::HandleDamaged(const Protocol::S_DAMAGED& DamagePkt)
 	{
 		DC->OnDamaged(DamagePkt);
 	}
+}
+
+void UGameManager::HandleParry(const Protocol::S_PARRY& ParryPkt)
+{
+	// 패링 수행
+
 }
 
 void UGameManager::HandleDebugMessage(const Protocol::S_DEBUG& DebugPkt)

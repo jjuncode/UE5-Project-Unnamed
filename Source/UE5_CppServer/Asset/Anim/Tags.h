@@ -13,8 +13,8 @@ namespace StateTags
     // Action State
     UE_DECLARE_GAMEPLAY_TAG_EXTERN(State_Action_None);
     UE_DECLARE_GAMEPLAY_TAG_EXTERN(State_Action_Skill);
-
     UE_DECLARE_GAMEPLAY_TAG_EXTERN(State_Action_OnDamaged);
+    UE_DECLARE_GAMEPLAY_TAG_EXTERN(State_Action_Parry);
 }
 
 namespace EventTags

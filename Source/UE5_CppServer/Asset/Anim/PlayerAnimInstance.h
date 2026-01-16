@@ -20,6 +20,7 @@ public:
 private:
 	void PlaySkillAnimation();
 	void PlayHittedAnimation();
+	void PlayParryAnimation();
 
 protected:
 	// ------------------
@@ -35,6 +36,9 @@ protected:
 	
 	UPROPERTY(Category = Animation, EditAnywhere, BlueprintReadOnly)
 	TObjectPtr<class UAnimMontage> HittedMontage;
+
+	UPROPERTY(Category = Animation, EditAnywhere, BlueprintReadOnly)
+	TObjectPtr<class UAnimMontage> ParryMontage;
 
 	
 	// -------------------------------

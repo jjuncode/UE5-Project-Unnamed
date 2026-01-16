@@ -17,13 +17,15 @@ enum :uint16
 	PKT_C_LEAVE_GAME = 1004,
 	PKT_S_LEAVE_GAME = 1005,
 	PKT_S_SPAWN = 1006,
-	PKT_S_DESPAWN = 1007,
-	PKT_C_MOVE = 1008,
-	PKT_S_MOVE = 1009,
-	PKT_C_SKILL = 1010,
-	PKT_S_SKILL = 1011,
-	PKT_S_DAMAGED = 1012,
-	PKT_S_DEBUG = 1013,
+	PKT_S_SPAWNDUMMY = 1007,
+	PKT_S_DESPAWN = 1008,
+	PKT_C_MOVE = 1009,
+	PKT_S_MOVE = 1010,
+	PKT_C_SKILL = 1011,
+	PKT_S_SKILL = 1012,
+	PKT_S_DAMAGED = 1013,
+	PKT_S_PARRY = 1014,
+	PKT_S_DEBUG = 1015,
 };
 
 bool Handle_INVALID(PacketSessionRef& session, BYTE* buffer, int32 len);
@@ -31,10 +33,12 @@ bool Handle_S_LOGIN(PacketSessionRef& session, Protocol::S_LOGIN&pkt);
 bool Handle_S_ENTER_GAME(PacketSessionRef& session, Protocol::S_ENTER_GAME&pkt);
 bool Handle_S_LEAVE_GAME(PacketSessionRef& session, Protocol::S_LEAVE_GAME&pkt);
 bool Handle_S_SPAWN(PacketSessionRef& session, Protocol::S_SPAWN&pkt);
+bool Handle_S_SPAWNDUMMY(PacketSessionRef& session, Protocol::S_SPAWNDUMMY&pkt);
 bool Handle_S_DESPAWN(PacketSessionRef& session, Protocol::S_DESPAWN&pkt);
 bool Handle_S_MOVE(PacketSessionRef& session, Protocol::S_MOVE&pkt);
 bool Handle_S_SKILL(PacketSessionRef& session, Protocol::S_SKILL&pkt);
 bool Handle_S_DAMAGED(PacketSessionRef& session, Protocol::S_DAMAGED&pkt);
+bool Handle_S_PARRY(PacketSessionRef& session, Protocol::S_PARRY&pkt);
 bool Handle_S_DEBUG(PacketSessionRef& session, Protocol::S_DEBUG&pkt);
 
 class ServerPacketHandler
@@ -48,10 +52,12 @@ public:
 		GPacketHandler[PKT_S_ENTER_GAME] = [](PacketSessionRef& session, BYTE* buffer, int32 len) { return HandlePacket<Protocol::S_ENTER_GAME >(Handle_S_ENTER_GAME, session, buffer, len); };
 		GPacketHandler[PKT_S_LEAVE_GAME] = [](PacketSessionRef& session, BYTE* buffer, int32 len) { return HandlePacket<Protocol::S_LEAVE_GAME >(Handle_S_LEAVE_GAME, session, buffer, len); };
 		GPacketHandler[PKT_S_SPAWN] = [](PacketSessionRef& session, BYTE* buffer, int32 len) { return HandlePacket<Protocol::S_SPAWN >(Handle_S_SPAWN, session, buffer, len); };
+		GPacketHandler[PKT_S_SPAWNDUMMY] = [](PacketSessionRef& session, BYTE* buffer, int32 len) { return HandlePacket<Protocol::S_SPAWNDUMMY >(Handle_S_SPAWNDUMMY, session, buffer, len); };
 		GPacketHandler[PKT_S_DESPAWN] = [](PacketSessionRef& session, BYTE* buffer, int32 len) { return HandlePacket<Protocol::S_DESPAWN >(Handle_S_DESPAWN, session, buffer, len); };
 		GPacketHandler[PKT_S_MOVE] = [](PacketSessionRef& session, BYTE* buffer, int32 len) { return HandlePacket<Protocol::S_MOVE >(Handle_S_MOVE, session, buffer, len); };
 		GPacketHandler[PKT_S_SKILL] = [](PacketSessionRef& session, BYTE* buffer, int32 len) { return HandlePacket<Protocol::S_SKILL >(Handle_S_SKILL, session, buffer, len); };
 		GPacketHandler[PKT_S_DAMAGED] = [](PacketSessionRef& session, BYTE* buffer, int32 len) { return HandlePacket<Protocol::S_DAMAGED >(Handle_S_DAMAGED, session, buffer, len); };
+		GPacketHandler[PKT_S_PARRY] = [](PacketSessionRef& session, BYTE* buffer, int32 len) { return HandlePacket<Protocol::S_PARRY >(Handle_S_PARRY, session, buffer, len); };
 		GPacketHandler[PKT_S_DEBUG] = [](PacketSessionRef& session, BYTE* buffer, int32 len) { return HandlePacket<Protocol::S_DEBUG >(Handle_S_DEBUG, session, buffer, len); };
 	}
 

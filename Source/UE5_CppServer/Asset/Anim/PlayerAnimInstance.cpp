@@ -86,6 +86,11 @@ void UPlayerAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 		PlayHittedAnimation();
 		break;
 	}
+	case Protocol::ACTION_STATE_PARRY:
+	{
+		PlayParryAnimation();
+		break;
+	}
 	default:
 		break;
 	}
@@ -167,6 +172,21 @@ void UPlayerAnimInstance::PlayHittedAnimation()
 		GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, TEXT("[ UPlayerAnimInstance ] : Error - Invalid Damaged Dir"));
 		break;
 	}
+
+	if (IsAnyMontagePlaying() == false)
+	{
+		// 재생 종료
+		OwnerCharacter->SetActionState(Protocol::ACTION_STATE_NONE);
+		OwnerCharacter->ResetDamageDir();
+		State = StateTags::State_Action_None;
+	}
+}
+
+void UPlayerAnimInstance::PlayParryAnimation()
+{
+	State = StateTags::State_Action_Parry;
+
+	OwnerCharacter->PlayAnimMontage(ParryMontage, 1.0, "UP_TO_DOWN");
 
 	if (IsAnyMontagePlaying() == false)
 	{
