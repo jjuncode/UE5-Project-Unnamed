@@ -162,9 +162,8 @@ inline bool MoveState_Parse(
 enum ActionState : int {
   ACTION_STATE_NONE = 0,
   ACTION_STATE_SKILL = 1,
-  ACTION_STATE_CAN_BE_DAMAGED = 2,
-  ACTION_STATE_DAMAGED = 3,
-  ACTION_STATE_PARRY = 4,
+  ACTION_STATE_DAMAGED = 2,
+  ACTION_STATE_PARRY = 3,
   ActionState_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
   ActionState_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
 };

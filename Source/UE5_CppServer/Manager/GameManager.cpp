@@ -72,7 +72,7 @@ void UGameManager::HandleSpawn(const Protocol::ObjectInfo& PlayerInfo, bool IsMi
 			DummyPlayer->SetObjectInfo(PlayerInfo);
 			Players.Add(ObjectId, DummyPlayer);
 
-			DummyPlayer->Caching();
+			DummyPlayer->Caching(true);
 		}
 
 	}
@@ -142,6 +142,11 @@ void UGameManager::HandleMove(const Protocol::S_MOVE& MovePkt)
 	Player->SetDesntInfo(MovePkt.player_info());								// 목적지 설정
 	Player->SetMoveState(MovePkt.player_info().creature_info().move_state());	// 상태 설정
 	Player->SetMoveDir(MovePkt.move_dir());										// 방향 설정
+
+	// 위치 강제 동기화
+	Protocol::Vec3 Pos = MovePkt.player_info().pos();
+	FVector Location{ Pos.x(), Pos.y(), Pos.z()};
+	Player->SetActorLocation(Location);
 }
 
 void UGameManager::HandleSkill(const Protocol::S_SKILL& SkillPkt)

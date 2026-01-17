@@ -41,15 +41,14 @@ const char descriptor_table_protodef_Enum_2eproto[] PROTOBUF_SECTION_VARIABLE(pr
   "IR_RIGHT_TO_LEFT\020\003\022\025\n\021DIR_LEFT_TO_RIGHT\020"
   "\004\022\r\n\tDIR_FRONT\020\005*^\n\tMoveState\022\023\n\017MOVE_ST"
   "ATE_NONE\020\000\022\023\n\017MOVE_STATE_IDLE\020\001\022\022\n\016MOVE_"
-  "STATE_RUN\020\002\022\023\n\017MOVE_STATE_JUMP\020\003*\217\001\n\013Act"
-  "ionState\022\025\n\021ACTION_STATE_NONE\020\000\022\026\n\022ACTIO"
-  "N_STATE_SKILL\020\001\022\037\n\033ACTION_STATE_CAN_BE_D"
-  "AMAGED\020\002\022\030\n\024ACTION_STATE_DAMAGED\020\003\022\026\n\022AC"
-  "TION_STATE_PARRY\020\004b\006proto3"
+  "STATE_RUN\020\002\022\023\n\017MOVE_STATE_JUMP\020\003*n\n\013Acti"
+  "onState\022\025\n\021ACTION_STATE_NONE\020\000\022\026\n\022ACTION"
+  "_STATE_SKILL\020\001\022\030\n\024ACTION_STATE_DAMAGED\020\002"
+  "\022\026\n\022ACTION_STATE_PARRY\020\003b\006proto3"
   ;
 static ::_pbi::once_flag descriptor_table_Enum_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_Enum_2eproto = {
-    false, false, 666, descriptor_table_protodef_Enum_2eproto,
+    false, false, 632, descriptor_table_protodef_Enum_2eproto,
     "Enum.proto",
     &descriptor_table_Enum_2eproto_once, nullptr, 0, 0,
     schemas, file_default_instances, TableStruct_Enum_2eproto::offsets,
@@ -141,7 +140,6 @@ bool ActionState_IsValid(int value) {
     case 1:
     case 2:
     case 3:
-    case 4:
       return true;
     default:
       return false;

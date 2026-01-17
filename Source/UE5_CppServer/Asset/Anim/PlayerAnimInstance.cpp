@@ -179,6 +179,11 @@ void UPlayerAnimInstance::PlayHittedAnimation()
 		OwnerCharacter->SetActionState(Protocol::ACTION_STATE_NONE);
 		OwnerCharacter->ResetDamageDir();
 		State = StateTags::State_Action_None;
+
+		// 스킬 시전중 데미지 입었을경우를 대비 
+		// 스킬정보 밀어버림
+		OwnerCharacter->SetCurPlayingSkill(Protocol::SKILL_INFO_NONE);
+		PlayingSkillInfo = Protocol::SKILL_INFO_NONE;
 	}
 }
 

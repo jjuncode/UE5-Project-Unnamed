@@ -92,6 +92,10 @@ void APlayerBase::MoveSync()
 	else
 	{
 		// 안움직이면 최신 정보와 강제 동기화
+		// 더미가 아닐 경우에만 
+		if ( bIsDummy)
+			return;
+
 		FVector Location{ DestnInfo.pos().x(), DestnInfo.pos().y(), DestnInfo.pos().z() };
 		SetActorLocation(Location);
 		SetActorRotation(FRotator(0, DestnInfo.yaw(), 0));
