@@ -178,7 +178,17 @@ void UGameManager::HandleDamaged(const Protocol::S_DAMAGED& DamagePkt)
 void UGameManager::HandleParry(const Protocol::S_PARRY& ParryPkt)
 {
 	// 패링 수행
+	Protocol::ObjectInfo ObjectInfo = ParryPkt.object_info();
 
+	// Damage받은 애 정보 셋팅 
+	TObjectPtr<APlayerBase>* ParryCreature = Players.Find(ObjectInfo.creature_info().id());
+	ensureMsgf(ParryCreature, TEXT("[GameManager - HandleParry] : Can't Find Player"));
+
+	IParryable* PC = Cast<IParryable>(*ParryCreature);
+	if (PC)
+	{
+		PC->Parry(ParryPkt);
+	}
 }
 
 void UGameManager::HandleDebugMessage(const Protocol::S_DEBUG& DebugPkt)
@@ -257,6 +267,9 @@ bool UGameManager::IsMyPlayer(TObjectPtr<class APlayerBase> rhs)
 
 bool UGameManager::IsMyPlayer(int32 Id)
 {
+	if (MyPlayer == nullptr)
+		return false;
+
 	if (Id == MyPlayer->GetObjectInfo().creature_info().id())
 		return true;
 	return false;

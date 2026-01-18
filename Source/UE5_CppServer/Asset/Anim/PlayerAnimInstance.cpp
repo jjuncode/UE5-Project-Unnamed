@@ -189,9 +189,12 @@ void UPlayerAnimInstance::PlayHittedAnimation()
 
 void UPlayerAnimInstance::PlayParryAnimation()
 {
-	State = StateTags::State_Action_Parry;
-
-	OwnerCharacter->PlayAnimMontage(ParryMontage, 1.0, "UP_TO_DOWN");
+	// 한번만 수행해야한다.
+	if (State != StateTags::State_Action_Parry)
+	{
+		State = StateTags::State_Action_Parry;
+		OwnerCharacter->PlayAnimMontage(ParryMontage, 1.0, "Parry");
+	}
 
 	if (IsAnyMontagePlaying() == false)
 	{
@@ -199,5 +202,9 @@ void UPlayerAnimInstance::PlayParryAnimation()
 		OwnerCharacter->SetActionState(Protocol::ACTION_STATE_NONE);
 		OwnerCharacter->ResetDamageDir();
 		State = StateTags::State_Action_None;
+
+		// 스킬정보 밀어버림
+		OwnerCharacter->SetCurPlayingSkill(Protocol::SKILL_INFO_NONE);
+		PlayingSkillInfo = Protocol::SKILL_INFO_NONE;
 	}
 }

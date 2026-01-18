@@ -4,12 +4,15 @@
 
 #include "CoreMinimal.h"
 #include "Creature.h"
+
 #include "Interface/Weaponable.h"
 #include "Interface/Damageable.h"
+#include "Interface/Parryable.h"
+
 #include "PlayerBase.generated.h"
 
 UCLASS()
-class UE5_CPPSERVER_API APlayerBase : public ACreature, public IWeaponable, public IDamageable
+class UE5_CPPSERVER_API APlayerBase : public ACreature, public IWeaponable, public IDamageable, public IParryable
 {
 	GENERATED_BODY()
 
@@ -35,6 +38,11 @@ public:
 
 	virtual Protocol::AttackDir GetDamagedDir() const override { return DamagedDir; }
 	virtual void ResetDamageDir() override { DamagedDir = Protocol::DIR_NONE; }
+
+	// --------------------------------
+	//		Interface - Parryable
+	// --------------------------------
+	virtual void Parry(Protocol::S_PARRY ParryInfo);
 
 	// ----------------------
 	//		Event Handle
