@@ -63,7 +63,7 @@ void AClientPlayerController::HandleEvent(FGameplayTag EventTag)
 	}
 }
 
-void AClientPlayerController::_HandleMoveAction(const FInputActionValue& Value, const Protocol::MoveState& State )
+void AClientPlayerController::_HandleMoveAction(const FInputActionValue& Value, const Protocol::ActionState& State )
 {
 	FVector2D InputValue = Value.Get<FVector2D>();
 
@@ -75,18 +75,24 @@ void AClientPlayerController::_HandleMoveAction(const FInputActionValue& Value, 
 	ClientPlayer->SetMoveDir(MoveDir);
 
 	ClientPlayer->AddMovementInput(MoveDir);
-	ClientPlayer->SetMoveState(State);
+	ClientPlayer->SetActionState(State);
 }
 
 void AClientPlayerController::HandleMoveActionTrigerred(const FInputActionValue& Value)
 {
-	_HandleMoveAction(Value, Protocol::MOVE_STATE_RUN);
+	// IDLE / RUN 상태에서만 움직이기가 가능하다
+	if (ClientPlayer->GetActionState() == Protocol::ACTION_STATE_MOVE_IDLE
+		|| ClientPlayer->GetActionState() == Protocol::ACTION_STATE_MOVE_RUN)
+	{}
+	else return;
+
+	_HandleMoveAction(Value, Protocol::ACTION_STATE_MOVE_RUN);
 }
 
 void AClientPlayerController::HandleMoveActionCompleted(const FInputActionValue& Value)
 {
 	ClientPlayer->ForceSendMovePkt();
-	_HandleMoveAction(Value, Protocol::MOVE_STATE_IDLE);
+	_HandleMoveAction(Value, Protocol::ACTION_STATE_MOVE_IDLE);
 }
 
 
@@ -100,6 +106,12 @@ void AClientPlayerController::HandleMouseLookAction(const FInputActionValue& Val
 
 void AClientPlayerController::HandleSkillAction(const FInputActionValue& Value)
 {
+	if (ClientPlayer->GetActionState() == Protocol::ACTION_STATE_MOVE_IDLE
+		|| ClientPlayer->GetActionState() == Protocol::ACTION_STATE_MOVE_RUN)
+	{}
+	else
+		return;
+
 	if (ClientPlayer->GetCurPlayingSkill() != Protocol::SKILL_INFO_NONE)
 		return;
 

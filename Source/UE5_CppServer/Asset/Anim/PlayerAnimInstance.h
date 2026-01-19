@@ -18,16 +18,13 @@ public:
 	virtual void NativeUpdateAnimation(float DeltaSeconds) override;
 
 private:
-	void PlaySkillAnimation();
+	void PlayAttackAnimationTry();
+	void PlayAttackAnimationSuccess();
+	void PlayAttackAnimationFailed();
 	void PlayHittedAnimation();
 	void PlayParryAnimation();
 
 protected:
-	// ------------------
-	//		Caching
-	// ------------------
-	Protocol::SkillInfo PlayingSkillInfo = Protocol::SKILL_INFO_NONE;
-
 	// ------------------
 	//		Montage
 	// ------------------

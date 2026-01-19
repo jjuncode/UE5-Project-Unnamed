@@ -3,20 +3,18 @@
 
 #include "Tags.h"
 
-namespace StateTags
+namespace ActionState
 {
-    UE_DEFINE_GAMEPLAY_TAG(Movement_Mode_Walking, "Movement.Mode.Walking");
-
-    // Move State
-    UE_DEFINE_GAMEPLAY_TAG(State_Move_None , "State.Move.None");
-    UE_DEFINE_GAMEPLAY_TAG(State_Move_Idle , "State.Move.None");
-    UE_DEFINE_GAMEPLAY_TAG(State_Move_Run  , "State.Move.None");
+	 // Action State
+    UE_DEFINE_GAMEPLAY_TAG(State_Action_None        , "State.Action.None");
+    UE_DEFINE_GAMEPLAY_TAG(State_Action_Move_Idle   , "State.Action.Move.Idle");
+    UE_DEFINE_GAMEPLAY_TAG(State_Action_Move_Run    , "State.Action.Move.Run");
     
-     // Action State
-     UE_DEFINE_GAMEPLAY_TAG(State_Action_None       , "State.Action.None");
-     UE_DEFINE_GAMEPLAY_TAG(State_Action_Skill      , "State.Action.Skill");
-     UE_DEFINE_GAMEPLAY_TAG(State_Action_OnDamaged  , "State.Action.OnDamaged");
-     UE_DEFINE_GAMEPLAY_TAG(State_Action_Parry      , "State.Action.Parry");
+    UE_DEFINE_GAMEPLAY_TAG(State_Action_Attack_Try          , "State.Action.Attack.Try");
+    UE_DEFINE_GAMEPLAY_TAG(State_Action_Attack_Success      , "State.Action.Attack.Success");
+    UE_DEFINE_GAMEPLAY_TAG(State_Action_Attack_Interrupted  , "State.Action.Attack.Interrupted");
+    UE_DEFINE_GAMEPLAY_TAG(State_Action_OnDamaged           , "State.Action.Attack.OnDamaged");
+    UE_DEFINE_GAMEPLAY_TAG(State_Action_Parry               , "State.Action.Attack.Parry");
 }
 
 namespace EventTags

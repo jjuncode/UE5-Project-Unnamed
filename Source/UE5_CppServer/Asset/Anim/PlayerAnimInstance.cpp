@@ -69,18 +69,22 @@ void UPlayerAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 		Direction = ret;
 	}
 
-	Protocol::ActionState ActionState = OwnerCharacter->GetObjectInfo().creature_info().action_state();
+	Protocol::ActionState ActionState = OwnerCharacter->GetActionState();
 
 	switch (ActionState)
 	{
 	case Protocol::ACTION_STATE_NONE:
-		State = StateTags::State_Action_None;
+		State = ActionState::State_Action_None;
 		break;
-	case Protocol::ACTION_STATE_SKILL:
-	{
-		PlaySkillAnimation();
+	case Protocol::ACTION_STATE_ATTACK_TRY:
+		PlayAttackAnimationTry();
 		break;
-	}
+	case Protocol::ACTION_STATE_ATTACK_SUCCESS:
+		PlayAttackAnimationTry();
+		break;
+	case Protocol::ACTION_STATE_ATTACK_INTERRUPTED:
+		PlayAttackAnimationTry();
+		break;
 	case Protocol::ACTION_STATE_DAMAGED:
 	{
 		PlayHittedAnimation();
@@ -90,21 +94,35 @@ void UPlayerAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 	{
 		PlayParryAnimation();
 		break;
-	}
+	}	
+
 	default:
 		break;
 	}
+
+	// 재생 종료
+	if (IsAnyMontagePlaying() == false)
+	{
+		OwnerCharacter->SetActionState(Protocol::ACTION_STATE_MOVE_IDLE);
+		OwnerCharacter->ResetDamageDir();
+		State = ActionState::State_Action_Move_Idle;
+
+		// 스킬 시전중 데미지 입었을경우를 대비 
+		// 스킬정보 밀어버림
+		OwnerCharacter->SetCurPlayingSkill(Protocol::SKILL_INFO_NONE);
+	}
 }
 
-void UPlayerAnimInstance::PlaySkillAnimation()
+void UPlayerAnimInstance::PlayAttackAnimationTry()
 {
-	State = StateTags::State_Action_Skill;
-
-	// Skill Animation
-	Protocol::SkillInfo CurSkill = OwnerCharacter->GetCurPlayingSkill();
-
-	if (CurSkill != PlayingSkillInfo) // 한 스킬만 시전 가능 
+	// 한번만 수행해야한다.
+	if (State != ActionState::State_Action_Attack_Try)
 	{
+		State = ActionState::State_Action_Attack_Try;
+
+		// Skill Animation
+		Protocol::SkillInfo CurSkill = OwnerCharacter->GetCurPlayingSkill();
+
 		// 재생
 		switch (CurSkill)
 		{
@@ -128,83 +146,58 @@ void UPlayerAnimInstance::PlaySkillAnimation()
 			GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, TEXT("[ UPlayerAnimInstance ] : Error - Incorrect Skill Info"));
 			break;
 		}
-
-		PlayingSkillInfo = CurSkill;
 	}
+}
 
-	if (IsAnyMontagePlaying() == false)
-	{
-		// 재생 종료
-		OwnerCharacter->SetActionState(Protocol::ACTION_STATE_NONE);
+void UPlayerAnimInstance::PlayAttackAnimationSuccess()
+{
+}
 
-		// 스킬정보 밀어버림
-		OwnerCharacter->SetCurPlayingSkill(Protocol::SKILL_INFO_NONE);
-		PlayingSkillInfo = Protocol::SKILL_INFO_NONE;
-	}
+void UPlayerAnimInstance::PlayAttackAnimationFailed()
+{
 }
 
 void UPlayerAnimInstance::PlayHittedAnimation()
 {
-	Protocol::AttackDir DamageDir = OwnerCharacter->GetDamagedDir();
-	OwnerCharacter->ResetDamageDir();
-
-	State = StateTags::State_Action_OnDamaged;	// 피격 상태 
-	switch (DamageDir)
+	// 한번만 수행해야한다.
+	if (State != ActionState::State_Action_OnDamaged)
 	{
-	case Protocol::DIR_NONE:
-		break;
-	case Protocol::DIR_UP_TO_DOWN:
-		OwnerCharacter->PlayAnimMontage(HittedMontage, 1.0, "UP_TO_DOWN");
-		break;
-	case Protocol::DIR_DOWN_TO_UP:
-		OwnerCharacter->PlayAnimMontage(HittedMontage, 1.0, "DOWN_TO_UP");
-		break;
-	case Protocol::DIR_RIGHT_TO_LEFT:
-		OwnerCharacter->PlayAnimMontage(HittedMontage, 1.0, "RIGHT");
-		break;
-	case Protocol::DIR_LEFT_TO_RIGHT:
-		OwnerCharacter->PlayAnimMontage(HittedMontage, 1.0, "LEFT");
-		break;
-	case Protocol::DIR_FRONT:
-		OwnerCharacter->PlayAnimMontage(HittedMontage, 1.0, "FRONT");
-		break;
-	default:
-		GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, TEXT("[ UPlayerAnimInstance ] : Error - Invalid Damaged Dir"));
-		break;
-	}
+		State = ActionState::State_Action_OnDamaged;
 
-	if (IsAnyMontagePlaying() == false)
-	{
-		// 재생 종료
-		OwnerCharacter->SetActionState(Protocol::ACTION_STATE_NONE);
-		OwnerCharacter->ResetDamageDir();
-		State = StateTags::State_Action_None;
+		Protocol::AttackDir DamageDir = OwnerCharacter->GetDamagedDir();
 
-		// 스킬 시전중 데미지 입었을경우를 대비 
-		// 스킬정보 밀어버림
-		OwnerCharacter->SetCurPlayingSkill(Protocol::SKILL_INFO_NONE);
-		PlayingSkillInfo = Protocol::SKILL_INFO_NONE;
+		switch (DamageDir)
+		{
+		case Protocol::DIR_NONE:
+			break;
+		case Protocol::DIR_UP_TO_DOWN:
+			OwnerCharacter->PlayAnimMontage(HittedMontage, 1.0, "UP_TO_DOWN");
+			break;
+		case Protocol::DIR_DOWN_TO_UP:
+			OwnerCharacter->PlayAnimMontage(HittedMontage, 1.0, "DOWN_TO_UP");
+			break;
+		case Protocol::DIR_RIGHT_TO_LEFT:
+			OwnerCharacter->PlayAnimMontage(HittedMontage, 1.0, "RIGHT");
+			break;
+		case Protocol::DIR_LEFT_TO_RIGHT:
+			OwnerCharacter->PlayAnimMontage(HittedMontage, 1.0, "LEFT");
+			break;
+		case Protocol::DIR_FRONT:
+			OwnerCharacter->PlayAnimMontage(HittedMontage, 1.0, "FRONT");
+			break;
+		default:
+			GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, TEXT("[ UPlayerAnimInstance ] : Error - Invalid Damaged Dir"));
+			break;
+		}
 	}
 }
 
 void UPlayerAnimInstance::PlayParryAnimation()
 {
 	// 한번만 수행해야한다.
-	if (State != StateTags::State_Action_Parry)
+	if (State != ActionState::State_Action_Parry)
 	{
-		State = StateTags::State_Action_Parry;
+		State = ActionState::State_Action_Parry;
 		OwnerCharacter->PlayAnimMontage(ParryMontage, 1.0, "Parry");
-	}
-
-	if (IsAnyMontagePlaying() == false)
-	{
-		// 재생 종료
-		OwnerCharacter->SetActionState(Protocol::ACTION_STATE_NONE);
-		OwnerCharacter->ResetDamageDir();
-		State = StateTags::State_Action_None;
-
-		// 스킬정보 밀어버림
-		OwnerCharacter->SetCurPlayingSkill(Protocol::SKILL_INFO_NONE);
-		PlayingSkillInfo = Protocol::SKILL_INFO_NONE;
 	}
 }

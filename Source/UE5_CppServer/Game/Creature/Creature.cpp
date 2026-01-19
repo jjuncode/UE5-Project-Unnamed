@@ -14,10 +14,7 @@ void ACreature::BeginPlay()
 	Super::BeginPlay();
 
 	// Idle
-	{
-		Protocol::CreatureInfo* CreatureInfo = ObjectInfo.mutable_creature_info();
-		CreatureInfo->set_move_state(Protocol::MOVE_STATE_IDLE);
-	}
+	SetActionState(Protocol::ACTION_STATE_MOVE_IDLE);
 
 	// 정보 동기화
 	{
@@ -60,11 +57,6 @@ void ACreature::Tick(float DeltaTime)
 	}
 }
 
-void ACreature::SetMoveState(const Protocol::MoveState& rhs)
-{
-	Protocol::CreatureInfo* CreatureInfo = ObjectInfo.mutable_creature_info();
-	CreatureInfo->set_move_state(rhs);
-}
 void ACreature::SetActionState(const Protocol::ActionState& rhs)
 {
 	Protocol::CreatureInfo* CreatureInfo = ObjectInfo.mutable_creature_info();

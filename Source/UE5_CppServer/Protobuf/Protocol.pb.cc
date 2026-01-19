@@ -185,7 +185,8 @@ PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORIT
 PROTOBUF_CONSTEXPR S_DAMAGED::S_DAMAGED(
     ::_pbi::ConstantInitialized)
   : object_info_(nullptr)
-  , skill_data_(nullptr){}
+  , skill_data_(nullptr)
+  , attacker_id_(uint64_t{0u}){}
 struct S_DAMAGEDDefaultTypeInternal {
   PROTOBUF_CONSTEXPR S_DAMAGEDDefaultTypeInternal()
       : _instance(::_pbi::ConstantInitialized{}) {}
@@ -198,7 +199,8 @@ PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORIT
 PROTOBUF_CONSTEXPR S_PARRY::S_PARRY(
     ::_pbi::ConstantInitialized)
   : object_info_(nullptr)
-  , skill_data_(nullptr){}
+  , skill_data_(nullptr)
+  , attacker_id_(uint64_t{0u}){}
 struct S_PARRYDefaultTypeInternal {
   PROTOBUF_CONSTEXPR S_PARRYDefaultTypeInternal()
       : _instance(::_pbi::ConstantInitialized{}) {}
@@ -329,6 +331,7 @@ const uint32_t TableStruct_Protocol_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE
   ~0u,  // no _inlined_string_donated_
   PROTOBUF_FIELD_OFFSET(::Protocol::S_DAMAGED, object_info_),
   PROTOBUF_FIELD_OFFSET(::Protocol::S_DAMAGED, skill_data_),
+  PROTOBUF_FIELD_OFFSET(::Protocol::S_DAMAGED, attacker_id_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::Protocol::S_PARRY, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -337,6 +340,7 @@ const uint32_t TableStruct_Protocol_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE
   ~0u,  // no _inlined_string_donated_
   PROTOBUF_FIELD_OFFSET(::Protocol::S_PARRY, object_info_),
   PROTOBUF_FIELD_OFFSET(::Protocol::S_PARRY, skill_data_),
+  PROTOBUF_FIELD_OFFSET(::Protocol::S_PARRY, attacker_id_),
   ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::Protocol::S_DEBUG, _internal_metadata_),
   ~0u,  // no _extensions_
@@ -360,8 +364,8 @@ static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protode
   { 79, -1, -1, sizeof(::Protocol::C_SKILL)},
   { 88, -1, -1, sizeof(::Protocol::S_SKILL)},
   { 95, -1, -1, sizeof(::Protocol::S_DAMAGED)},
-  { 103, -1, -1, sizeof(::Protocol::S_PARRY)},
-  { 111, -1, -1, sizeof(::Protocol::S_DEBUG)},
+  { 104, -1, -1, sizeof(::Protocol::S_PARRY)},
+  { 113, -1, -1, sizeof(::Protocol::S_DEBUG)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
@@ -403,13 +407,14 @@ const char descriptor_table_protodef_Protocol_2eproto[] PROTOBUF_SECTION_VARIABL
   "data\030\001 \001(\0132\023.Protocol.SkillData\022\033\n\003pos\030\002"
   " \001(\0132\016.Protocol.Vec3\022\013\n\003yaw\030\003 \001(\002\"4\n\007S_S"
   "KILL\022)\n\013object_info\030\001 \001(\0132\024.Protocol.Obj"
-  "ectInfo\"_\n\tS_DAMAGED\022)\n\013object_info\030\001 \001("
+  "ectInfo\"t\n\tS_DAMAGED\022)\n\013object_info\030\001 \001("
   "\0132\024.Protocol.ObjectInfo\022\'\n\nskill_data\030\002 "
-  "\001(\0132\023.Protocol.SkillData\"]\n\007S_PARRY\022)\n\013o"
-  "bject_info\030\001 \001(\0132\024.Protocol.ObjectInfo\022\'"
-  "\n\nskill_data\030\002 \001(\0132\023.Protocol.SkillData\""
-  ",\n\007S_DEBUG\022!\n\004info\030\001 \001(\0132\023.Protocol.Debu"
-  "gInfob\006proto3"
+  "\001(\0132\023.Protocol.SkillData\022\023\n\013attacker_id\030"
+  "\003 \001(\004\"r\n\007S_PARRY\022)\n\013object_info\030\001 \001(\0132\024."
+  "Protocol.ObjectInfo\022\'\n\nskill_data\030\002 \001(\0132"
+  "\023.Protocol.SkillData\022\023\n\013attacker_id\030\003 \001("
+  "\004\",\n\007S_DEBUG\022!\n\004info\030\001 \001(\0132\023.Protocol.De"
+  "bugInfob\006proto3"
   ;
 static const ::_pbi::DescriptorTable* const descriptor_table_Protocol_2eproto_deps[2] = {
   &::descriptor_table_Enum_2eproto,
@@ -417,7 +422,7 @@ static const ::_pbi::DescriptorTable* const descriptor_table_Protocol_2eproto_de
 };
 static ::_pbi::once_flag descriptor_table_Protocol_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_Protocol_2eproto = {
-    false, false, 1013, descriptor_table_protodef_Protocol_2eproto,
+    false, false, 1055, descriptor_table_protodef_Protocol_2eproto,
     "Protocol.proto",
     &descriptor_table_Protocol_2eproto_once, descriptor_table_Protocol_2eproto_deps, 2, 16,
     schemas, file_default_instances, TableStruct_Protocol_2eproto::offsets,
@@ -2865,14 +2870,15 @@ S_DAMAGED::S_DAMAGED(const S_DAMAGED& from)
   } else {
     skill_data_ = nullptr;
   }
+  attacker_id_ = from.attacker_id_;
   // @@protoc_insertion_point(copy_constructor:Protocol.S_DAMAGED)
 }
 
 inline void S_DAMAGED::SharedCtor() {
 ::memset(reinterpret_cast<char*>(this) + static_cast<size_t>(
     reinterpret_cast<char*>(&object_info_) - reinterpret_cast<char*>(this)),
-    0, static_cast<size_t>(reinterpret_cast<char*>(&skill_data_) -
-    reinterpret_cast<char*>(&object_info_)) + sizeof(skill_data_));
+    0, static_cast<size_t>(reinterpret_cast<char*>(&attacker_id_) -
+    reinterpret_cast<char*>(&object_info_)) + sizeof(attacker_id_));
 }
 
 S_DAMAGED::~S_DAMAGED() {
@@ -2908,6 +2914,7 @@ void S_DAMAGED::Clear() {
     delete skill_data_;
   }
   skill_data_ = nullptr;
+  attacker_id_ = uint64_t{0u};
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -2929,6 +2936,14 @@ const char* S_DAMAGED::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx
       case 2:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
           ptr = ctx->ParseMessage(_internal_mutable_skill_data(), ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // uint64 attacker_id = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 24)) {
+          attacker_id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
         } else
           goto handle_unusual;
@@ -2976,6 +2991,12 @@ uint8_t* S_DAMAGED::_InternalSerialize(
         _Internal::skill_data(this).GetCachedSize(), target, stream);
   }
 
+  // uint64 attacker_id = 3;
+  if (this->_internal_attacker_id() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteUInt64ToArray(3, this->_internal_attacker_id(), target);
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
@@ -3006,6 +3027,11 @@ size_t S_DAMAGED::ByteSizeLong() const {
         *skill_data_);
   }
 
+  // uint64 attacker_id = 3;
+  if (this->_internal_attacker_id() != 0) {
+    total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(this->_internal_attacker_id());
+  }
+
   return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
 }
 
@@ -3034,6 +3060,9 @@ void S_DAMAGED::MergeFrom(const S_DAMAGED& from) {
   if (from._internal_has_skill_data()) {
     _internal_mutable_skill_data()->::Protocol::SkillData::MergeFrom(from._internal_skill_data());
   }
+  if (from._internal_attacker_id() != 0) {
+    _internal_set_attacker_id(from._internal_attacker_id());
+  }
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
 
@@ -3052,8 +3081,8 @@ void S_DAMAGED::InternalSwap(S_DAMAGED* other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(S_DAMAGED, skill_data_)
-      + sizeof(S_DAMAGED::skill_data_)
+      PROTOBUF_FIELD_OFFSET(S_DAMAGED, attacker_id_)
+      + sizeof(S_DAMAGED::attacker_id_)
       - PROTOBUF_FIELD_OFFSET(S_DAMAGED, object_info_)>(
           reinterpret_cast<char*>(&object_info_),
           reinterpret_cast<char*>(&other->object_info_));
@@ -3112,14 +3141,15 @@ S_PARRY::S_PARRY(const S_PARRY& from)
   } else {
     skill_data_ = nullptr;
   }
+  attacker_id_ = from.attacker_id_;
   // @@protoc_insertion_point(copy_constructor:Protocol.S_PARRY)
 }
 
 inline void S_PARRY::SharedCtor() {
 ::memset(reinterpret_cast<char*>(this) + static_cast<size_t>(
     reinterpret_cast<char*>(&object_info_) - reinterpret_cast<char*>(this)),
-    0, static_cast<size_t>(reinterpret_cast<char*>(&skill_data_) -
-    reinterpret_cast<char*>(&object_info_)) + sizeof(skill_data_));
+    0, static_cast<size_t>(reinterpret_cast<char*>(&attacker_id_) -
+    reinterpret_cast<char*>(&object_info_)) + sizeof(attacker_id_));
 }
 
 S_PARRY::~S_PARRY() {
@@ -3155,6 +3185,7 @@ void S_PARRY::Clear() {
     delete skill_data_;
   }
   skill_data_ = nullptr;
+  attacker_id_ = uint64_t{0u};
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -3176,6 +3207,14 @@ const char* S_PARRY::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) 
       case 2:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
           ptr = ctx->ParseMessage(_internal_mutable_skill_data(), ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // uint64 attacker_id = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 24)) {
+          attacker_id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
         } else
           goto handle_unusual;
@@ -3223,6 +3262,12 @@ uint8_t* S_PARRY::_InternalSerialize(
         _Internal::skill_data(this).GetCachedSize(), target, stream);
   }
 
+  // uint64 attacker_id = 3;
+  if (this->_internal_attacker_id() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteUInt64ToArray(3, this->_internal_attacker_id(), target);
+  }
+
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
     target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
         _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
@@ -3253,6 +3298,11 @@ size_t S_PARRY::ByteSizeLong() const {
         *skill_data_);
   }
 
+  // uint64 attacker_id = 3;
+  if (this->_internal_attacker_id() != 0) {
+    total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(this->_internal_attacker_id());
+  }
+
   return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
 }
 
@@ -3281,6 +3331,9 @@ void S_PARRY::MergeFrom(const S_PARRY& from) {
   if (from._internal_has_skill_data()) {
     _internal_mutable_skill_data()->::Protocol::SkillData::MergeFrom(from._internal_skill_data());
   }
+  if (from._internal_attacker_id() != 0) {
+    _internal_set_attacker_id(from._internal_attacker_id());
+  }
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
 
@@ -3299,8 +3352,8 @@ void S_PARRY::InternalSwap(S_PARRY* other) {
   using std::swap;
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(S_PARRY, skill_data_)
-      + sizeof(S_PARRY::skill_data_)
+      PROTOBUF_FIELD_OFFSET(S_PARRY, attacker_id_)
+      + sizeof(S_PARRY::attacker_id_)
       - PROTOBUF_FIELD_OFFSET(S_PARRY, object_info_)>(
           reinterpret_cast<char*>(&object_info_),
           reinterpret_cast<char*>(&other->object_info_));

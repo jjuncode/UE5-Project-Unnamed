@@ -376,9 +376,8 @@ class CreatureInfo final :
 
   enum : int {
     kIdFieldNumber = 1,
-    kMoveStateFieldNumber = 2,
-    kActionStateFieldNumber = 3,
-    kSkillInfoFieldNumber = 4,
+    kActionStateFieldNumber = 2,
+    kSkillInfoFieldNumber = 3,
   };
   // uint64 id = 1;
   void clear_id();
@@ -389,16 +388,7 @@ class CreatureInfo final :
   void _internal_set_id(uint64_t value);
   public:
 
-  // .Protocol.MoveState move_state = 2;
-  void clear_move_state();
-  ::Protocol::MoveState move_state() const;
-  void set_move_state(::Protocol::MoveState value);
-  private:
-  ::Protocol::MoveState _internal_move_state() const;
-  void _internal_set_move_state(::Protocol::MoveState value);
-  public:
-
-  // .Protocol.ActionState action_state = 3;
+  // .Protocol.ActionState action_state = 2;
   void clear_action_state();
   ::Protocol::ActionState action_state() const;
   void set_action_state(::Protocol::ActionState value);
@@ -407,7 +397,7 @@ class CreatureInfo final :
   void _internal_set_action_state(::Protocol::ActionState value);
   public:
 
-  // .Protocol.SkillInfo skill_info = 4;
+  // .Protocol.SkillInfo skill_info = 3;
   void clear_skill_info();
   ::Protocol::SkillInfo skill_info() const;
   void set_skill_info(::Protocol::SkillInfo value);
@@ -424,7 +414,6 @@ class CreatureInfo final :
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
   uint64_t id_;
-  int move_state_;
   int action_state_;
   int skill_info_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
@@ -1260,27 +1249,7 @@ inline void CreatureInfo::set_id(uint64_t value) {
   // @@protoc_insertion_point(field_set:Protocol.CreatureInfo.id)
 }
 
-// .Protocol.MoveState move_state = 2;
-inline void CreatureInfo::clear_move_state() {
-  move_state_ = 0;
-}
-inline ::Protocol::MoveState CreatureInfo::_internal_move_state() const {
-  return static_cast< ::Protocol::MoveState >(move_state_);
-}
-inline ::Protocol::MoveState CreatureInfo::move_state() const {
-  // @@protoc_insertion_point(field_get:Protocol.CreatureInfo.move_state)
-  return _internal_move_state();
-}
-inline void CreatureInfo::_internal_set_move_state(::Protocol::MoveState value) {
-  
-  move_state_ = value;
-}
-inline void CreatureInfo::set_move_state(::Protocol::MoveState value) {
-  _internal_set_move_state(value);
-  // @@protoc_insertion_point(field_set:Protocol.CreatureInfo.move_state)
-}
-
-// .Protocol.ActionState action_state = 3;
+// .Protocol.ActionState action_state = 2;
 inline void CreatureInfo::clear_action_state() {
   action_state_ = 0;
 }
@@ -1300,7 +1269,7 @@ inline void CreatureInfo::set_action_state(::Protocol::ActionState value) {
   // @@protoc_insertion_point(field_set:Protocol.CreatureInfo.action_state)
 }
 
-// .Protocol.SkillInfo skill_info = 4;
+// .Protocol.SkillInfo skill_info = 3;
 inline void CreatureInfo::clear_skill_info() {
   skill_info_ = 0;
 }

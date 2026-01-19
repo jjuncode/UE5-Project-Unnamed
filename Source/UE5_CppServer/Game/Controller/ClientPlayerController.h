@@ -33,7 +33,7 @@ private:
 	//		Handle IA 
 	// -----------------------
 	// IA_Move
-	void _HandleMoveAction(const FInputActionValue& Value, const Protocol::MoveState& State);
+	void _HandleMoveAction(const FInputActionValue& Value, const Protocol::ActionState& State);
 	void HandleMoveActionTrigerred(const FInputActionValue& Value);
 	void HandleMoveActionCompleted(const FInputActionValue& Value);
 

@@ -2224,6 +2224,7 @@ class S_DAMAGED final :
   enum : int {
     kObjectInfoFieldNumber = 1,
     kSkillDataFieldNumber = 2,
+    kAttackerIdFieldNumber = 3,
   };
   // .Protocol.ObjectInfo object_info = 1;
   bool has_object_info() const;
@@ -2261,6 +2262,15 @@ class S_DAMAGED final :
       ::Protocol::SkillData* skill_data);
   ::Protocol::SkillData* unsafe_arena_release_skill_data();
 
+  // uint64 attacker_id = 3;
+  void clear_attacker_id();
+  uint64_t attacker_id() const;
+  void set_attacker_id(uint64_t value);
+  private:
+  uint64_t _internal_attacker_id() const;
+  void _internal_set_attacker_id(uint64_t value);
+  public:
+
   // @@protoc_insertion_point(class_scope:Protocol.S_DAMAGED)
  private:
   class _Internal;
@@ -2270,6 +2280,7 @@ class S_DAMAGED final :
   typedef void DestructorSkippable_;
   ::Protocol::ObjectInfo* object_info_;
   ::Protocol::SkillData* skill_data_;
+  uint64_t attacker_id_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_Protocol_2eproto;
 };
@@ -2396,6 +2407,7 @@ class S_PARRY final :
   enum : int {
     kObjectInfoFieldNumber = 1,
     kSkillDataFieldNumber = 2,
+    kAttackerIdFieldNumber = 3,
   };
   // .Protocol.ObjectInfo object_info = 1;
   bool has_object_info() const;
@@ -2433,6 +2445,15 @@ class S_PARRY final :
       ::Protocol::SkillData* skill_data);
   ::Protocol::SkillData* unsafe_arena_release_skill_data();
 
+  // uint64 attacker_id = 3;
+  void clear_attacker_id();
+  uint64_t attacker_id() const;
+  void set_attacker_id(uint64_t value);
+  private:
+  uint64_t _internal_attacker_id() const;
+  void _internal_set_attacker_id(uint64_t value);
+  public:
+
   // @@protoc_insertion_point(class_scope:Protocol.S_PARRY)
  private:
   class _Internal;
@@ -2442,6 +2463,7 @@ class S_PARRY final :
   typedef void DestructorSkippable_;
   ::Protocol::ObjectInfo* object_info_;
   ::Protocol::SkillData* skill_data_;
+  uint64_t attacker_id_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_Protocol_2eproto;
 };
@@ -3816,6 +3838,26 @@ inline void S_DAMAGED::set_allocated_skill_data(::Protocol::SkillData* skill_dat
   // @@protoc_insertion_point(field_set_allocated:Protocol.S_DAMAGED.skill_data)
 }
 
+// uint64 attacker_id = 3;
+inline void S_DAMAGED::clear_attacker_id() {
+  attacker_id_ = uint64_t{0u};
+}
+inline uint64_t S_DAMAGED::_internal_attacker_id() const {
+  return attacker_id_;
+}
+inline uint64_t S_DAMAGED::attacker_id() const {
+  // @@protoc_insertion_point(field_get:Protocol.S_DAMAGED.attacker_id)
+  return _internal_attacker_id();
+}
+inline void S_DAMAGED::_internal_set_attacker_id(uint64_t value) {
+  
+  attacker_id_ = value;
+}
+inline void S_DAMAGED::set_attacker_id(uint64_t value) {
+  _internal_set_attacker_id(value);
+  // @@protoc_insertion_point(field_set:Protocol.S_DAMAGED.attacker_id)
+}
+
 // -------------------------------------------------------------------
 
 // S_PARRY
@@ -3988,6 +4030,26 @@ inline void S_PARRY::set_allocated_skill_data(::Protocol::SkillData* skill_data)
   }
   skill_data_ = skill_data;
   // @@protoc_insertion_point(field_set_allocated:Protocol.S_PARRY.skill_data)
+}
+
+// uint64 attacker_id = 3;
+inline void S_PARRY::clear_attacker_id() {
+  attacker_id_ = uint64_t{0u};
+}
+inline uint64_t S_PARRY::_internal_attacker_id() const {
+  return attacker_id_;
+}
+inline uint64_t S_PARRY::attacker_id() const {
+  // @@protoc_insertion_point(field_get:Protocol.S_PARRY.attacker_id)
+  return _internal_attacker_id();
+}
+inline void S_PARRY::_internal_set_attacker_id(uint64_t value) {
+  
+  attacker_id_ = value;
+}
+inline void S_PARRY::set_attacker_id(uint64_t value) {
+  _internal_set_attacker_id(value);
+  // @@protoc_insertion_point(field_set:Protocol.S_PARRY.attacker_id)
 }
 
 // -------------------------------------------------------------------

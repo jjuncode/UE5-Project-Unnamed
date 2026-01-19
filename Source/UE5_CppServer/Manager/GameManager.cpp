@@ -139,9 +139,9 @@ void UGameManager::HandleMove(const Protocol::S_MOVE& MovePkt)
 		return;
 
 	// Only About Other Player
-	Player->SetDesntInfo(MovePkt.player_info());								// 목적지 설정
-	Player->SetMoveState(MovePkt.player_info().creature_info().move_state());	// 상태 설정
-	Player->SetMoveDir(MovePkt.move_dir());										// 방향 설정
+	Player->SetDesntInfo(MovePkt.player_info());	// 목적지 설정
+	Player->SetMoveDir(MovePkt.move_dir());			// 방향 설정
+	Player->SetObjectInfo(MovePkt.player_info());	// update
 
 	// 위치 강제 동기화
 	Protocol::Vec3 Pos = MovePkt.player_info().pos();
@@ -158,6 +158,7 @@ void UGameManager::HandleSkill(const Protocol::S_SKILL& SkillPkt)
 	ensureMsgf(SkillUsePlayer, TEXT("[GameManager - HandleSkill] : Can't Find Player"));
 
 	(*SkillUsePlayer)->SetObjectInfo(ObjectInfo);
+	(*SkillUsePlayer)->SetCurPlayingSkill(ObjectInfo.creature_info().skill_info());
 }
 
 void UGameManager::HandleDamaged(const Protocol::S_DAMAGED& DamagePkt)
@@ -172,6 +173,14 @@ void UGameManager::HandleDamaged(const Protocol::S_DAMAGED& DamagePkt)
 	if (DC)
 	{
 		DC->OnDamaged(DamagePkt);
+	}
+
+	// 공격자 공격 성공 
+	uint64 AttackId = DamagePkt.attacker_id();
+	TObjectPtr<APlayerBase>* Attacker = Players.Find(AttackId);
+	if (Attacker)
+	{
+		(*Attacker)->SetActionState(Protocol::ACTION_STATE_ATTACK_SUCCESS);
 	}
 }
 
@@ -188,6 +197,14 @@ void UGameManager::HandleParry(const Protocol::S_PARRY& ParryPkt)
 	if (PC)
 	{
 		PC->Parry(ParryPkt);
+	}
+
+	// 공격자 공격 실패  
+	uint64 AttackId = ParryPkt.attacker_id();
+	TObjectPtr<APlayerBase>* Attacker = Players.Find(AttackId);
+	if (Attacker)
+	{
+		(*Attacker)->SetActionState(Protocol::ACTION_STATE_ATTACK_INTERRUPTED);
 	}
 }
 

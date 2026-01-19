@@ -47,33 +47,6 @@ PROTOBUF_NAMESPACE_OPEN
 PROTOBUF_NAMESPACE_CLOSE
 namespace Protocol {
 
-enum DebugShape : int {
-  DEBUG_SHAPE_NONE = 0,
-  DEBUG_SHAPE_BOX = 1,
-  DEBUG_SHAPE_CIRCLE = 2,
-  DEBUG_SHAPE_LINE = 3,
-  DebugShape_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
-  DebugShape_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
-};
-bool DebugShape_IsValid(int value);
-constexpr DebugShape DebugShape_MIN = DEBUG_SHAPE_NONE;
-constexpr DebugShape DebugShape_MAX = DEBUG_SHAPE_LINE;
-constexpr int DebugShape_ARRAYSIZE = DebugShape_MAX + 1;
-
-const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* DebugShape_descriptor();
-template<typename T>
-inline const std::string& DebugShape_Name(T enum_t_value) {
-  static_assert(::std::is_same<T, DebugShape>::value ||
-    ::std::is_integral<T>::value,
-    "Incorrect type passed to function DebugShape_Name.");
-  return ::PROTOBUF_NAMESPACE_ID::internal::NameOfEnum(
-    DebugShape_descriptor(), enum_t_value);
-}
-inline bool DebugShape_Parse(
-    ::PROTOBUF_NAMESPACE_ID::ConstStringParam name, DebugShape* value) {
-  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<DebugShape>(
-    DebugShape_descriptor(), name, value);
-}
 enum SkillInfo : int {
   SKILL_INFO_NONE = 0,
   SKILL_INFO_SLASH_UP = 1,
@@ -132,44 +105,22 @@ inline bool AttackDir_Parse(
   return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<AttackDir>(
     AttackDir_descriptor(), name, value);
 }
-enum MoveState : int {
-  MOVE_STATE_NONE = 0,
-  MOVE_STATE_IDLE = 1,
-  MOVE_STATE_RUN = 2,
-  MOVE_STATE_JUMP = 3,
-  MoveState_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
-  MoveState_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
-};
-bool MoveState_IsValid(int value);
-constexpr MoveState MoveState_MIN = MOVE_STATE_NONE;
-constexpr MoveState MoveState_MAX = MOVE_STATE_JUMP;
-constexpr int MoveState_ARRAYSIZE = MoveState_MAX + 1;
-
-const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* MoveState_descriptor();
-template<typename T>
-inline const std::string& MoveState_Name(T enum_t_value) {
-  static_assert(::std::is_same<T, MoveState>::value ||
-    ::std::is_integral<T>::value,
-    "Incorrect type passed to function MoveState_Name.");
-  return ::PROTOBUF_NAMESPACE_ID::internal::NameOfEnum(
-    MoveState_descriptor(), enum_t_value);
-}
-inline bool MoveState_Parse(
-    ::PROTOBUF_NAMESPACE_ID::ConstStringParam name, MoveState* value) {
-  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<MoveState>(
-    MoveState_descriptor(), name, value);
-}
 enum ActionState : int {
   ACTION_STATE_NONE = 0,
-  ACTION_STATE_SKILL = 1,
-  ACTION_STATE_DAMAGED = 2,
-  ACTION_STATE_PARRY = 3,
+  ACTION_STATE_MOVE_IDLE = 1,
+  ACTION_STATE_MOVE_RUN = 2,
+  ACTION_STATE_MOVE_JUMP = 3,
+  ACTION_STATE_ATTACK_TRY = 4,
+  ACTION_STATE_ATTACK_SUCCESS = 5,
+  ACTION_STATE_ATTACK_INTERRUPTED = 6,
+  ACTION_STATE_PARRY = 7,
+  ACTION_STATE_DAMAGED = 8,
   ActionState_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
   ActionState_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
 };
 bool ActionState_IsValid(int value);
 constexpr ActionState ActionState_MIN = ACTION_STATE_NONE;
-constexpr ActionState ActionState_MAX = ACTION_STATE_PARRY;
+constexpr ActionState ActionState_MAX = ACTION_STATE_DAMAGED;
 constexpr int ActionState_ARRAYSIZE = ActionState_MAX + 1;
 
 const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* ActionState_descriptor();
@@ -185,6 +136,33 @@ inline bool ActionState_Parse(
     ::PROTOBUF_NAMESPACE_ID::ConstStringParam name, ActionState* value) {
   return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<ActionState>(
     ActionState_descriptor(), name, value);
+}
+enum DebugShape : int {
+  DEBUG_SHAPE_NONE = 0,
+  DEBUG_SHAPE_BOX = 1,
+  DEBUG_SHAPE_CIRCLE = 2,
+  DEBUG_SHAPE_LINE = 3,
+  DebugShape_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
+  DebugShape_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
+};
+bool DebugShape_IsValid(int value);
+constexpr DebugShape DebugShape_MIN = DEBUG_SHAPE_NONE;
+constexpr DebugShape DebugShape_MAX = DEBUG_SHAPE_LINE;
+constexpr int DebugShape_ARRAYSIZE = DebugShape_MAX + 1;
+
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* DebugShape_descriptor();
+template<typename T>
+inline const std::string& DebugShape_Name(T enum_t_value) {
+  static_assert(::std::is_same<T, DebugShape>::value ||
+    ::std::is_integral<T>::value,
+    "Incorrect type passed to function DebugShape_Name.");
+  return ::PROTOBUF_NAMESPACE_ID::internal::NameOfEnum(
+    DebugShape_descriptor(), enum_t_value);
+}
+inline bool DebugShape_Parse(
+    ::PROTOBUF_NAMESPACE_ID::ConstStringParam name, DebugShape* value) {
+  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<DebugShape>(
+    DebugShape_descriptor(), name, value);
 }
 // ===================================================================
 
@@ -208,11 +186,6 @@ inline bool ActionState_Parse(
 
 PROTOBUF_NAMESPACE_OPEN
 
-template <> struct is_proto_enum< ::Protocol::DebugShape> : ::std::true_type {};
-template <>
-inline const EnumDescriptor* GetEnumDescriptor< ::Protocol::DebugShape>() {
-  return ::Protocol::DebugShape_descriptor();
-}
 template <> struct is_proto_enum< ::Protocol::SkillInfo> : ::std::true_type {};
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::Protocol::SkillInfo>() {
@@ -223,15 +196,15 @@ template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::Protocol::AttackDir>() {
   return ::Protocol::AttackDir_descriptor();
 }
-template <> struct is_proto_enum< ::Protocol::MoveState> : ::std::true_type {};
-template <>
-inline const EnumDescriptor* GetEnumDescriptor< ::Protocol::MoveState>() {
-  return ::Protocol::MoveState_descriptor();
-}
 template <> struct is_proto_enum< ::Protocol::ActionState> : ::std::true_type {};
 template <>
 inline const EnumDescriptor* GetEnumDescriptor< ::Protocol::ActionState>() {
   return ::Protocol::ActionState_descriptor();
+}
+template <> struct is_proto_enum< ::Protocol::DebugShape> : ::std::true_type {};
+template <>
+inline const EnumDescriptor* GetEnumDescriptor< ::Protocol::DebugShape>() {
+  return ::Protocol::DebugShape_descriptor();
 }
 
 PROTOBUF_NAMESPACE_CLOSE

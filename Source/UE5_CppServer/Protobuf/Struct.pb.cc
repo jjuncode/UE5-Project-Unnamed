@@ -38,8 +38,6 @@ PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORIT
 PROTOBUF_CONSTEXPR CreatureInfo::CreatureInfo(
     ::_pbi::ConstantInitialized)
   : id_(uint64_t{0u})
-  , move_state_(0)
-
   , action_state_(0)
 
   , skill_info_(0)
@@ -127,7 +125,6 @@ const uint32_t TableStruct_Struct_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(p
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
   PROTOBUF_FIELD_OFFSET(::Protocol::CreatureInfo, id_),
-  PROTOBUF_FIELD_OFFSET(::Protocol::CreatureInfo, move_state_),
   PROTOBUF_FIELD_OFFSET(::Protocol::CreatureInfo, action_state_),
   PROTOBUF_FIELD_OFFSET(::Protocol::CreatureInfo, skill_info_),
   ~0u,  // no _has_bits_
@@ -168,9 +165,9 @@ const uint32_t TableStruct_Struct_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(p
 static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, -1, sizeof(::Protocol::ObjectInfo)},
   { 9, -1, -1, sizeof(::Protocol::CreatureInfo)},
-  { 19, -1, -1, sizeof(::Protocol::Vec3)},
-  { 28, -1, -1, sizeof(::Protocol::DebugInfo)},
-  { 39, -1, -1, sizeof(::Protocol::SkillData)},
+  { 18, -1, -1, sizeof(::Protocol::Vec3)},
+  { 27, -1, -1, sizeof(::Protocol::DebugInfo)},
+  { 38, -1, -1, sizeof(::Protocol::SkillData)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
@@ -185,28 +182,27 @@ const char descriptor_table_protodef_Struct_2eproto[] PROTOBUF_SECTION_VARIABLE(
   "\n\014Struct.proto\022\010Protocol\032\nEnum.proto\"e\n\n"
   "ObjectInfo\022\033\n\003pos\030\001 \001(\0132\016.Protocol.Vec3\022"
   "\013\n\003yaw\030\002 \001(\002\022-\n\rcreature_info\030\003 \001(\0132\026.Pr"
-  "otocol.CreatureInfo\"\231\001\n\014CreatureInfo\022\n\n\002"
-  "id\030\001 \001(\004\022\'\n\nmove_state\030\002 \001(\0162\023.Protocol."
-  "MoveState\022+\n\014action_state\030\003 \001(\0162\025.Protoc"
-  "ol.ActionState\022\'\n\nskill_info\030\004 \001(\0162\023.Pro"
-  "tocol.SkillInfo\"\'\n\004Vec3\022\t\n\001x\030\001 \001(\002\022\t\n\001y\030"
-  "\002 \001(\002\022\t\n\001z\030\003 \001(\002\"\221\001\n\tDebugInfo\022\036\n\006center"
-  "\030\001 \001(\0132\016.Protocol.Vec3\022\036\n\006radius\030\002 \001(\0132\016"
-  ".Protocol.Vec3\022\020\n\010duration\030\003 \001(\002\022\r\n\005colo"
-  "r\030\004 \001(\005\022#\n\005shape\030\005 \001(\0162\024.Protocol.DebugS"
-  "hape\"\315\001\n\tSkillData\022\037\n\002id\030\001 \001(\0162\023.Protoco"
-  "l.SkillInfo\022\014\n\004name\030\002 \001(\t\022\'\n\nattack_dir\030"
-  "\003 \001(\0162\023.Protocol.AttackDir\022\022\n\nangle_left"
-  "\030\004 \001(\005\022\023\n\013angle_right\030\005 \001(\005\022\r\n\005range\030\006 \001"
-  "(\005\022\030\n\020hit_window_start\030\007 \001(\002\022\026\n\016hit_wind"
-  "ow_end\030\010 \001(\002b\006proto3"
+  "otocol.CreatureInfo\"p\n\014CreatureInfo\022\n\n\002i"
+  "d\030\001 \001(\004\022+\n\014action_state\030\002 \001(\0162\025.Protocol"
+  ".ActionState\022\'\n\nskill_info\030\003 \001(\0162\023.Proto"
+  "col.SkillInfo\"\'\n\004Vec3\022\t\n\001x\030\001 \001(\002\022\t\n\001y\030\002 "
+  "\001(\002\022\t\n\001z\030\003 \001(\002\"\221\001\n\tDebugInfo\022\036\n\006center\030\001"
+  " \001(\0132\016.Protocol.Vec3\022\036\n\006radius\030\002 \001(\0132\016.P"
+  "rotocol.Vec3\022\020\n\010duration\030\003 \001(\002\022\r\n\005color\030"
+  "\004 \001(\005\022#\n\005shape\030\005 \001(\0162\024.Protocol.DebugSha"
+  "pe\"\315\001\n\tSkillData\022\037\n\002id\030\001 \001(\0162\023.Protocol."
+  "SkillInfo\022\014\n\004name\030\002 \001(\t\022\'\n\nattack_dir\030\003 "
+  "\001(\0162\023.Protocol.AttackDir\022\022\n\nangle_left\030\004"
+  " \001(\005\022\023\n\013angle_right\030\005 \001(\005\022\r\n\005range\030\006 \001(\005"
+  "\022\030\n\020hit_window_start\030\007 \001(\002\022\026\n\016hit_window"
+  "_end\030\010 \001(\002b\006proto3"
   ;
 static const ::_pbi::DescriptorTable* const descriptor_table_Struct_2eproto_deps[1] = {
   &::descriptor_table_Enum_2eproto,
 };
 static ::_pbi::once_flag descriptor_table_Struct_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_Struct_2eproto = {
-    false, false, 700, descriptor_table_protodef_Struct_2eproto,
+    false, false, 658, descriptor_table_protodef_Struct_2eproto,
     "Struct.proto",
     &descriptor_table_Struct_2eproto_once, descriptor_table_Struct_2eproto_deps, 1, 5,
     schemas, file_default_instances, TableStruct_Struct_2eproto::offsets,
@@ -563,27 +559,18 @@ const char* CreatureInfo::_InternalParse(const char* ptr, ::_pbi::ParseContext* 
         } else
           goto handle_unusual;
         continue;
-      // .Protocol.MoveState move_state = 2;
+      // .Protocol.ActionState action_state = 2;
       case 2:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 16)) {
-          uint64_t val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
-          CHK_(ptr);
-          _internal_set_move_state(static_cast<::Protocol::MoveState>(val));
-        } else
-          goto handle_unusual;
-        continue;
-      // .Protocol.ActionState action_state = 3;
-      case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 24)) {
           uint64_t val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
           _internal_set_action_state(static_cast<::Protocol::ActionState>(val));
         } else
           goto handle_unusual;
         continue;
-      // .Protocol.SkillInfo skill_info = 4;
-      case 4:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 32)) {
+      // .Protocol.SkillInfo skill_info = 3;
+      case 3:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 24)) {
           uint64_t val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
           _internal_set_skill_info(static_cast<::Protocol::SkillInfo>(val));
@@ -625,25 +612,18 @@ uint8_t* CreatureInfo::_InternalSerialize(
     target = ::_pbi::WireFormatLite::WriteUInt64ToArray(1, this->_internal_id(), target);
   }
 
-  // .Protocol.MoveState move_state = 2;
-  if (this->_internal_move_state() != 0) {
-    target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteEnumToArray(
-      2, this->_internal_move_state(), target);
-  }
-
-  // .Protocol.ActionState action_state = 3;
+  // .Protocol.ActionState action_state = 2;
   if (this->_internal_action_state() != 0) {
     target = stream->EnsureSpace(target);
     target = ::_pbi::WireFormatLite::WriteEnumToArray(
-      3, this->_internal_action_state(), target);
+      2, this->_internal_action_state(), target);
   }
 
-  // .Protocol.SkillInfo skill_info = 4;
+  // .Protocol.SkillInfo skill_info = 3;
   if (this->_internal_skill_info() != 0) {
     target = stream->EnsureSpace(target);
     target = ::_pbi::WireFormatLite::WriteEnumToArray(
-      4, this->_internal_skill_info(), target);
+      3, this->_internal_skill_info(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -667,19 +647,13 @@ size_t CreatureInfo::ByteSizeLong() const {
     total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(this->_internal_id());
   }
 
-  // .Protocol.MoveState move_state = 2;
-  if (this->_internal_move_state() != 0) {
-    total_size += 1 +
-      ::_pbi::WireFormatLite::EnumSize(this->_internal_move_state());
-  }
-
-  // .Protocol.ActionState action_state = 3;
+  // .Protocol.ActionState action_state = 2;
   if (this->_internal_action_state() != 0) {
     total_size += 1 +
       ::_pbi::WireFormatLite::EnumSize(this->_internal_action_state());
   }
 
-  // .Protocol.SkillInfo skill_info = 4;
+  // .Protocol.SkillInfo skill_info = 3;
   if (this->_internal_skill_info() != 0) {
     total_size += 1 +
       ::_pbi::WireFormatLite::EnumSize(this->_internal_skill_info());
@@ -709,9 +683,6 @@ void CreatureInfo::MergeFrom(const CreatureInfo& from) {
 
   if (from._internal_id() != 0) {
     _internal_set_id(from._internal_id());
-  }
-  if (from._internal_move_state() != 0) {
-    _internal_set_move_state(from._internal_move_state());
   }
   if (from._internal_action_state() != 0) {
     _internal_set_action_state(from._internal_action_state());

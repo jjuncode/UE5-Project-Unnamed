@@ -3,16 +3,16 @@
 #pragma once
 #include "NativeGameplayTags.h"
 
-namespace StateTags
+namespace ActionState
 {
-    // Move State
-    UE_DECLARE_GAMEPLAY_TAG_EXTERN(State_Move_None);
-    UE_DECLARE_GAMEPLAY_TAG_EXTERN(State_Move_Idle);
-    UE_DECLARE_GAMEPLAY_TAG_EXTERN(State_Move_Run);
-
     // Action State
     UE_DECLARE_GAMEPLAY_TAG_EXTERN(State_Action_None);
-    UE_DECLARE_GAMEPLAY_TAG_EXTERN(State_Action_Skill);
+    UE_DECLARE_GAMEPLAY_TAG_EXTERN(State_Action_Move_Idle);
+    UE_DECLARE_GAMEPLAY_TAG_EXTERN(State_Action_Move_Run);
+
+    UE_DECLARE_GAMEPLAY_TAG_EXTERN(State_Action_Attack_Try);
+    UE_DECLARE_GAMEPLAY_TAG_EXTERN(State_Action_Attack_Success);
+    UE_DECLARE_GAMEPLAY_TAG_EXTERN(State_Action_Attack_Interrupted);
     UE_DECLARE_GAMEPLAY_TAG_EXTERN(State_Action_OnDamaged);
     UE_DECLARE_GAMEPLAY_TAG_EXTERN(State_Action_Parry);
 }
