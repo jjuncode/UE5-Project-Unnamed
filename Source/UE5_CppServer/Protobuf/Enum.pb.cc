@@ -29,28 +29,28 @@ static constexpr ::_pbi::MigrationSchema* schemas = nullptr;
 static constexpr ::_pb::Message* const* file_default_instances = nullptr;
 
 const char descriptor_table_protodef_Enum_2eproto[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) =
-  "\n\nEnum.proto\022\010Protocol*\240\001\n\tSkillInfo\022\023\n\017"
-  "SKILL_INFO_NONE\020\000\022\027\n\023SKILL_INFO_SLASH_UP"
-  "\020\001\022\031\n\025SKILL_INFO_SLASH_DOWN\020\002\022\031\n\025SKILL_I"
-  "NFO_SLASH_LEFT\020\003\022\032\n\026SKILL_INFO_SLASH_RIG"
-  "HT\020\004\022\023\n\017SKILL_INFO_KICK\020\005*~\n\tAttackDir\022\014"
-  "\n\010DIR_NONE\020\000\022\022\n\016DIR_DOWN_TO_UP\020\001\022\022\n\016DIR_"
-  "UP_TO_DOWN\020\002\022\025\n\021DIR_RIGHT_TO_LEFT\020\003\022\025\n\021D"
-  "IR_LEFT_TO_RIGHT\020\004\022\r\n\tDIR_FRONT\020\005*\214\002\n\013Ac"
-  "tionState\022\025\n\021ACTION_STATE_NONE\020\000\022\032\n\026ACTI"
-  "ON_STATE_MOVE_IDLE\020\001\022\031\n\025ACTION_STATE_MOV"
-  "E_RUN\020\002\022\032\n\026ACTION_STATE_MOVE_JUMP\020\003\022\033\n\027A"
-  "CTION_STATE_ATTACK_TRY\020\004\022\037\n\033ACTION_STATE"
-  "_ATTACK_SUCCESS\020\005\022#\n\037ACTION_STATE_ATTACK"
-  "_INTERRUPTED\020\006\022\026\n\022ACTION_STATE_PARRY\020\007\022\030"
-  "\n\024ACTION_STATE_DAMAGED\020\010*e\n\nDebugShape\022\024"
-  "\n\020DEBUG_SHAPE_NONE\020\000\022\023\n\017DEBUG_SHAPE_BOX\020"
-  "\001\022\026\n\022DEBUG_SHAPE_CIRCLE\020\002\022\024\n\020DEBUG_SHAPE"
-  "_LINE\020\003b\006proto3"
+  "\n\nEnum.proto\022\010Protocol*\236\001\n\007SkillId\022\023\n\017SK"
+  "ILL_INFO_NONE\020\000\022\027\n\023SKILL_INFO_SLASH_UP\020\001"
+  "\022\031\n\025SKILL_INFO_SLASH_DOWN\020\002\022\031\n\025SKILL_INF"
+  "O_SLASH_LEFT\020\003\022\032\n\026SKILL_INFO_SLASH_RIGHT"
+  "\020\004\022\023\n\017SKILL_INFO_KICK\020\005*~\n\tAttackDir\022\014\n\010"
+  "DIR_NONE\020\000\022\022\n\016DIR_DOWN_TO_UP\020\001\022\022\n\016DIR_UP"
+  "_TO_DOWN\020\002\022\025\n\021DIR_RIGHT_TO_LEFT\020\003\022\025\n\021DIR"
+  "_LEFT_TO_RIGHT\020\004\022\r\n\tDIR_FRONT\020\005*\214\002\n\013Acti"
+  "onState\022\025\n\021ACTION_STATE_NONE\020\000\022\032\n\026ACTION"
+  "_STATE_MOVE_IDLE\020\001\022\031\n\025ACTION_STATE_MOVE_"
+  "RUN\020\002\022\032\n\026ACTION_STATE_MOVE_JUMP\020\003\022\033\n\027ACT"
+  "ION_STATE_ATTACK_TRY\020\004\022\037\n\033ACTION_STATE_A"
+  "TTACK_SUCCESS\020\005\022#\n\037ACTION_STATE_ATTACK_I"
+  "NTERRUPTED\020\006\022\026\n\022ACTION_STATE_PARRY\020\007\022\030\n\024"
+  "ACTION_STATE_DAMAGED\020\010*e\n\nDebugShape\022\024\n\020"
+  "DEBUG_SHAPE_NONE\020\000\022\023\n\017DEBUG_SHAPE_BOX\020\001\022"
+  "\026\n\022DEBUG_SHAPE_CIRCLE\020\002\022\024\n\020DEBUG_SHAPE_L"
+  "INE\020\003b\006proto3"
   ;
 static ::_pbi::once_flag descriptor_table_Enum_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_Enum_2eproto = {
-    false, false, 695, descriptor_table_protodef_Enum_2eproto,
+    false, false, 693, descriptor_table_protodef_Enum_2eproto,
     "Enum.proto",
     &descriptor_table_Enum_2eproto_once, nullptr, 0, 0,
     schemas, file_default_instances, TableStruct_Enum_2eproto::offsets,
@@ -64,11 +64,11 @@ PROTOBUF_ATTRIBUTE_WEAK const ::_pbi::DescriptorTable* descriptor_table_Enum_2ep
 // Force running AddDescriptors() at dynamic initialization time.
 PROTOBUF_ATTRIBUTE_INIT_PRIORITY2 static ::_pbi::AddDescriptorsRunner dynamic_init_dummy_Enum_2eproto(&descriptor_table_Enum_2eproto);
 namespace Protocol {
-const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* SkillInfo_descriptor() {
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* SkillId_descriptor() {
   ::PROTOBUF_NAMESPACE_ID::internal::AssignDescriptors(&descriptor_table_Enum_2eproto);
   return file_level_enum_descriptors_Enum_2eproto[0];
 }
-bool SkillInfo_IsValid(int value) {
+bool SkillId_IsValid(int value) {
   switch (value) {
     case 0:
     case 1:

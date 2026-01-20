@@ -84,16 +84,10 @@ struct DebugInfoDefaultTypeInternal {
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 DebugInfoDefaultTypeInternal _DebugInfo_default_instance_;
 PROTOBUF_CONSTEXPR SkillData::SkillData(
     ::_pbi::ConstantInitialized)
-  : name_(&::_pbi::fixed_address_empty_string, ::_pbi::ConstantInitialized{})
-  , id_(0)
+  : id_(0)
 
   , attack_dir_(0)
-
-  , angle_left_(0)
-  , angle_right_(0)
-  , range_(0)
-  , hit_window_start_(0)
-  , hit_window_end_(0){}
+{}
 struct SkillDataDefaultTypeInternal {
   PROTOBUF_CONSTEXPR SkillDataDefaultTypeInternal()
       : _instance(::_pbi::ConstantInitialized{}) {}
@@ -154,13 +148,7 @@ const uint32_t TableStruct_Struct_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE(p
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
   PROTOBUF_FIELD_OFFSET(::Protocol::SkillData, id_),
-  PROTOBUF_FIELD_OFFSET(::Protocol::SkillData, name_),
   PROTOBUF_FIELD_OFFSET(::Protocol::SkillData, attack_dir_),
-  PROTOBUF_FIELD_OFFSET(::Protocol::SkillData, angle_left_),
-  PROTOBUF_FIELD_OFFSET(::Protocol::SkillData, angle_right_),
-  PROTOBUF_FIELD_OFFSET(::Protocol::SkillData, range_),
-  PROTOBUF_FIELD_OFFSET(::Protocol::SkillData, hit_window_start_),
-  PROTOBUF_FIELD_OFFSET(::Protocol::SkillData, hit_window_end_),
 };
 static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protodesc_cold) = {
   { 0, -1, -1, sizeof(::Protocol::ObjectInfo)},
@@ -182,27 +170,24 @@ const char descriptor_table_protodef_Struct_2eproto[] PROTOBUF_SECTION_VARIABLE(
   "\n\014Struct.proto\022\010Protocol\032\nEnum.proto\"e\n\n"
   "ObjectInfo\022\033\n\003pos\030\001 \001(\0132\016.Protocol.Vec3\022"
   "\013\n\003yaw\030\002 \001(\002\022-\n\rcreature_info\030\003 \001(\0132\026.Pr"
-  "otocol.CreatureInfo\"p\n\014CreatureInfo\022\n\n\002i"
+  "otocol.CreatureInfo\"n\n\014CreatureInfo\022\n\n\002i"
   "d\030\001 \001(\004\022+\n\014action_state\030\002 \001(\0162\025.Protocol"
-  ".ActionState\022\'\n\nskill_info\030\003 \001(\0162\023.Proto"
-  "col.SkillInfo\"\'\n\004Vec3\022\t\n\001x\030\001 \001(\002\022\t\n\001y\030\002 "
-  "\001(\002\022\t\n\001z\030\003 \001(\002\"\221\001\n\tDebugInfo\022\036\n\006center\030\001"
-  " \001(\0132\016.Protocol.Vec3\022\036\n\006radius\030\002 \001(\0132\016.P"
-  "rotocol.Vec3\022\020\n\010duration\030\003 \001(\002\022\r\n\005color\030"
-  "\004 \001(\005\022#\n\005shape\030\005 \001(\0162\024.Protocol.DebugSha"
-  "pe\"\315\001\n\tSkillData\022\037\n\002id\030\001 \001(\0162\023.Protocol."
-  "SkillInfo\022\014\n\004name\030\002 \001(\t\022\'\n\nattack_dir\030\003 "
-  "\001(\0162\023.Protocol.AttackDir\022\022\n\nangle_left\030\004"
-  " \001(\005\022\023\n\013angle_right\030\005 \001(\005\022\r\n\005range\030\006 \001(\005"
-  "\022\030\n\020hit_window_start\030\007 \001(\002\022\026\n\016hit_window"
-  "_end\030\010 \001(\002b\006proto3"
+  ".ActionState\022%\n\nskill_info\030\003 \001(\0162\021.Proto"
+  "col.SkillId\"\'\n\004Vec3\022\t\n\001x\030\001 \001(\002\022\t\n\001y\030\002 \001("
+  "\002\022\t\n\001z\030\003 \001(\002\"\221\001\n\tDebugInfo\022\036\n\006center\030\001 \001"
+  "(\0132\016.Protocol.Vec3\022\036\n\006radius\030\002 \001(\0132\016.Pro"
+  "tocol.Vec3\022\020\n\010duration\030\003 \001(\002\022\r\n\005color\030\004 "
+  "\001(\005\022#\n\005shape\030\005 \001(\0162\024.Protocol.DebugShape"
+  "\"S\n\tSkillData\022\035\n\002id\030\001 \001(\0162\021.Protocol.Ski"
+  "llId\022\'\n\nattack_dir\030\002 \001(\0162\023.Protocol.Atta"
+  "ckDirb\006proto3"
   ;
 static const ::_pbi::DescriptorTable* const descriptor_table_Struct_2eproto_deps[1] = {
   &::descriptor_table_Enum_2eproto,
 };
 static ::_pbi::once_flag descriptor_table_Struct_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_Struct_2eproto = {
-    false, false, 658, descriptor_table_protodef_Struct_2eproto,
+    false, false, 533, descriptor_table_protodef_Struct_2eproto,
     "Struct.proto",
     &descriptor_table_Struct_2eproto_once, descriptor_table_Struct_2eproto_deps, 1, 5,
     schemas, file_default_instances, TableStruct_Struct_2eproto::offsets,
@@ -568,12 +553,12 @@ const char* CreatureInfo::_InternalParse(const char* ptr, ::_pbi::ParseContext* 
         } else
           goto handle_unusual;
         continue;
-      // .Protocol.SkillInfo skill_info = 3;
+      // .Protocol.SkillId skill_info = 3;
       case 3:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 24)) {
           uint64_t val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
-          _internal_set_skill_info(static_cast<::Protocol::SkillInfo>(val));
+          _internal_set_skill_info(static_cast<::Protocol::SkillId>(val));
         } else
           goto handle_unusual;
         continue;
@@ -619,7 +604,7 @@ uint8_t* CreatureInfo::_InternalSerialize(
       2, this->_internal_action_state(), target);
   }
 
-  // .Protocol.SkillInfo skill_info = 3;
+  // .Protocol.SkillId skill_info = 3;
   if (this->_internal_skill_info() != 0) {
     target = stream->EnsureSpace(target);
     target = ::_pbi::WireFormatLite::WriteEnumToArray(
@@ -653,7 +638,7 @@ size_t CreatureInfo::ByteSizeLong() const {
       ::_pbi::WireFormatLite::EnumSize(this->_internal_action_state());
   }
 
-  // .Protocol.SkillInfo skill_info = 3;
+  // .Protocol.SkillId skill_info = 3;
   if (this->_internal_skill_info() != 0) {
     total_size += 1 +
       ::_pbi::WireFormatLite::EnumSize(this->_internal_skill_info());
@@ -1321,29 +1306,17 @@ SkillData::SkillData(::PROTOBUF_NAMESPACE_ID::Arena* arena,
 SkillData::SkillData(const SkillData& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  name_.InitDefault();
-  #ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-    name_.Set("", GetArenaForAllocation());
-  #endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (!from._internal_name().empty()) {
-    name_.Set(from._internal_name(), 
-      GetArenaForAllocation());
-  }
   ::memcpy(&id_, &from.id_,
-    static_cast<size_t>(reinterpret_cast<char*>(&hit_window_end_) -
-    reinterpret_cast<char*>(&id_)) + sizeof(hit_window_end_));
+    static_cast<size_t>(reinterpret_cast<char*>(&attack_dir_) -
+    reinterpret_cast<char*>(&id_)) + sizeof(attack_dir_));
   // @@protoc_insertion_point(copy_constructor:Protocol.SkillData)
 }
 
 inline void SkillData::SharedCtor() {
-name_.InitDefault();
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  name_.Set("", GetArenaForAllocation());
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
 ::memset(reinterpret_cast<char*>(this) + static_cast<size_t>(
     reinterpret_cast<char*>(&id_) - reinterpret_cast<char*>(this)),
-    0, static_cast<size_t>(reinterpret_cast<char*>(&hit_window_end_) -
-    reinterpret_cast<char*>(&id_)) + sizeof(hit_window_end_));
+    0, static_cast<size_t>(reinterpret_cast<char*>(&attack_dir_) -
+    reinterpret_cast<char*>(&id_)) + sizeof(attack_dir_));
 }
 
 SkillData::~SkillData() {
@@ -1357,7 +1330,6 @@ SkillData::~SkillData() {
 
 inline void SkillData::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
-  name_.Destroy();
 }
 
 void SkillData::SetCachedSize(int size) const {
@@ -1370,10 +1342,9 @@ void SkillData::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  name_.ClearToEmpty();
   ::memset(&id_, 0, static_cast<size_t>(
-      reinterpret_cast<char*>(&hit_window_end_) -
-      reinterpret_cast<char*>(&id_)) + sizeof(hit_window_end_));
+      reinterpret_cast<char*>(&attack_dir_) -
+      reinterpret_cast<char*>(&id_)) + sizeof(attack_dir_));
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -1383,71 +1354,21 @@ const char* SkillData::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx
     uint32_t tag;
     ptr = ::_pbi::ReadTag(ptr, &tag);
     switch (tag >> 3) {
-      // .Protocol.SkillInfo id = 1;
+      // .Protocol.SkillId id = 1;
       case 1:
         if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
           uint64_t val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
-          _internal_set_id(static_cast<::Protocol::SkillInfo>(val));
+          _internal_set_id(static_cast<::Protocol::SkillId>(val));
         } else
           goto handle_unusual;
         continue;
-      // string name = 2;
+      // .Protocol.AttackDir attack_dir = 2;
       case 2:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 18)) {
-          auto str = _internal_mutable_name();
-          ptr = ::_pbi::InlineGreedyStringParser(str, ptr, ctx);
-          CHK_(ptr);
-          CHK_(::_pbi::VerifyUTF8(str, "Protocol.SkillData.name"));
-        } else
-          goto handle_unusual;
-        continue;
-      // .Protocol.AttackDir attack_dir = 3;
-      case 3:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 24)) {
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 16)) {
           uint64_t val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
           _internal_set_attack_dir(static_cast<::Protocol::AttackDir>(val));
-        } else
-          goto handle_unusual;
-        continue;
-      // int32 angle_left = 4;
-      case 4:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 32)) {
-          angle_left_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
-          CHK_(ptr);
-        } else
-          goto handle_unusual;
-        continue;
-      // int32 angle_right = 5;
-      case 5:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 40)) {
-          angle_right_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
-          CHK_(ptr);
-        } else
-          goto handle_unusual;
-        continue;
-      // int32 range = 6;
-      case 6:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 48)) {
-          range_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint32(&ptr);
-          CHK_(ptr);
-        } else
-          goto handle_unusual;
-        continue;
-      // float hit_window_start = 7;
-      case 7:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 61)) {
-          hit_window_start_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<float>(ptr);
-          ptr += sizeof(float);
-        } else
-          goto handle_unusual;
-        continue;
-      // float hit_window_end = 8;
-      case 8:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 69)) {
-          hit_window_end_ = ::PROTOBUF_NAMESPACE_ID::internal::UnalignedLoad<float>(ptr);
-          ptr += sizeof(float);
         } else
           goto handle_unusual;
         continue;
@@ -1480,66 +1401,18 @@ uint8_t* SkillData::_InternalSerialize(
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // .Protocol.SkillInfo id = 1;
+  // .Protocol.SkillId id = 1;
   if (this->_internal_id() != 0) {
     target = stream->EnsureSpace(target);
     target = ::_pbi::WireFormatLite::WriteEnumToArray(
       1, this->_internal_id(), target);
   }
 
-  // string name = 2;
-  if (!this->_internal_name().empty()) {
-    ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::VerifyUtf8String(
-      this->_internal_name().data(), static_cast<int>(this->_internal_name().length()),
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::SERIALIZE,
-      "Protocol.SkillData.name");
-    target = stream->WriteStringMaybeAliased(
-        2, this->_internal_name(), target);
-  }
-
-  // .Protocol.AttackDir attack_dir = 3;
+  // .Protocol.AttackDir attack_dir = 2;
   if (this->_internal_attack_dir() != 0) {
     target = stream->EnsureSpace(target);
     target = ::_pbi::WireFormatLite::WriteEnumToArray(
-      3, this->_internal_attack_dir(), target);
-  }
-
-  // int32 angle_left = 4;
-  if (this->_internal_angle_left() != 0) {
-    target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteInt32ToArray(4, this->_internal_angle_left(), target);
-  }
-
-  // int32 angle_right = 5;
-  if (this->_internal_angle_right() != 0) {
-    target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteInt32ToArray(5, this->_internal_angle_right(), target);
-  }
-
-  // int32 range = 6;
-  if (this->_internal_range() != 0) {
-    target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteInt32ToArray(6, this->_internal_range(), target);
-  }
-
-  // float hit_window_start = 7;
-  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
-  float tmp_hit_window_start = this->_internal_hit_window_start();
-  uint32_t raw_hit_window_start;
-  memcpy(&raw_hit_window_start, &tmp_hit_window_start, sizeof(tmp_hit_window_start));
-  if (raw_hit_window_start != 0) {
-    target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteFloatToArray(7, this->_internal_hit_window_start(), target);
-  }
-
-  // float hit_window_end = 8;
-  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
-  float tmp_hit_window_end = this->_internal_hit_window_end();
-  uint32_t raw_hit_window_end;
-  memcpy(&raw_hit_window_end, &tmp_hit_window_end, sizeof(tmp_hit_window_end));
-  if (raw_hit_window_end != 0) {
-    target = stream->EnsureSpace(target);
-    target = ::_pbi::WireFormatLite::WriteFloatToArray(8, this->_internal_hit_window_end(), target);
+      2, this->_internal_attack_dir(), target);
   }
 
   if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
@@ -1558,56 +1431,16 @@ size_t SkillData::ByteSizeLong() const {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // string name = 2;
-  if (!this->_internal_name().empty()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::StringSize(
-        this->_internal_name());
-  }
-
-  // .Protocol.SkillInfo id = 1;
+  // .Protocol.SkillId id = 1;
   if (this->_internal_id() != 0) {
     total_size += 1 +
       ::_pbi::WireFormatLite::EnumSize(this->_internal_id());
   }
 
-  // .Protocol.AttackDir attack_dir = 3;
+  // .Protocol.AttackDir attack_dir = 2;
   if (this->_internal_attack_dir() != 0) {
     total_size += 1 +
       ::_pbi::WireFormatLite::EnumSize(this->_internal_attack_dir());
-  }
-
-  // int32 angle_left = 4;
-  if (this->_internal_angle_left() != 0) {
-    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_angle_left());
-  }
-
-  // int32 angle_right = 5;
-  if (this->_internal_angle_right() != 0) {
-    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_angle_right());
-  }
-
-  // int32 range = 6;
-  if (this->_internal_range() != 0) {
-    total_size += ::_pbi::WireFormatLite::Int32SizePlusOne(this->_internal_range());
-  }
-
-  // float hit_window_start = 7;
-  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
-  float tmp_hit_window_start = this->_internal_hit_window_start();
-  uint32_t raw_hit_window_start;
-  memcpy(&raw_hit_window_start, &tmp_hit_window_start, sizeof(tmp_hit_window_start));
-  if (raw_hit_window_start != 0) {
-    total_size += 1 + 4;
-  }
-
-  // float hit_window_end = 8;
-  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
-  float tmp_hit_window_end = this->_internal_hit_window_end();
-  uint32_t raw_hit_window_end;
-  memcpy(&raw_hit_window_end, &tmp_hit_window_end, sizeof(tmp_hit_window_end));
-  if (raw_hit_window_end != 0) {
-    total_size += 1 + 4;
   }
 
   return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
@@ -1632,37 +1465,11 @@ void SkillData::MergeFrom(const SkillData& from) {
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  if (!from._internal_name().empty()) {
-    _internal_set_name(from._internal_name());
-  }
   if (from._internal_id() != 0) {
     _internal_set_id(from._internal_id());
   }
   if (from._internal_attack_dir() != 0) {
     _internal_set_attack_dir(from._internal_attack_dir());
-  }
-  if (from._internal_angle_left() != 0) {
-    _internal_set_angle_left(from._internal_angle_left());
-  }
-  if (from._internal_angle_right() != 0) {
-    _internal_set_angle_right(from._internal_angle_right());
-  }
-  if (from._internal_range() != 0) {
-    _internal_set_range(from._internal_range());
-  }
-  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
-  float tmp_hit_window_start = from._internal_hit_window_start();
-  uint32_t raw_hit_window_start;
-  memcpy(&raw_hit_window_start, &tmp_hit_window_start, sizeof(tmp_hit_window_start));
-  if (raw_hit_window_start != 0) {
-    _internal_set_hit_window_start(from._internal_hit_window_start());
-  }
-  static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
-  float tmp_hit_window_end = from._internal_hit_window_end();
-  uint32_t raw_hit_window_end;
-  memcpy(&raw_hit_window_end, &tmp_hit_window_end, sizeof(tmp_hit_window_end));
-  if (raw_hit_window_end != 0) {
-    _internal_set_hit_window_end(from._internal_hit_window_end());
   }
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
 }
@@ -1680,16 +1487,10 @@ bool SkillData::IsInitialized() const {
 
 void SkillData::InternalSwap(SkillData* other) {
   using std::swap;
-  auto* lhs_arena = GetArenaForAllocation();
-  auto* rhs_arena = other->GetArenaForAllocation();
   _internal_metadata_.InternalSwap(&other->_internal_metadata_);
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr::InternalSwap(
-      &name_, lhs_arena,
-      &other->name_, rhs_arena
-  );
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
-      PROTOBUF_FIELD_OFFSET(SkillData, hit_window_end_)
-      + sizeof(SkillData::hit_window_end_)
+      PROTOBUF_FIELD_OFFSET(SkillData, attack_dir_)
+      + sizeof(SkillData::attack_dir_)
       - PROTOBUF_FIELD_OFFSET(SkillData, id_)>(
           reinterpret_cast<char*>(&id_),
           reinterpret_cast<char*>(&other->id_));

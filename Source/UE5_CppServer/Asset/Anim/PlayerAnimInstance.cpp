@@ -4,6 +4,7 @@
 #include "Asset/Anim/PlayerAnimInstance.h"
 #include "PlayerBase.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "KismetAnimationLibrary.h"
 
 void UPlayerAnimInstance::NativeInitializeAnimation()
 {
@@ -58,7 +59,7 @@ void UPlayerAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 	// so that backwards animations do not play when turning around, 
 	// but running into wall looks better.
 	
-	float ret = CalculateDirection(Velocity, OwnerCharacter->GetActorRotation());
+	 float ret = UKismetAnimationLibrary::CalculateDirection(Velocity,	OwnerCharacter->GetActorRotation());
 
 	if (MovementComponent->bOrientRotationToMovement)
 	{
@@ -121,7 +122,7 @@ void UPlayerAnimInstance::PlayAttackAnimationTry()
 		State = ActionState::State_Action_Attack_Try;
 
 		// Skill Animation
-		Protocol::SkillInfo CurSkill = OwnerCharacter->GetCurPlayingSkill();
+		Protocol::SkillId CurSkill = OwnerCharacter->GetCurPlayingSkill();
 
 		// Àç»ý
 		switch (CurSkill)

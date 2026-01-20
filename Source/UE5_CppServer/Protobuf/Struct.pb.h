@@ -397,13 +397,13 @@ class CreatureInfo final :
   void _internal_set_action_state(::Protocol::ActionState value);
   public:
 
-  // .Protocol.SkillInfo skill_info = 3;
+  // .Protocol.SkillId skill_info = 3;
   void clear_skill_info();
-  ::Protocol::SkillInfo skill_info() const;
-  void set_skill_info(::Protocol::SkillInfo value);
+  ::Protocol::SkillId skill_info() const;
+  void set_skill_info(::Protocol::SkillId value);
   private:
-  ::Protocol::SkillInfo _internal_skill_info() const;
-  void _internal_set_skill_info(::Protocol::SkillInfo value);
+  ::Protocol::SkillId _internal_skill_info() const;
+  void _internal_set_skill_info(::Protocol::SkillId value);
   public:
 
   // @@protoc_insertion_point(class_scope:Protocol.CreatureInfo)
@@ -910,90 +910,25 @@ class SkillData final :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kNameFieldNumber = 2,
     kIdFieldNumber = 1,
-    kAttackDirFieldNumber = 3,
-    kAngleLeftFieldNumber = 4,
-    kAngleRightFieldNumber = 5,
-    kRangeFieldNumber = 6,
-    kHitWindowStartFieldNumber = 7,
-    kHitWindowEndFieldNumber = 8,
+    kAttackDirFieldNumber = 2,
   };
-  // string name = 2;
-  void clear_name();
-  const std::string& name() const;
-  template <typename ArgT0 = const std::string&, typename... ArgT>
-  void set_name(ArgT0&& arg0, ArgT... args);
-  std::string* mutable_name();
-  PROTOBUF_NODISCARD std::string* release_name();
-  void set_allocated_name(std::string* name);
-  private:
-  const std::string& _internal_name() const;
-  inline PROTOBUF_ALWAYS_INLINE void _internal_set_name(const std::string& value);
-  std::string* _internal_mutable_name();
-  public:
-
-  // .Protocol.SkillInfo id = 1;
+  // .Protocol.SkillId id = 1;
   void clear_id();
-  ::Protocol::SkillInfo id() const;
-  void set_id(::Protocol::SkillInfo value);
+  ::Protocol::SkillId id() const;
+  void set_id(::Protocol::SkillId value);
   private:
-  ::Protocol::SkillInfo _internal_id() const;
-  void _internal_set_id(::Protocol::SkillInfo value);
+  ::Protocol::SkillId _internal_id() const;
+  void _internal_set_id(::Protocol::SkillId value);
   public:
 
-  // .Protocol.AttackDir attack_dir = 3;
+  // .Protocol.AttackDir attack_dir = 2;
   void clear_attack_dir();
   ::Protocol::AttackDir attack_dir() const;
   void set_attack_dir(::Protocol::AttackDir value);
   private:
   ::Protocol::AttackDir _internal_attack_dir() const;
   void _internal_set_attack_dir(::Protocol::AttackDir value);
-  public:
-
-  // int32 angle_left = 4;
-  void clear_angle_left();
-  int32_t angle_left() const;
-  void set_angle_left(int32_t value);
-  private:
-  int32_t _internal_angle_left() const;
-  void _internal_set_angle_left(int32_t value);
-  public:
-
-  // int32 angle_right = 5;
-  void clear_angle_right();
-  int32_t angle_right() const;
-  void set_angle_right(int32_t value);
-  private:
-  int32_t _internal_angle_right() const;
-  void _internal_set_angle_right(int32_t value);
-  public:
-
-  // int32 range = 6;
-  void clear_range();
-  int32_t range() const;
-  void set_range(int32_t value);
-  private:
-  int32_t _internal_range() const;
-  void _internal_set_range(int32_t value);
-  public:
-
-  // float hit_window_start = 7;
-  void clear_hit_window_start();
-  float hit_window_start() const;
-  void set_hit_window_start(float value);
-  private:
-  float _internal_hit_window_start() const;
-  void _internal_set_hit_window_start(float value);
-  public:
-
-  // float hit_window_end = 8;
-  void clear_hit_window_end();
-  float hit_window_end() const;
-  void set_hit_window_end(float value);
-  private:
-  float _internal_hit_window_end() const;
-  void _internal_set_hit_window_end(float value);
   public:
 
   // @@protoc_insertion_point(class_scope:Protocol.SkillData)
@@ -1003,14 +938,8 @@ class SkillData final :
   template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
-  ::PROTOBUF_NAMESPACE_ID::internal::ArenaStringPtr name_;
   int id_;
   int attack_dir_;
-  int32_t angle_left_;
-  int32_t angle_right_;
-  int32_t range_;
-  float hit_window_start_;
-  float hit_window_end_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_Struct_2eproto;
 };
@@ -1269,22 +1198,22 @@ inline void CreatureInfo::set_action_state(::Protocol::ActionState value) {
   // @@protoc_insertion_point(field_set:Protocol.CreatureInfo.action_state)
 }
 
-// .Protocol.SkillInfo skill_info = 3;
+// .Protocol.SkillId skill_info = 3;
 inline void CreatureInfo::clear_skill_info() {
   skill_info_ = 0;
 }
-inline ::Protocol::SkillInfo CreatureInfo::_internal_skill_info() const {
-  return static_cast< ::Protocol::SkillInfo >(skill_info_);
+inline ::Protocol::SkillId CreatureInfo::_internal_skill_info() const {
+  return static_cast< ::Protocol::SkillId >(skill_info_);
 }
-inline ::Protocol::SkillInfo CreatureInfo::skill_info() const {
+inline ::Protocol::SkillId CreatureInfo::skill_info() const {
   // @@protoc_insertion_point(field_get:Protocol.CreatureInfo.skill_info)
   return _internal_skill_info();
 }
-inline void CreatureInfo::_internal_set_skill_info(::Protocol::SkillInfo value) {
+inline void CreatureInfo::_internal_set_skill_info(::Protocol::SkillId value) {
   
   skill_info_ = value;
 }
-inline void CreatureInfo::set_skill_info(::Protocol::SkillInfo value) {
+inline void CreatureInfo::set_skill_info(::Protocol::SkillId value) {
   _internal_set_skill_info(value);
   // @@protoc_insertion_point(field_set:Protocol.CreatureInfo.skill_info)
 }
@@ -1601,77 +1530,27 @@ inline void DebugInfo::set_shape(::Protocol::DebugShape value) {
 
 // SkillData
 
-// .Protocol.SkillInfo id = 1;
+// .Protocol.SkillId id = 1;
 inline void SkillData::clear_id() {
   id_ = 0;
 }
-inline ::Protocol::SkillInfo SkillData::_internal_id() const {
-  return static_cast< ::Protocol::SkillInfo >(id_);
+inline ::Protocol::SkillId SkillData::_internal_id() const {
+  return static_cast< ::Protocol::SkillId >(id_);
 }
-inline ::Protocol::SkillInfo SkillData::id() const {
+inline ::Protocol::SkillId SkillData::id() const {
   // @@protoc_insertion_point(field_get:Protocol.SkillData.id)
   return _internal_id();
 }
-inline void SkillData::_internal_set_id(::Protocol::SkillInfo value) {
+inline void SkillData::_internal_set_id(::Protocol::SkillId value) {
   
   id_ = value;
 }
-inline void SkillData::set_id(::Protocol::SkillInfo value) {
+inline void SkillData::set_id(::Protocol::SkillId value) {
   _internal_set_id(value);
   // @@protoc_insertion_point(field_set:Protocol.SkillData.id)
 }
 
-// string name = 2;
-inline void SkillData::clear_name() {
-  name_.ClearToEmpty();
-}
-inline const std::string& SkillData::name() const {
-  // @@protoc_insertion_point(field_get:Protocol.SkillData.name)
-  return _internal_name();
-}
-template <typename ArgT0, typename... ArgT>
-inline PROTOBUF_ALWAYS_INLINE
-void SkillData::set_name(ArgT0&& arg0, ArgT... args) {
- 
- name_.Set(static_cast<ArgT0 &&>(arg0), args..., GetArenaForAllocation());
-  // @@protoc_insertion_point(field_set:Protocol.SkillData.name)
-}
-inline std::string* SkillData::mutable_name() {
-  std::string* _s = _internal_mutable_name();
-  // @@protoc_insertion_point(field_mutable:Protocol.SkillData.name)
-  return _s;
-}
-inline const std::string& SkillData::_internal_name() const {
-  return name_.Get();
-}
-inline void SkillData::_internal_set_name(const std::string& value) {
-  
-  name_.Set(value, GetArenaForAllocation());
-}
-inline std::string* SkillData::_internal_mutable_name() {
-  
-  return name_.Mutable(GetArenaForAllocation());
-}
-inline std::string* SkillData::release_name() {
-  // @@protoc_insertion_point(field_release:Protocol.SkillData.name)
-  return name_.Release();
-}
-inline void SkillData::set_allocated_name(std::string* name) {
-  if (name != nullptr) {
-    
-  } else {
-    
-  }
-  name_.SetAllocated(name, GetArenaForAllocation());
-#ifdef PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  if (name_.IsDefault()) {
-    name_.Set("", GetArenaForAllocation());
-  }
-#endif // PROTOBUF_FORCE_COPY_DEFAULT_STRING
-  // @@protoc_insertion_point(field_set_allocated:Protocol.SkillData.name)
-}
-
-// .Protocol.AttackDir attack_dir = 3;
+// .Protocol.AttackDir attack_dir = 2;
 inline void SkillData::clear_attack_dir() {
   attack_dir_ = 0;
 }
@@ -1689,106 +1568,6 @@ inline void SkillData::_internal_set_attack_dir(::Protocol::AttackDir value) {
 inline void SkillData::set_attack_dir(::Protocol::AttackDir value) {
   _internal_set_attack_dir(value);
   // @@protoc_insertion_point(field_set:Protocol.SkillData.attack_dir)
-}
-
-// int32 angle_left = 4;
-inline void SkillData::clear_angle_left() {
-  angle_left_ = 0;
-}
-inline int32_t SkillData::_internal_angle_left() const {
-  return angle_left_;
-}
-inline int32_t SkillData::angle_left() const {
-  // @@protoc_insertion_point(field_get:Protocol.SkillData.angle_left)
-  return _internal_angle_left();
-}
-inline void SkillData::_internal_set_angle_left(int32_t value) {
-  
-  angle_left_ = value;
-}
-inline void SkillData::set_angle_left(int32_t value) {
-  _internal_set_angle_left(value);
-  // @@protoc_insertion_point(field_set:Protocol.SkillData.angle_left)
-}
-
-// int32 angle_right = 5;
-inline void SkillData::clear_angle_right() {
-  angle_right_ = 0;
-}
-inline int32_t SkillData::_internal_angle_right() const {
-  return angle_right_;
-}
-inline int32_t SkillData::angle_right() const {
-  // @@protoc_insertion_point(field_get:Protocol.SkillData.angle_right)
-  return _internal_angle_right();
-}
-inline void SkillData::_internal_set_angle_right(int32_t value) {
-  
-  angle_right_ = value;
-}
-inline void SkillData::set_angle_right(int32_t value) {
-  _internal_set_angle_right(value);
-  // @@protoc_insertion_point(field_set:Protocol.SkillData.angle_right)
-}
-
-// int32 range = 6;
-inline void SkillData::clear_range() {
-  range_ = 0;
-}
-inline int32_t SkillData::_internal_range() const {
-  return range_;
-}
-inline int32_t SkillData::range() const {
-  // @@protoc_insertion_point(field_get:Protocol.SkillData.range)
-  return _internal_range();
-}
-inline void SkillData::_internal_set_range(int32_t value) {
-  
-  range_ = value;
-}
-inline void SkillData::set_range(int32_t value) {
-  _internal_set_range(value);
-  // @@protoc_insertion_point(field_set:Protocol.SkillData.range)
-}
-
-// float hit_window_start = 7;
-inline void SkillData::clear_hit_window_start() {
-  hit_window_start_ = 0;
-}
-inline float SkillData::_internal_hit_window_start() const {
-  return hit_window_start_;
-}
-inline float SkillData::hit_window_start() const {
-  // @@protoc_insertion_point(field_get:Protocol.SkillData.hit_window_start)
-  return _internal_hit_window_start();
-}
-inline void SkillData::_internal_set_hit_window_start(float value) {
-  
-  hit_window_start_ = value;
-}
-inline void SkillData::set_hit_window_start(float value) {
-  _internal_set_hit_window_start(value);
-  // @@protoc_insertion_point(field_set:Protocol.SkillData.hit_window_start)
-}
-
-// float hit_window_end = 8;
-inline void SkillData::clear_hit_window_end() {
-  hit_window_end_ = 0;
-}
-inline float SkillData::_internal_hit_window_end() const {
-  return hit_window_end_;
-}
-inline float SkillData::hit_window_end() const {
-  // @@protoc_insertion_point(field_get:Protocol.SkillData.hit_window_end)
-  return _internal_hit_window_end();
-}
-inline void SkillData::_internal_set_hit_window_end(float value) {
-  
-  hit_window_end_ = value;
-}
-inline void SkillData::set_hit_window_end(float value) {
-  _internal_set_hit_window_end(value);
-  // @@protoc_insertion_point(field_set:Protocol.SkillData.hit_window_end)
 }
 
 #ifdef __GNUC__

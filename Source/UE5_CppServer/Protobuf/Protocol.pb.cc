@@ -158,8 +158,9 @@ struct S_MOVEDefaultTypeInternal {
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 S_MOVEDefaultTypeInternal _S_MOVE_default_instance_;
 PROTOBUF_CONSTEXPR C_SKILL::C_SKILL(
     ::_pbi::ConstantInitialized)
-  : skill_data_(nullptr)
-  , pos_(nullptr)
+  : pos_(nullptr)
+  , skill_id_(0)
+
   , yaw_(0){}
 struct C_SKILLDefaultTypeInternal {
   PROTOBUF_CONSTEXPR C_SKILLDefaultTypeInternal()
@@ -313,7 +314,7 @@ const uint32_t TableStruct_Protocol_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE
   ~0u,  // no _oneof_case_
   ~0u,  // no _weak_field_map_
   ~0u,  // no _inlined_string_donated_
-  PROTOBUF_FIELD_OFFSET(::Protocol::C_SKILL, skill_data_),
+  PROTOBUF_FIELD_OFFSET(::Protocol::C_SKILL, skill_id_),
   PROTOBUF_FIELD_OFFSET(::Protocol::C_SKILL, pos_),
   PROTOBUF_FIELD_OFFSET(::Protocol::C_SKILL, yaw_),
   ~0u,  // no _has_bits_
@@ -403,18 +404,18 @@ const char descriptor_table_protodef_Protocol_2eproto[] PROTOBUF_SECTION_VARIABL
   "rotocol.ObjectInfo\022 \n\010move_dir\030\002 \001(\0132\016.P"
   "rotocol.Vec3\"U\n\006S_MOVE\022)\n\013player_info\030\001 "
   "\001(\0132\024.Protocol.ObjectInfo\022 \n\010move_dir\030\002 "
-  "\001(\0132\016.Protocol.Vec3\"\\\n\007C_SKILL\022\'\n\nskill_"
-  "data\030\001 \001(\0132\023.Protocol.SkillData\022\033\n\003pos\030\002"
-  " \001(\0132\016.Protocol.Vec3\022\013\n\003yaw\030\003 \001(\002\"4\n\007S_S"
-  "KILL\022)\n\013object_info\030\001 \001(\0132\024.Protocol.Obj"
-  "ectInfo\"t\n\tS_DAMAGED\022)\n\013object_info\030\001 \001("
-  "\0132\024.Protocol.ObjectInfo\022\'\n\nskill_data\030\002 "
-  "\001(\0132\023.Protocol.SkillData\022\023\n\013attacker_id\030"
-  "\003 \001(\004\"r\n\007S_PARRY\022)\n\013object_info\030\001 \001(\0132\024."
+  "\001(\0132\016.Protocol.Vec3\"X\n\007C_SKILL\022#\n\010skill_"
+  "id\030\001 \001(\0162\021.Protocol.SkillId\022\033\n\003pos\030\002 \001(\013"
+  "2\016.Protocol.Vec3\022\013\n\003yaw\030\003 \001(\002\"4\n\007S_SKILL"
+  "\022)\n\013object_info\030\001 \001(\0132\024.Protocol.ObjectI"
+  "nfo\"t\n\tS_DAMAGED\022)\n\013object_info\030\001 \001(\0132\024."
   "Protocol.ObjectInfo\022\'\n\nskill_data\030\002 \001(\0132"
   "\023.Protocol.SkillData\022\023\n\013attacker_id\030\003 \001("
-  "\004\",\n\007S_DEBUG\022!\n\004info\030\001 \001(\0132\023.Protocol.De"
-  "bugInfob\006proto3"
+  "\004\"r\n\007S_PARRY\022)\n\013object_info\030\001 \001(\0132\024.Prot"
+  "ocol.ObjectInfo\022\'\n\nskill_data\030\002 \001(\0132\023.Pr"
+  "otocol.SkillData\022\023\n\013attacker_id\030\003 \001(\004\",\n"
+  "\007S_DEBUG\022!\n\004info\030\001 \001(\0132\023.Protocol.DebugI"
+  "nfob\006proto3"
   ;
 static const ::_pbi::DescriptorTable* const descriptor_table_Protocol_2eproto_deps[2] = {
   &::descriptor_table_Enum_2eproto,
@@ -422,7 +423,7 @@ static const ::_pbi::DescriptorTable* const descriptor_table_Protocol_2eproto_de
 };
 static ::_pbi::once_flag descriptor_table_Protocol_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_Protocol_2eproto = {
-    false, false, 1055, descriptor_table_protodef_Protocol_2eproto,
+    false, false, 1051, descriptor_table_protodef_Protocol_2eproto,
     "Protocol.proto",
     &descriptor_table_Protocol_2eproto_once, descriptor_table_Protocol_2eproto_deps, 2, 16,
     schemas, file_default_instances, TableStruct_Protocol_2eproto::offsets,
@@ -2351,23 +2352,12 @@ void S_MOVE::InternalSwap(S_MOVE* other) {
 
 class C_SKILL::_Internal {
  public:
-  static const ::Protocol::SkillData& skill_data(const C_SKILL* msg);
   static const ::Protocol::Vec3& pos(const C_SKILL* msg);
 };
 
-const ::Protocol::SkillData&
-C_SKILL::_Internal::skill_data(const C_SKILL* msg) {
-  return *msg->skill_data_;
-}
 const ::Protocol::Vec3&
 C_SKILL::_Internal::pos(const C_SKILL* msg) {
   return *msg->pos_;
-}
-void C_SKILL::clear_skill_data() {
-  if (GetArenaForAllocation() == nullptr && skill_data_ != nullptr) {
-    delete skill_data_;
-  }
-  skill_data_ = nullptr;
 }
 void C_SKILL::clear_pos() {
   if (GetArenaForAllocation() == nullptr && pos_ != nullptr) {
@@ -2384,25 +2374,22 @@ C_SKILL::C_SKILL(::PROTOBUF_NAMESPACE_ID::Arena* arena,
 C_SKILL::C_SKILL(const C_SKILL& from)
   : ::PROTOBUF_NAMESPACE_ID::Message() {
   _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
-  if (from._internal_has_skill_data()) {
-    skill_data_ = new ::Protocol::SkillData(*from.skill_data_);
-  } else {
-    skill_data_ = nullptr;
-  }
   if (from._internal_has_pos()) {
     pos_ = new ::Protocol::Vec3(*from.pos_);
   } else {
     pos_ = nullptr;
   }
-  yaw_ = from.yaw_;
+  ::memcpy(&skill_id_, &from.skill_id_,
+    static_cast<size_t>(reinterpret_cast<char*>(&yaw_) -
+    reinterpret_cast<char*>(&skill_id_)) + sizeof(yaw_));
   // @@protoc_insertion_point(copy_constructor:Protocol.C_SKILL)
 }
 
 inline void C_SKILL::SharedCtor() {
 ::memset(reinterpret_cast<char*>(this) + static_cast<size_t>(
-    reinterpret_cast<char*>(&skill_data_) - reinterpret_cast<char*>(this)),
+    reinterpret_cast<char*>(&pos_) - reinterpret_cast<char*>(this)),
     0, static_cast<size_t>(reinterpret_cast<char*>(&yaw_) -
-    reinterpret_cast<char*>(&skill_data_)) + sizeof(yaw_));
+    reinterpret_cast<char*>(&pos_)) + sizeof(yaw_));
 }
 
 C_SKILL::~C_SKILL() {
@@ -2416,7 +2403,6 @@ C_SKILL::~C_SKILL() {
 
 inline void C_SKILL::SharedDtor() {
   GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
-  if (this != internal_default_instance()) delete skill_data_;
   if (this != internal_default_instance()) delete pos_;
 }
 
@@ -2430,15 +2416,13 @@ void C_SKILL::Clear() {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  if (GetArenaForAllocation() == nullptr && skill_data_ != nullptr) {
-    delete skill_data_;
-  }
-  skill_data_ = nullptr;
   if (GetArenaForAllocation() == nullptr && pos_ != nullptr) {
     delete pos_;
   }
   pos_ = nullptr;
-  yaw_ = 0;
+  ::memset(&skill_id_, 0, static_cast<size_t>(
+      reinterpret_cast<char*>(&yaw_) -
+      reinterpret_cast<char*>(&skill_id_)) + sizeof(yaw_));
   _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
 }
 
@@ -2448,11 +2432,12 @@ const char* C_SKILL::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) 
     uint32_t tag;
     ptr = ::_pbi::ReadTag(ptr, &tag);
     switch (tag >> 3) {
-      // .Protocol.SkillData skill_data = 1;
+      // .Protocol.SkillId skill_id = 1;
       case 1:
-        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
-          ptr = ctx->ParseMessage(_internal_mutable_skill_data(), ptr);
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
+          uint64_t val = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
           CHK_(ptr);
+          _internal_set_skill_id(static_cast<::Protocol::SkillId>(val));
         } else
           goto handle_unusual;
         continue;
@@ -2501,11 +2486,11 @@ uint8_t* C_SKILL::_InternalSerialize(
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  // .Protocol.SkillData skill_data = 1;
-  if (this->_internal_has_skill_data()) {
-    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
-      InternalWriteMessage(1, _Internal::skill_data(this),
-        _Internal::skill_data(this).GetCachedSize(), target, stream);
+  // .Protocol.SkillId skill_id = 1;
+  if (this->_internal_skill_id() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteEnumToArray(
+      1, this->_internal_skill_id(), target);
   }
 
   // .Protocol.Vec3 pos = 2;
@@ -2541,18 +2526,17 @@ size_t C_SKILL::ByteSizeLong() const {
   // Prevent compiler warnings about cached_has_bits being unused
   (void) cached_has_bits;
 
-  // .Protocol.SkillData skill_data = 1;
-  if (this->_internal_has_skill_data()) {
-    total_size += 1 +
-      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
-        *skill_data_);
-  }
-
   // .Protocol.Vec3 pos = 2;
   if (this->_internal_has_pos()) {
     total_size += 1 +
       ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
         *pos_);
+  }
+
+  // .Protocol.SkillId skill_id = 1;
+  if (this->_internal_skill_id() != 0) {
+    total_size += 1 +
+      ::_pbi::WireFormatLite::EnumSize(this->_internal_skill_id());
   }
 
   // float yaw = 3;
@@ -2586,11 +2570,11 @@ void C_SKILL::MergeFrom(const C_SKILL& from) {
   uint32_t cached_has_bits = 0;
   (void) cached_has_bits;
 
-  if (from._internal_has_skill_data()) {
-    _internal_mutable_skill_data()->::Protocol::SkillData::MergeFrom(from._internal_skill_data());
-  }
   if (from._internal_has_pos()) {
     _internal_mutable_pos()->::Protocol::Vec3::MergeFrom(from._internal_pos());
+  }
+  if (from._internal_skill_id() != 0) {
+    _internal_set_skill_id(from._internal_skill_id());
   }
   static_assert(sizeof(uint32_t) == sizeof(float), "Code assumes uint32_t and float are the same size.");
   float tmp_yaw = from._internal_yaw();
@@ -2619,9 +2603,9 @@ void C_SKILL::InternalSwap(C_SKILL* other) {
   ::PROTOBUF_NAMESPACE_ID::internal::memswap<
       PROTOBUF_FIELD_OFFSET(C_SKILL, yaw_)
       + sizeof(C_SKILL::yaw_)
-      - PROTOBUF_FIELD_OFFSET(C_SKILL, skill_data_)>(
-          reinterpret_cast<char*>(&skill_data_),
-          reinterpret_cast<char*>(&other->skill_data_));
+      - PROTOBUF_FIELD_OFFSET(C_SKILL, pos_)>(
+          reinterpret_cast<char*>(&pos_),
+          reinterpret_cast<char*>(&other->pos_));
 }
 
 ::PROTOBUF_NAMESPACE_ID::Metadata C_SKILL::GetMetadata() const {

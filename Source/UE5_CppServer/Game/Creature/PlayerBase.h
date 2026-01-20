@@ -22,8 +22,8 @@ public:
 
 	void Caching(bool IsDummy = false);
 
-	void SetCurPlayingSkill(const Protocol::SkillInfo& Info) { ObjectInfo.mutable_creature_info()->set_skill_info(Info); }
-	Protocol::SkillInfo GetCurPlayingSkill() { return  ObjectInfo.creature_info().skill_info(); }
+	void SetCurPlayingSkill(const Protocol::SkillId& Info) { ObjectInfo.mutable_creature_info()->set_skill_info(Info); }
+	Protocol::SkillId GetCurPlayingSkill() { return  ObjectInfo.creature_info().skill_info(); }
 
 	// --------------------------------
 	//		Interface - Weaponable

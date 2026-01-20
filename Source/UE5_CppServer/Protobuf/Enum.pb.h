@@ -47,34 +47,34 @@ PROTOBUF_NAMESPACE_OPEN
 PROTOBUF_NAMESPACE_CLOSE
 namespace Protocol {
 
-enum SkillInfo : int {
+enum SkillId : int {
   SKILL_INFO_NONE = 0,
   SKILL_INFO_SLASH_UP = 1,
   SKILL_INFO_SLASH_DOWN = 2,
   SKILL_INFO_SLASH_LEFT = 3,
   SKILL_INFO_SLASH_RIGHT = 4,
   SKILL_INFO_KICK = 5,
-  SkillInfo_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
-  SkillInfo_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
+  SkillId_INT_MIN_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::min(),
+  SkillId_INT_MAX_SENTINEL_DO_NOT_USE_ = std::numeric_limits<int32_t>::max()
 };
-bool SkillInfo_IsValid(int value);
-constexpr SkillInfo SkillInfo_MIN = SKILL_INFO_NONE;
-constexpr SkillInfo SkillInfo_MAX = SKILL_INFO_KICK;
-constexpr int SkillInfo_ARRAYSIZE = SkillInfo_MAX + 1;
+bool SkillId_IsValid(int value);
+constexpr SkillId SkillId_MIN = SKILL_INFO_NONE;
+constexpr SkillId SkillId_MAX = SKILL_INFO_KICK;
+constexpr int SkillId_ARRAYSIZE = SkillId_MAX + 1;
 
-const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* SkillInfo_descriptor();
+const ::PROTOBUF_NAMESPACE_ID::EnumDescriptor* SkillId_descriptor();
 template<typename T>
-inline const std::string& SkillInfo_Name(T enum_t_value) {
-  static_assert(::std::is_same<T, SkillInfo>::value ||
+inline const std::string& SkillId_Name(T enum_t_value) {
+  static_assert(::std::is_same<T, SkillId>::value ||
     ::std::is_integral<T>::value,
-    "Incorrect type passed to function SkillInfo_Name.");
+    "Incorrect type passed to function SkillId_Name.");
   return ::PROTOBUF_NAMESPACE_ID::internal::NameOfEnum(
-    SkillInfo_descriptor(), enum_t_value);
+    SkillId_descriptor(), enum_t_value);
 }
-inline bool SkillInfo_Parse(
-    ::PROTOBUF_NAMESPACE_ID::ConstStringParam name, SkillInfo* value) {
-  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<SkillInfo>(
-    SkillInfo_descriptor(), name, value);
+inline bool SkillId_Parse(
+    ::PROTOBUF_NAMESPACE_ID::ConstStringParam name, SkillId* value) {
+  return ::PROTOBUF_NAMESPACE_ID::internal::ParseNamedEnum<SkillId>(
+    SkillId_descriptor(), name, value);
 }
 enum AttackDir : int {
   DIR_NONE = 0,
@@ -186,10 +186,10 @@ inline bool DebugShape_Parse(
 
 PROTOBUF_NAMESPACE_OPEN
 
-template <> struct is_proto_enum< ::Protocol::SkillInfo> : ::std::true_type {};
+template <> struct is_proto_enum< ::Protocol::SkillId> : ::std::true_type {};
 template <>
-inline const EnumDescriptor* GetEnumDescriptor< ::Protocol::SkillInfo>() {
-  return ::Protocol::SkillInfo_descriptor();
+inline const EnumDescriptor* GetEnumDescriptor< ::Protocol::SkillId>() {
+  return ::Protocol::SkillId_descriptor();
 }
 template <> struct is_proto_enum< ::Protocol::AttackDir> : ::std::true_type {};
 template <>

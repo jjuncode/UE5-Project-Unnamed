@@ -120,8 +120,8 @@ void AClientPlayerController::HandleSkillAction(const FInputActionValue& Value)
 	Protocol::C_SKILL SkillPkt;
 
 	// 스킬 idx 설정 
-	Protocol::SkillInfo SkillInfo = static_cast<Protocol::SkillInfo>(SkillIndex);
-	SkillPkt.mutable_skill_data()->set_id(SkillInfo);
+	Protocol::SkillId SkillInfo = static_cast<Protocol::SkillId>(SkillIndex);
+	SkillPkt.set_skill_id(SkillInfo);
 
 	// 위치, yaw설정 
 	Protocol::Vec3* Pos = SkillPkt.mutable_pos();

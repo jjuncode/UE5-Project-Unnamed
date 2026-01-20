@@ -1887,28 +1887,10 @@ class C_SKILL final :
   // accessors -------------------------------------------------------
 
   enum : int {
-    kSkillDataFieldNumber = 1,
     kPosFieldNumber = 2,
+    kSkillIdFieldNumber = 1,
     kYawFieldNumber = 3,
   };
-  // .Protocol.SkillData skill_data = 1;
-  bool has_skill_data() const;
-  private:
-  bool _internal_has_skill_data() const;
-  public:
-  void clear_skill_data();
-  const ::Protocol::SkillData& skill_data() const;
-  PROTOBUF_NODISCARD ::Protocol::SkillData* release_skill_data();
-  ::Protocol::SkillData* mutable_skill_data();
-  void set_allocated_skill_data(::Protocol::SkillData* skill_data);
-  private:
-  const ::Protocol::SkillData& _internal_skill_data() const;
-  ::Protocol::SkillData* _internal_mutable_skill_data();
-  public:
-  void unsafe_arena_set_allocated_skill_data(
-      ::Protocol::SkillData* skill_data);
-  ::Protocol::SkillData* unsafe_arena_release_skill_data();
-
   // .Protocol.Vec3 pos = 2;
   bool has_pos() const;
   private:
@@ -1927,6 +1909,15 @@ class C_SKILL final :
       ::Protocol::Vec3* pos);
   ::Protocol::Vec3* unsafe_arena_release_pos();
 
+  // .Protocol.SkillId skill_id = 1;
+  void clear_skill_id();
+  ::Protocol::SkillId skill_id() const;
+  void set_skill_id(::Protocol::SkillId value);
+  private:
+  ::Protocol::SkillId _internal_skill_id() const;
+  void _internal_set_skill_id(::Protocol::SkillId value);
+  public:
+
   // float yaw = 3;
   void clear_yaw();
   float yaw() const;
@@ -1943,8 +1934,8 @@ class C_SKILL final :
   template <typename T> friend class ::PROTOBUF_NAMESPACE_ID::Arena::InternalHelper;
   typedef void InternalArenaConstructable_;
   typedef void DestructorSkippable_;
-  ::Protocol::SkillData* skill_data_;
   ::Protocol::Vec3* pos_;
+  int skill_id_;
   float yaw_;
   mutable ::PROTOBUF_NAMESPACE_ID::internal::CachedSize _cached_size_;
   friend struct ::TableStruct_Protocol_2eproto;
@@ -3385,89 +3376,24 @@ inline void S_MOVE::set_allocated_move_dir(::Protocol::Vec3* move_dir) {
 
 // C_SKILL
 
-// .Protocol.SkillData skill_data = 1;
-inline bool C_SKILL::_internal_has_skill_data() const {
-  return this != internal_default_instance() && skill_data_ != nullptr;
+// .Protocol.SkillId skill_id = 1;
+inline void C_SKILL::clear_skill_id() {
+  skill_id_ = 0;
 }
-inline bool C_SKILL::has_skill_data() const {
-  return _internal_has_skill_data();
+inline ::Protocol::SkillId C_SKILL::_internal_skill_id() const {
+  return static_cast< ::Protocol::SkillId >(skill_id_);
 }
-inline const ::Protocol::SkillData& C_SKILL::_internal_skill_data() const {
-  const ::Protocol::SkillData* p = skill_data_;
-  return p != nullptr ? *p : reinterpret_cast<const ::Protocol::SkillData&>(
-      ::Protocol::_SkillData_default_instance_);
+inline ::Protocol::SkillId C_SKILL::skill_id() const {
+  // @@protoc_insertion_point(field_get:Protocol.C_SKILL.skill_id)
+  return _internal_skill_id();
 }
-inline const ::Protocol::SkillData& C_SKILL::skill_data() const {
-  // @@protoc_insertion_point(field_get:Protocol.C_SKILL.skill_data)
-  return _internal_skill_data();
-}
-inline void C_SKILL::unsafe_arena_set_allocated_skill_data(
-    ::Protocol::SkillData* skill_data) {
-  if (GetArenaForAllocation() == nullptr) {
-    delete reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(skill_data_);
-  }
-  skill_data_ = skill_data;
-  if (skill_data) {
-    
-  } else {
-    
-  }
-  // @@protoc_insertion_point(field_unsafe_arena_set_allocated:Protocol.C_SKILL.skill_data)
-}
-inline ::Protocol::SkillData* C_SKILL::release_skill_data() {
+inline void C_SKILL::_internal_set_skill_id(::Protocol::SkillId value) {
   
-  ::Protocol::SkillData* temp = skill_data_;
-  skill_data_ = nullptr;
-#ifdef PROTOBUF_FORCE_COPY_IN_RELEASE
-  auto* old =  reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(temp);
-  temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-  if (GetArenaForAllocation() == nullptr) { delete old; }
-#else  // PROTOBUF_FORCE_COPY_IN_RELEASE
-  if (GetArenaForAllocation() != nullptr) {
-    temp = ::PROTOBUF_NAMESPACE_ID::internal::DuplicateIfNonNull(temp);
-  }
-#endif  // !PROTOBUF_FORCE_COPY_IN_RELEASE
-  return temp;
+  skill_id_ = value;
 }
-inline ::Protocol::SkillData* C_SKILL::unsafe_arena_release_skill_data() {
-  // @@protoc_insertion_point(field_release:Protocol.C_SKILL.skill_data)
-  
-  ::Protocol::SkillData* temp = skill_data_;
-  skill_data_ = nullptr;
-  return temp;
-}
-inline ::Protocol::SkillData* C_SKILL::_internal_mutable_skill_data() {
-  
-  if (skill_data_ == nullptr) {
-    auto* p = CreateMaybeMessage<::Protocol::SkillData>(GetArenaForAllocation());
-    skill_data_ = p;
-  }
-  return skill_data_;
-}
-inline ::Protocol::SkillData* C_SKILL::mutable_skill_data() {
-  ::Protocol::SkillData* _msg = _internal_mutable_skill_data();
-  // @@protoc_insertion_point(field_mutable:Protocol.C_SKILL.skill_data)
-  return _msg;
-}
-inline void C_SKILL::set_allocated_skill_data(::Protocol::SkillData* skill_data) {
-  ::PROTOBUF_NAMESPACE_ID::Arena* message_arena = GetArenaForAllocation();
-  if (message_arena == nullptr) {
-    delete reinterpret_cast< ::PROTOBUF_NAMESPACE_ID::MessageLite*>(skill_data_);
-  }
-  if (skill_data) {
-    ::PROTOBUF_NAMESPACE_ID::Arena* submessage_arena =
-        ::PROTOBUF_NAMESPACE_ID::Arena::InternalGetOwningArena(
-                reinterpret_cast<::PROTOBUF_NAMESPACE_ID::MessageLite*>(skill_data));
-    if (message_arena != submessage_arena) {
-      skill_data = ::PROTOBUF_NAMESPACE_ID::internal::GetOwnedMessage(
-          message_arena, skill_data, submessage_arena);
-    }
-    
-  } else {
-    
-  }
-  skill_data_ = skill_data;
-  // @@protoc_insertion_point(field_set_allocated:Protocol.C_SKILL.skill_data)
+inline void C_SKILL::set_skill_id(::Protocol::SkillId value) {
+  _internal_set_skill_id(value);
+  // @@protoc_insertion_point(field_set:Protocol.C_SKILL.skill_id)
 }
 
 // .Protocol.Vec3 pos = 2;
