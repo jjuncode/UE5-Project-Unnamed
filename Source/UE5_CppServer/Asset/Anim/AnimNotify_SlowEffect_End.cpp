@@ -29,6 +29,18 @@ void UAnimNotify_SlowEffect_End::Notify(USkeletalMeshComponent* MeshComp, UAnimS
 					PlayerAnim->PlayParryTiming = true;
 				}
 			}
+			
+			// 패링 공격 방해받은 상태 감지
+			if (Creature->GetActionState() == Protocol::ACTION_STATE_ATTACK_INTERRUPTED)
+			{
+				UPlayerAnimInstance* PlayerAnim = Cast<UPlayerAnimInstance>(AnimInst);
+				if (PlayerAnim)
+				{
+					PlayerAnim->PlayAttackInterruptedTiming = true;
+				}
+			}
 		}
+
+		
     }
 }

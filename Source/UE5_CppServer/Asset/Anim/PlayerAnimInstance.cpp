@@ -81,11 +81,10 @@ void UPlayerAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 		PlayAttackAnimationTry();
 		break;
 	case Protocol::ACTION_STATE_ATTACK_SUCCESS:
-		PlayAttackAnimationTry();
+		PlayAttackAnimationTry();	// 공격 애니메이션 그대로 수행 
 		break;
 	case Protocol::ACTION_STATE_ATTACK_INTERRUPTED:
-		// TODO : 패링에 튕겨져나가는 애니메이션 
-		PlayAttackAnimationTry();
+		PlayAttackAnimationInterrupted();
 		break;
 	case Protocol::ACTION_STATE_DAMAGED:
 	{
@@ -95,7 +94,7 @@ void UPlayerAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 	case Protocol::ACTION_STATE_PARRY:
 	{
 		// 패링 성공 
-		// 공격 애니메이션을 2배속으로 틀어준다.
+		// 공격 애니메이션을 1.5배속으로 틀어준다.
 		// 이후, 타격 지점에서 패링 애니메이션이 수행된다.
 		PlayParryAnimation();
 		break;
@@ -162,8 +161,18 @@ void UPlayerAnimInstance::PlayAttackAnimationSuccess()
 {
 }
 
-void UPlayerAnimInstance::PlayAttackAnimationFailed()
+void UPlayerAnimInstance::PlayAttackAnimationInterrupted()
 {
+	// 틀어주던거 계속 틀고 있음
+
+	if (PlayAttackInterruptedTiming )
+	{
+		// 패링 애니메이션은 한번만 재생함
+		State = ActionState::State_Action_Attack_Interrupted;
+		PlayAttackInterruptedTiming = false;
+		OwnerCharacter->PlayAnimMontage(AttackInterrupteddMontage, 1.0, "ATTACK_INTERRUPTED");
+	}
+
 }
 
 void UPlayerAnimInstance::PlayHittedAnimation()

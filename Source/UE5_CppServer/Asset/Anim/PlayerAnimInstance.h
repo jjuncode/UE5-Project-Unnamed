@@ -20,13 +20,14 @@ public:
 private:
 	void PlayAttackAnimationTry();
 	void PlayAttackAnimationSuccess();
-	void PlayAttackAnimationFailed();
+	void PlayAttackAnimationInterrupted();
 	void PlayHittedAnimation();
 	void PlayParryAnimation();
 
 protected:
 	// Cache
 	bool PlayParryTiming = false;
+	bool PlayAttackInterruptedTiming = false;
 	Protocol::SkillId CurPlayingAttackSkill;
 
 protected:
@@ -41,6 +42,9 @@ protected:
 
 	UPROPERTY(Category = Animation, EditAnywhere, BlueprintReadOnly)
 	TObjectPtr<class UAnimMontage> ParryMontage;
+
+	UPROPERTY(Category = Animation, EditAnywhere, BlueprintReadOnly)
+	TObjectPtr<class UAnimMontage> AttackInterrupteddMontage;
 
 	// -------------------------------
 	//		AnimGraph Caching
