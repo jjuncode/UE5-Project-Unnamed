@@ -7,16 +7,6 @@
 #include "Engine/SkeletalMeshSocket.h"
 #include "Weapon/Weapon.h"
 
-void APlayerBase::Parry(Protocol::S_PARRY ParryInfo)
-{
-	SetObjectInfo(ParryInfo.object_info());
-
-	// 패링 스킬 정보 
-	Protocol::SkillData DamagingSkill = ParryInfo.skill_data();
-
-	//DamagedDir = DamagingSkill.attack_dir();
-}
-
 void APlayerBase::HandleEvent(FGameplayTag EventTag)
 {
 	Controller->HandleEvent(EventTag);
@@ -77,6 +67,16 @@ void APlayerBase::OnDamaged(const Protocol::S_DAMAGED& DamagePkt)
 
 	// 피격 방향 Cache
 	DamagedDir = DamagingSkill.attack_dir();
+}
+
+void APlayerBase::Parry(Protocol::S_PARRY ParryInfo)
+{
+	SetObjectInfo(ParryInfo.object_info());
+
+	// 패링 스킬 정보 
+	Protocol::SkillData DamagingSkill = ParryInfo.skill_data();
+
+	//DamagedDir = DamagingSkill.attack_dir();
 }
 
 void APlayerBase::MoveSync()

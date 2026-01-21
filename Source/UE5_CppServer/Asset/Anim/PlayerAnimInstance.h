@@ -25,6 +25,11 @@ private:
 	void PlayParryAnimation();
 
 protected:
+	// Cache
+	bool PlayParryTiming = false;
+	Protocol::SkillId CurPlayingAttackSkill;
+
+protected:
 	// ------------------
 	//		Montage
 	// ------------------
@@ -37,7 +42,6 @@ protected:
 	UPROPERTY(Category = Animation, EditAnywhere, BlueprintReadOnly)
 	TObjectPtr<class UAnimMontage> ParryMontage;
 
-	
 	// -------------------------------
 	//		AnimGraph Caching
 	// -------------------------------
@@ -64,4 +68,7 @@ protected:
 
 	UPROPERTY(Category = Character, VisibleAnywhere, BlueprintReadOnly)
 	FGameplayTag State;
+
+public:
+	friend class UAnimNotify_SlowEffect_End;
 };
