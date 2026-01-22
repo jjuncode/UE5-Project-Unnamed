@@ -6,20 +6,44 @@
 #include "PlayerBase.h"
 #include "ClientPlayer.generated.h"
 
-/**
- * 
- */
+UENUM(BlueprintType)
+enum class ECameraState : uint8
+{
+	Normal,
+	LockOn,
+	Parry,
+};
+
+struct FCameraStateData
+{
+	FVector PivotOffset = FVector::ZeroVector;
+	FRotator PivotRotation = FRotator::ZeroRotator;
+	float ArmLength = 415.f;
+	float InterpSpeed = 8.f;
+};
+
 UCLASS()
 class UE5_CPPSERVER_API AClientPlayer : public APlayerBase
 {
 	GENERATED_BODY()
 
 public:
+	AClientPlayer();
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
 	
 public:
 	void Caching();
+
+	// ----------------------
+	//		Camera
+	// ----------------------
+public:
+	UFUNCTION(BlueprintCallable)
+	void SetCameraState(ECameraState NewState);
+
+private:
+	void UpdateCamera(float DeltaTime);
 
 	// ----------------------
 	//		Handle Event
@@ -35,6 +59,23 @@ public:
 
 private:
 	void MoveSync(float DeltaTime);
+
+protected:
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Camera")
+	TObjectPtr<class USpringArmComponent> SpringArm;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Camera")
+	TObjectPtr<class UCameraComponent> Camera;
+
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Camera")
+	TObjectPtr<USceneComponent> CameraPivot;
+
+protected:
+	// Camera
+	TMap<ECameraState, FCameraStateData> CameraStates;
+	
+	UPROPERTY(EditAnywhere, Category = "Camera State")
+	ECameraState CurCameraState = ECameraState::Normal;
 
 private:
 	// Caching

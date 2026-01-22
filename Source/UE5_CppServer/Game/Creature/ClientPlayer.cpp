@@ -2,10 +2,67 @@
 
 
 #include "ClientPlayer.h"
+#include "Camera/CameraComponent.h"
+#include "GameFramework/SpringArmComponent.h"
+
 #include "NetUtils.h"
 #include "ServerPacketHandler.h"
 #include "UE5_CppServer.h"
 #include "ClientPlayerController.h"
+
+AClientPlayer::AClientPlayer()
+	:Super()
+{
+	// ===== Camera Pivot =====
+	CameraPivot = CreateDefaultSubobject<USceneComponent>(TEXT("CameraPivot")); 
+	CameraPivot->SetupAttachment(RootComponent);      
+	CameraPivot->SetRelativeLocation(FVector::ZeroVector);
+	CameraPivot->SetRelativeRotation(FRotator::ZeroRotator);
+
+	// ===== SpringArm =====
+	SpringArm = CreateDefaultSubobject<USpringArmComponent>(TEXT("SpringArm"));
+	SpringArm->SetupAttachment(CameraPivot);
+	SpringArm->TargetArmLength = 415.f;
+	SpringArm->bUsePawnControlRotation = true;   // 컨트롤러 회전 사용 X 
+
+	// ===== Camera =====
+	Camera = CreateDefaultSubobject<UCameraComponent>(TEXT("Camera"));
+	Camera->SetupAttachment(SpringArm, USpringArmComponent::SocketName);
+	Camera->bUsePawnControlRotation = false; // 카메라는 SpringArm만 따라감
+
+	// ===============================
+	// Camera State 초기값
+	// ===============================
+	// Normal
+	{
+		FCameraStateData State;
+		State.PivotOffset = FVector::ZeroVector;
+		State.PivotRotation = FRotator::ZeroRotator;
+		State.ArmLength = 415.f;
+		State.InterpSpeed = 8.f;
+		CameraStates.Add(ECameraState::Normal, State);
+	}
+
+	// LockOn
+	{
+		FCameraStateData State;
+		State.PivotOffset = FVector(0.f, 0.f, 30.f);
+		State.PivotRotation = FRotator::ZeroRotator;
+		State.ArmLength = 360.f;
+		State.InterpSpeed = 10.f;
+		CameraStates.Add(ECameraState::LockOn, State);
+	}
+
+	// Parry (측면)
+	{
+		FCameraStateData State;
+		State.PivotOffset = FVector(0.f, 80.f, 40.f);
+		State.PivotRotation = FRotator(0.f, 70.f, 0.f);
+		State.ArmLength = 260.f;
+		State.InterpSpeed = 12.f;
+		CameraStates.Add(ECameraState::Parry, State);
+	}
+}
 
 void AClientPlayer::HandleEvent(FGameplayTag EventTag)
 {
@@ -40,6 +97,10 @@ void AClientPlayer::BeginPlay()
 	Super::BeginPlay();
 
 	AutoPossessAI = EAutoPossessAI::Disabled;
+	bUseControllerRotationPitch = false;
+	bUseControllerRotationRoll = false;
+	bUseControllerRotationYaw = false;
+
 }
 
 void AClientPlayer::Tick(float DeltaTime)
@@ -47,6 +108,7 @@ void AClientPlayer::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	MoveSync(DeltaTime);
+	UpdateCamera(DeltaTime);
 }
 
 void AClientPlayer::Caching()
@@ -58,4 +120,57 @@ void AClientPlayer::Caching()
 		Controller = Cast<AClientPlayerController>(GetController());
 		check(Controller);
 	}
+}
+
+void AClientPlayer::SetCameraState(ECameraState NewState)
+{
+	if (CurCameraState == NewState)
+		return;
+
+	CurCameraState = NewState;
+}
+
+void AClientPlayer::UpdateCamera(float DeltaTime)
+{
+	const FCameraStateData* TargetState = CameraStates.Find(CurCameraState);
+	if (!TargetState)
+		return;
+
+	// Pivot 위치
+	CameraPivot->SetRelativeLocation(
+		FMath::VInterpTo(
+			CameraPivot->GetRelativeLocation(),
+			TargetState->PivotOffset,
+			DeltaTime,
+			TargetState->InterpSpeed
+		)
+	);
+	
+	// Pivot 회전
+	FRotator ControlRotator = GetControlRotation();
+
+	const FRotator TargetPivotRot(
+		ControlRotator.Pitch,             
+		ControlRotator.Yaw + TargetState->PivotRotation.Yaw,       
+		0.f
+	);
+
+	CameraPivot->SetRelativeRotation(
+		FMath::RInterpTo(
+			CameraPivot->GetRelativeRotation(),
+			TargetPivotRot,
+			DeltaTime,
+			TargetState->InterpSpeed
+		)
+	);
+
+
+	// SpringArm 거리
+	SpringArm->TargetArmLength =
+		FMath::FInterpTo(
+			SpringArm->TargetArmLength,
+			TargetState->ArmLength,
+			DeltaTime,
+			TargetState->InterpSpeed
+		);
 }

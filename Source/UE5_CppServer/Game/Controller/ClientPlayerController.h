@@ -36,6 +36,7 @@ private:
 	void _HandleMoveAction(const FInputActionValue& Value, const Protocol::ActionState& State);
 	void HandleMoveActionTrigerred(const FInputActionValue& Value);
 	void HandleMoveActionCompleted(const FInputActionValue& Value);
+	void SyncYaw(const FInputActionValue& Value);
 
 	// IA_MouseLook
 	void HandleMouseLookAction(const FInputActionValue& Value);

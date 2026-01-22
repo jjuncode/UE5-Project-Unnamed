@@ -45,7 +45,9 @@ void AClientPlayerController::SetupInputComponent()
 		// MOVE
 		EIC->BindAction(MoveAction, ETriggerEvent::Triggered, this, &AClientPlayerController::HandleMoveActionTrigerred);
 		EIC->BindAction(MoveAction, ETriggerEvent::Completed, this, &AClientPlayerController::HandleMoveActionCompleted);
-	
+		
+		EIC->BindAction(MoveAction, ETriggerEvent::Triggered, this, &AClientPlayerController::SyncYaw);
+		
 		// Mouse Look
 		EIC->BindAction(MouseLookAction, ETriggerEvent::Triggered, this, &AClientPlayerController::HandleMouseLookAction);
 		EIC->BindAction(MouseLookAction, ETriggerEvent::Completed, this, &AClientPlayerController::HandleMouseLookAction);
@@ -95,13 +97,28 @@ void AClientPlayerController::HandleMoveActionCompleted(const FInputActionValue&
 	_HandleMoveAction(Value, Protocol::ACTION_STATE_MOVE_IDLE);
 }
 
+void AClientPlayerController::SyncYaw(const FInputActionValue& Value)
+{
+	// 키 입력시 yaw 동기화 
+	FVector2D InputValue = Value.Get<FVector2D>();
+
+	const FRotator ControlRot = GetControlRotation();
+	const FRotator TargetYawRot(0.f, ControlRot.Yaw, 0.f);
+
+	const FRotator CurrentRot = ClientPlayer->GetActorRotation();
+	const float InterpSpeed = 15.f; // 값 키울수록 빠르게 회전
+	const FRotator SmoothRot =
+		FMath::RInterpTo(CurrentRot, TargetYawRot, GetWorld()->GetDeltaSeconds(), InterpSpeed);
+
+	// 보간 회전
+	ClientPlayer->SetActorRotation(SmoothRot);
+}
 
 void AClientPlayerController::HandleMouseLookAction(const FInputActionValue& Value)
 {
 	FVector2D InputValue = Value.Get<FVector2D>();
-
 	AddYawInput(InputValue.X);
-	AddPitchInput(InputValue.Y);
+	AddPitchInput(-InputValue.Y);
 }
 
 void AClientPlayerController::HandleSkillAction(const FInputActionValue& Value)
