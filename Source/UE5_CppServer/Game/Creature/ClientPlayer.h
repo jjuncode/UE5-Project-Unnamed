@@ -10,7 +10,7 @@ UENUM(BlueprintType)
 enum class ECameraState : uint8
 {
 	Normal,
-	LockOn,
+	Battle,
 	Parry,
 };
 
@@ -33,6 +33,7 @@ public:
 	virtual void Tick(float DeltaTime) override;
 	
 public:
+	UFUNCTION(BlueprintCallable)
 	void Caching();
 
 	// ----------------------
