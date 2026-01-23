@@ -25,7 +25,9 @@ enum :uint16
 	PKT_S_SKILL = 1012,
 	PKT_S_DAMAGED = 1013,
 	PKT_S_PARRY = 1014,
-	PKT_S_DEBUG = 1015,
+	PKT_C_SELECT_ENEMY = 1015,
+	PKT_S_SELECT_ENEMY = 1016,
+	PKT_S_DEBUG = 1017,
 };
 
 bool Handle_INVALID(PacketSessionRef& session, BYTE* buffer, int32 len);
@@ -39,6 +41,7 @@ bool Handle_S_MOVE(PacketSessionRef& session, Protocol::S_MOVE&pkt);
 bool Handle_S_SKILL(PacketSessionRef& session, Protocol::S_SKILL&pkt);
 bool Handle_S_DAMAGED(PacketSessionRef& session, Protocol::S_DAMAGED&pkt);
 bool Handle_S_PARRY(PacketSessionRef& session, Protocol::S_PARRY&pkt);
+bool Handle_S_SELECT_ENEMY(PacketSessionRef& session, Protocol::S_SELECT_ENEMY&pkt);
 bool Handle_S_DEBUG(PacketSessionRef& session, Protocol::S_DEBUG&pkt);
 
 class ServerPacketHandler
@@ -58,6 +61,7 @@ public:
 		GPacketHandler[PKT_S_SKILL] = [](PacketSessionRef& session, BYTE* buffer, int32 len) { return HandlePacket<Protocol::S_SKILL >(Handle_S_SKILL, session, buffer, len); };
 		GPacketHandler[PKT_S_DAMAGED] = [](PacketSessionRef& session, BYTE* buffer, int32 len) { return HandlePacket<Protocol::S_DAMAGED >(Handle_S_DAMAGED, session, buffer, len); };
 		GPacketHandler[PKT_S_PARRY] = [](PacketSessionRef& session, BYTE* buffer, int32 len) { return HandlePacket<Protocol::S_PARRY >(Handle_S_PARRY, session, buffer, len); };
+		GPacketHandler[PKT_S_SELECT_ENEMY] = [](PacketSessionRef& session, BYTE* buffer, int32 len) { return HandlePacket<Protocol::S_SELECT_ENEMY >(Handle_S_SELECT_ENEMY, session, buffer, len); };
 		GPacketHandler[PKT_S_DEBUG] = [](PacketSessionRef& session, BYTE* buffer, int32 len) { return HandlePacket<Protocol::S_DEBUG >(Handle_S_DEBUG, session, buffer, len); };
 	}
 
@@ -71,6 +75,7 @@ public:
 	static SendBufferRef MakePKTSendBuffer(Protocol::C_LEAVE_GAME&pkt) { return _MakeSendBuffer(pkt, PKT_C_LEAVE_GAME); }
 	static SendBufferRef MakePKTSendBuffer(Protocol::C_MOVE&pkt) { return _MakeSendBuffer(pkt, PKT_C_MOVE); }
 	static SendBufferRef MakePKTSendBuffer(Protocol::C_SKILL&pkt) { return _MakeSendBuffer(pkt, PKT_C_SKILL); }
+	static SendBufferRef MakePKTSendBuffer(Protocol::C_SELECT_ENEMY&pkt) { return _MakeSendBuffer(pkt, PKT_C_SELECT_ENEMY); }
 
 private:
 	template<typename PacketType, typename ProcessFunc>

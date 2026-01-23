@@ -75,7 +75,6 @@ void APlayerBase::Parry(Protocol::S_PARRY ParryInfo)
 
 	// 패링 스킬 정보 
 	Protocol::SkillData DamagingSkill = ParryInfo.skill_data();
-
 	//DamagedDir = DamagingSkill.attack_dir();
 }
 

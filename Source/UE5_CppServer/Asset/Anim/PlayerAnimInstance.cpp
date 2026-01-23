@@ -107,7 +107,14 @@ void UPlayerAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 	// 재생 종료
 	if (IsAnyMontagePlaying() == false)
 	{
-		if (OwnerCharacter->GetActionState() == Protocol::ACTION_STATE_MOVE_RUN)
+
+		if (ActionState == Protocol::ACTION_STATE_BATTLE)
+		{
+			OwnerCharacter->SetActionState(Protocol::ACTION_STATE_BATTLE);
+			OwnerCharacter->ResetDamageDir();
+			State = ActionState::State_Action_Battle;
+		}
+		else if (ActionState == Protocol::ACTION_STATE_MOVE_RUN)
 		{
 			OwnerCharacter->SetActionState(Protocol::ACTION_STATE_MOVE_RUN);
 			OwnerCharacter->ResetDamageDir();

@@ -53,11 +53,21 @@ AClientPlayer::AClientPlayer()
 		CameraStates.Add(ECameraState::Battle, State);
 	}
 
-	// Parry (측면)
+	// Damaged
 	{
 		FCameraStateData State;
 		State.PivotOffset = FVector(0.f, 70.f, 80.f);
-		State.PivotRotation = FRotator(-30.f, -45.f, 0.f);
+		State.PivotRotation = FRotator(-10.f, 0.f, 0.f);
+		State.ArmLength = 150.f;
+		State.InterpSpeed = 5.f;
+		CameraStates.Add(ECameraState::Battle, State);
+	}
+
+	// Parry (측면)
+	{
+		FCameraStateData State;
+		State.PivotOffset = FVector(0.f, 90.f, 80.f);
+		State.PivotRotation = FRotator(-25.f, -45.f, 0.f);
 		State.ArmLength = 100.f;
 		State.InterpSpeed = 15.f;
 		CameraStates.Add(ECameraState::Parry, State);
@@ -122,6 +132,18 @@ void AClientPlayer::Caching()
 	}
 }
 
+void AClientPlayer::OnDamaged(const Protocol::S_DAMAGED& DamagePkt)
+{
+	Super::OnDamaged(DamagePkt);
+}
+
+void AClientPlayer::Parry(Protocol::S_PARRY ParryInfo)
+{
+	Super::Parry(ParryInfo);
+
+	SetCameraState(ECameraState::Parry);
+}
+
 void AClientPlayer::SetCameraState(ECameraState NewState)
 {
 	if (CurCameraState == NewState)
@@ -131,6 +153,11 @@ void AClientPlayer::SetCameraState(ECameraState NewState)
 
 	// Controller 회전값 초기화 
 	Controller->SetControlRotation(GetActorRotation());
+}
+
+FVector AClientPlayer::GetCameraForward()
+{
+	return SpringArm->GetForwardVector();
 }
 
 void AClientPlayer::UpdateCamera(float DeltaTime)
@@ -149,12 +176,55 @@ void AClientPlayer::UpdateCamera(float DeltaTime)
 		)
 	);
 
-	// SpringArm회전
-	// 피봇 회전은 그냥 offset값으로 하는것 
+	// SpringArm 회전
+	FRotator DesiredRot;
+
+	// 락 온
+	// 락온 상태 체크
+	bool bLockOn = false;
+	Protocol::ActionState ActionState = GetActionState();
+
+	if (ActionState == Protocol::ACTION_STATE_ATTACK_TRY
+		|| ActionState == Protocol::ACTION_STATE_ATTACK_SUCCESS
+		|| ActionState == Protocol::ACTION_STATE_ATTACK_INTERRUPTED
+		|| ActionState == Protocol::ACTION_STATE_DAMAGED
+		|| ActionState == Protocol::ACTION_STATE_PARRY
+		)
+	{
+		bLockOn = true;
+	}
+	
+	if (bLockOn && Target )
+	{
+		const FVector From = SpringArm->GetComponentLocation(); // 또는 CameraPivot
+		const FVector ToTarget = Target->GetActorLocation() - From;
+
+		DesiredRot = ToTarget.Rotation();
+		DesiredRot += TargetState->PivotRotation;
+
+		// 강제 락온 -> 상대방을 향해 yaw회전 
+		{
+			const FVector TargetVec = Target->GetActorLocation() - GetActorLocation();
+
+			FRotator TargetYawRot = TargetVec.Rotation();
+			TargetYawRot.Pitch = 0;
+			TargetYawRot.Roll = 0;
+
+			const FRotator CurtRot = GetActorRotation();
+			const FRotator SmoothRot = FMath::RInterpTo(CurtRot, TargetYawRot, GetWorld()->GetDeltaSeconds(), 15.f);
+			SetActorRotation(SmoothRot);
+		}
+	}
+	else
+	{
+		// 공격 이외에는 자유 시점 
+		DesiredRot = TargetState->PivotRotation + GetControlRotation();
+	}
+
 	SpringArm->SetWorldRotation(
 		FMath::RInterpTo(
 			SpringArm->GetComponentRotation(),
-			GetControlRotation() + TargetState->PivotRotation,
+			DesiredRot,
 			DeltaTime,
 			TargetState->InterpSpeed
 		)

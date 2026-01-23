@@ -33,15 +33,31 @@ public:
 	virtual void Tick(float DeltaTime) override;
 	
 public:
-	UFUNCTION(BlueprintCallable)
 	void Caching();
+
+	// ----------------------
+	//		Battle
+	// ----------------------
+	void SetTarget(ACreature* Creature) { Target = Creature; }
+	void ResetTarget() { Target = nullptr; }
+	TObjectPtr<class ACreature> GetTarget() { return Target; }
+
+	// --------------------------------
+	//		Interface - Damageble
+	// --------------------------------
+	virtual void OnDamaged(const Protocol::S_DAMAGED& DamagePkt) override;
+
+	// --------------------------------
+	//		Interface - Parryable
+	// --------------------------------
+	virtual void Parry(Protocol::S_PARRY ParryInfo);
 
 	// ----------------------
 	//		Camera
 	// ----------------------
 public:
-	UFUNCTION(BlueprintCallable)
 	void SetCameraState(ECameraState NewState);
+	FVector GetCameraForward();
 
 private:
 	void UpdateCamera(float DeltaTime);
@@ -81,6 +97,7 @@ protected:
 private:
 	// Caching
 	TObjectPtr<class AClientPlayerController> Controller;
+	TObjectPtr<class ACreature> Target;
 
 	// Network
 	bool bForceSendMovePkt = false;

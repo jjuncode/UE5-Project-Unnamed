@@ -32,6 +32,7 @@ public:
 	void HandleSkill(const Protocol::S_SKILL& SkillPkt);
 	void HandleDamaged(const Protocol::S_DAMAGED& DamagePkt);
 	void HandleParry(const Protocol::S_PARRY& ParryPkt);
+	void HandleSelectEnemy(const Protocol::S_SELECT_ENEMY& SelectEnemyPkt);
 
 	void HandleDebugMessage(const Protocol::S_DEBUG& DebugPkt);
 
@@ -39,7 +40,9 @@ public:
 	bool IsMyPlayer(int32 Id);
 	bool IsMyPlayer(const Protocol::ObjectInfo& ObjectInfo);
 
-public:
+	const auto& GetPlayers() { return Players;  }
+
+protected:
 	UPROPERTY(VisibleAnywhere)
 	TSubclassOf<AActor> OtherPlayerClass;
 

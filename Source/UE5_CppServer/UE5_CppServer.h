@@ -31,3 +31,9 @@ inline UNetworkManager* GetNetworkManager()
 {
 	return GetManager<UNetworkManager>();
 }
+
+UFUNCTION(BlueprintCallable, Category = "Manager")
+inline UGameManager* GetGameManager()
+{
+	return GetManager<UGameManager>();
+}

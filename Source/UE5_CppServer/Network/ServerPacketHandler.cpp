@@ -115,6 +115,15 @@ bool Handle_S_PARRY(PacketSessionRef& session, Protocol::S_PARRY& pkt)
 	return true;
 }
 
+bool Handle_S_SELECT_ENEMY(PacketSessionRef& session, Protocol::S_SELECT_ENEMY& pkt)
+{
+	if (auto* GameManager = GetManager<UGameManager>())
+	{
+		GameManager->HandleSelectEnemy(pkt);
+	}
+	return true;
+}
+
 bool Handle_S_DEBUG(PacketSessionRef& session, Protocol::S_DEBUG& pkt)
 {
 	if (auto* GameManager = GetManager<UGameManager>())

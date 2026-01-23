@@ -208,6 +208,29 @@ void UGameManager::HandleParry(const Protocol::S_PARRY& ParryPkt)
 	}
 }
 
+void UGameManager::HandleSelectEnemy(const Protocol::S_SELECT_ENEMY& SelectEnemyPkt)
+{
+	// 받은 애 정보 셋팅 
+	Protocol::ObjectInfo ObjectInfo = SelectEnemyPkt.object_info();
+
+	TObjectPtr<APlayerBase>* Creature = Players.Find(ObjectInfo.creature_info().id());
+	ensureMsgf(Creature, TEXT("[GameManager - HandleSelectEnemy] : Can't Find Player"));
+	(*Creature)->SetObjectInfoRef().CopyFrom(ObjectInfo);
+
+	TObjectPtr<APlayerBase>* Target = Players.Find(SelectEnemyPkt.target_id());
+	ensureMsgf(Target, TEXT("[GameManager - HandleSelectEnemy] : Can't Find Target"));
+
+	AClientPlayer* Player = Cast<AClientPlayer>(*Creature);
+	if (Player)
+	{
+		// 카메라 셋팅 
+		Player->SetCameraState(ECameraState::Battle);
+	
+		// target 셋팅
+		Player->SetTarget(*Target);
+	}
+}
+
 void UGameManager::HandleDebugMessage(const Protocol::S_DEBUG& DebugPkt)
 {
 	// debug Message Rendering

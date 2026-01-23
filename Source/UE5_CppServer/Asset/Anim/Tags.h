@@ -10,6 +10,7 @@ namespace ActionState
     UE_DECLARE_GAMEPLAY_TAG_EXTERN(State_Action_Move_Idle);
     UE_DECLARE_GAMEPLAY_TAG_EXTERN(State_Action_Move_Run);
 
+    UE_DECLARE_GAMEPLAY_TAG_EXTERN(State_Action_Battle);
     UE_DECLARE_GAMEPLAY_TAG_EXTERN(State_Action_Attack_Try);
     UE_DECLARE_GAMEPLAY_TAG_EXTERN(State_Action_Attack_Success);
     UE_DECLARE_GAMEPLAY_TAG_EXTERN(State_Action_Attack_Interrupted);

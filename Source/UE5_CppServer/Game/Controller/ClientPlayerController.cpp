@@ -54,6 +54,9 @@ void AClientPlayerController::SetupInputComponent()
 	
 		// Skill 
 		EIC->BindAction(SkillAction, ETriggerEvent::Started, this, &AClientPlayerController::HandleSkillAction);
+	
+		// Search Enemy
+		EIC->BindAction(SearchEnemyAction, ETriggerEvent::Started, this, &AClientPlayerController::HandleSearchEnemyAction);
 	}
 }
 
@@ -82,49 +85,87 @@ void AClientPlayerController::_HandleMoveAction(const FInputActionValue& Value, 
 
 void AClientPlayerController::HandleMoveActionTrigerred(const FInputActionValue& Value)
 {
-	// IDLE / RUN 상태에서만 움직이기가 가능하다
-	if (ClientPlayer->GetActionState() == Protocol::ACTION_STATE_MOVE_IDLE
-		|| ClientPlayer->GetActionState() == Protocol::ACTION_STATE_MOVE_RUN)
+	// IDLE / RUN / BATTLE 상태에서만 움직이기가 가능하다
+	Protocol::ActionState ActionState = ClientPlayer->GetActionState();
+
+	if (ActionState == Protocol::ACTION_STATE_MOVE_IDLE
+		|| ActionState == Protocol::ACTION_STATE_MOVE_RUN
+		|| ActionState == Protocol::ACTION_STATE_BATTLE)
 	{}
 	else return;
 
-	_HandleMoveAction(Value, Protocol::ACTION_STATE_MOVE_RUN);
+	if (ActionState == Protocol::ACTION_STATE_BATTLE)
+	{
+		_HandleMoveAction(Value, Protocol::ACTION_STATE_BATTLE);
+	}
+	else
+	{
+		_HandleMoveAction(Value, Protocol::ACTION_STATE_MOVE_RUN);
+	}
 }
 
 void AClientPlayerController::HandleMoveActionCompleted(const FInputActionValue& Value)
 {
 	ClientPlayer->ForceSendMovePkt();
-	_HandleMoveAction(Value, Protocol::ACTION_STATE_MOVE_IDLE);
+
+	Protocol::ActionState ActionState = ClientPlayer->GetActionState();
+	if (ActionState == Protocol::ACTION_STATE_BATTLE)
+	{
+		_HandleMoveAction(Value, Protocol::ACTION_STATE_BATTLE);
+	}
+	else
+	{
+		_HandleMoveAction(Value, Protocol::ACTION_STATE_MOVE_IDLE);
+	}
 }
 
 void AClientPlayerController::SyncYaw(const FInputActionValue& Value)
 {
 	// 키 입력시 yaw 동기화 
-	FVector2D InputValue = Value.Get<FVector2D>();
+	Protocol::ActionState ActionState = ClientPlayer->GetActionState();
+	if (ActionState == Protocol::ACTION_STATE_MOVE_IDLE
+		|| ActionState == Protocol::ACTION_STATE_MOVE_RUN
+		|| ActionState == Protocol::ACTION_STATE_BATTLE ) 
+	{
+		FVector2D InputValue = Value.Get<FVector2D>();
 
-	const FRotator ControlRot = GetControlRotation();
-	const FRotator TargetYawRot(0.f, ControlRot.Yaw, 0.f);
+		const FRotator ControlRot = GetControlRotation();
+		const FRotator TargetYawRot(0.f, ControlRot.Yaw, 0.f);
 
-	const FRotator CurrentRot = ClientPlayer->GetActorRotation();
-	const float InterpSpeed = 15.f; // 값 키울수록 빠르게 회전
-	const FRotator SmoothRot =
-		FMath::RInterpTo(CurrentRot, TargetYawRot, GetWorld()->GetDeltaSeconds(), InterpSpeed);
+		const FRotator CurrentRot = ClientPlayer->GetActorRotation();
+		const float InterpSpeed = 15.f; // 값 키울수록 빠르게 회전
+		const FRotator SmoothRot =
+			FMath::RInterpTo(CurrentRot, TargetYawRot, GetWorld()->GetDeltaSeconds(), InterpSpeed);
 
-	// 보간 회전
-	ClientPlayer->SetActorRotation(SmoothRot);
+		// 보간 회전
+		ClientPlayer->SetActorRotation(SmoothRot);
+	}
 }
 
 void AClientPlayerController::HandleMouseLookAction(const FInputActionValue& Value)
 {
 	FVector2D InputValue = Value.Get<FVector2D>();
+
+	Protocol::ActionState ActionState = ClientPlayer->GetActionState();
+
+	// IDLE / MOVE / BATTLE 일 때만 카메라 회전이 가능 
+	if (ActionState == Protocol::ACTION_STATE_MOVE_IDLE
+		|| ActionState == Protocol::ACTION_STATE_MOVE_RUN
+		|| ActionState == Protocol::ACTION_STATE_BATTLE )
+	{}
+	else return;
+
 	AddYawInput(InputValue.X);
 	AddPitchInput(-InputValue.Y);
 }
 
 void AClientPlayerController::HandleSkillAction(const FInputActionValue& Value)
 {
-	if (ClientPlayer->GetActionState() == Protocol::ACTION_STATE_MOVE_IDLE
-		|| ClientPlayer->GetActionState() == Protocol::ACTION_STATE_MOVE_RUN)
+	Protocol::ActionState ActionState = ClientPlayer->GetActionState();
+	
+	if (ActionState == Protocol::ACTION_STATE_MOVE_IDLE
+		|| ActionState == Protocol::ACTION_STATE_MOVE_RUN
+		|| ActionState == Protocol::ACTION_STATE_BATTLE )
 	{}
 	else
 		return;
@@ -149,4 +190,150 @@ void AClientPlayerController::HandleSkillAction(const FInputActionValue& Value)
 	SkillPkt.set_yaw(ClientPlayer->GetObjectInfo().yaw());
 
 	SEND_PACKET_NO_SESSION(SkillPkt);
+}
+
+void AClientPlayerController::HandleSearchEnemyAction(const FInputActionValue& Value)
+{
+	// 거리를 기준으로 먼저 주변의 creature들을 탐색 / 방향까지 탐색
+	// target을 선별해서 보내줌
+	auto* GameManager = GetGameManager();
+	if (!GameManager || !ClientPlayer) return;
+
+	if (ClientPlayer->GetTarget() != nullptr)
+	{
+		ClientPlayer->ResetTarget();
+		ClientPlayer->SetCameraState(ECameraState::Normal);
+		return;
+	}
+
+	const FVector MyPos = ClientPlayer->GetActorLocation();
+	const FVector Forward = ClientPlayer->GetCameraForward(); // 카메라가 보는 기준 
+
+	const float MaxDistSq = SearchEnemyDistn * SearchEnemyDistn;
+	const float MinDot = FMath::Cos(FMath::DegreesToRadians(SearchEnemyAngle));
+	const float DotEpsilon = 0.01f; // 거의 정면 판별 기준
+
+	APlayerBase* BestTarget = nullptr;
+	float BestDot = MinDot;
+	float BestDistSq = TNumericLimits<float>::Max();
+
+	for (const auto& p : GameManager->GetPlayers())
+	{
+		APlayerBase* player = p.Value.Get();
+		if (!player) continue;
+
+		// 자신 제외
+		if (GameManager->IsMyPlayer(player))
+			continue;
+
+		const FVector ToTarget = player->GetActorLocation() - MyPos;
+		const float DistSq = ToTarget.SizeSquared();
+
+		// 거리 컷
+		if (DistSq > MaxDistSq)
+			continue;
+
+		// 각도 체크
+		const FVector ToTargetDir = ToTarget * FMath::InvSqrt(DistSq);
+		const float Dot = FVector::DotProduct(Forward, ToTargetDir);
+		if (Dot < MinDot)
+			continue;
+
+		// ===== 최종 선택 로직 =====
+		const bool bBetterDot = Dot > BestDot + DotEpsilon;
+		const bool bSameDotButCloser =
+			FMath::Abs(Dot - BestDot) <= DotEpsilon && DistSq < BestDistSq;
+
+		if (bBetterDot || bSameDotButCloser)
+		{
+			BestDot = Dot;
+			BestDistSq = DistSq;
+			BestTarget = player;
+		}
+	}
+
+	// ===== 결과 로그 =====
+	if (BestTarget)
+	{
+		Protocol::C_SELECT_ENEMY SelectEnemyPkt;
+		SelectEnemyPkt.set_target_id(BestTarget->GetObjectInfo().creature_info().id());
+		SEND_PACKET_NO_SESSION(SelectEnemyPkt);
+
+		const float BestDist = FMath::Sqrt(BestDistSq);
+		const float AngleDeg =
+			FMath::RadiansToDegrees(FMath::Acos(FMath::Clamp(BestDot, -1.f, 1.f)));
+
+		const FString DebugMsg = FString::Printf(
+			TEXT("[LockOn] Target=%s | Dist=%.1f | Dot=%.3f | Angle=%.1f"),
+			*BestTarget->GetName(),
+			BestDist,
+			BestDot,
+			AngleDeg
+		);
+
+		// Key = -1 → 매번 새 메시지
+		GEngine->AddOnScreenDebugMessage(
+			-1,
+			2.0f,              // 표시 시간 (초)
+			FColor::Green,
+			DebugMsg
+		);
+	}
+	else
+	{
+		GEngine->AddOnScreenDebugMessage(
+			-1,
+			1.5f,
+			FColor::Red,
+			TEXT("[LockOn] No valid target")
+		);
+	}
+
+	// Draw Debug Span 
+	{
+		const FVector Start = MyPos;
+
+		// 중앙선 (정면)
+		DrawDebugLine(
+			GetWorld(),
+			Start,
+			Start + Forward * SearchEnemyDistn,
+			FColor::Yellow,
+			false,
+			1.f,
+			0,
+			2.f
+		);
+
+		// 좌 / 우 경계 각도
+		const FRotator LeftRot(0.f, -SearchEnemyAngle, 0.f);
+		const FRotator RightRot(0.f, SearchEnemyAngle, 0.f);
+
+		const FVector LeftDir = LeftRot.RotateVector(Forward);
+		const FVector RightDir = RightRot.RotateVector(Forward);
+
+		// 왼쪽 경계
+		DrawDebugLine(
+			GetWorld(),
+			Start,
+			Start + LeftDir * SearchEnemyDistn,
+			FColor::Cyan,
+			false,
+			1.f,
+			0,
+			1.5f
+		);
+
+		// 오른쪽 경계
+		DrawDebugLine(
+			GetWorld(),
+			Start,
+			Start + RightDir * SearchEnemyDistn,
+			FColor::Cyan,
+			false,
+			1.f,
+			0,
+			1.5f
+		);
+	}
 }

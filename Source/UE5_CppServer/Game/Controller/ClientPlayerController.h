@@ -44,6 +44,13 @@ private:
 	// IA_Attack
 	void HandleSkillAction(const FInputActionValue& Value);
 
+	// 적수지정
+	void HandleSearchEnemyAction(const FInputActionValue& Value);
+
+private:
+	const float SearchEnemyDistn = 1000;	// 적수지정 거리
+	const float SearchEnemyAngle = 45.f;	// 적수지정 각도
+
 private:
 	UPROPERTY(Category=Input, EditAnywhere)
 	TObjectPtr<class UInputAction> MoveAction;
@@ -53,6 +60,9 @@ private:
 
 	UPROPERTY(Category = Input, EditAnywhere)
 	TObjectPtr<class UInputAction> SkillAction;
+
+	UPROPERTY(Category = Input, EditAnywhere)
+	TObjectPtr<class UInputAction> SearchEnemyAction;
 
 	UPROPERTY(Category = Input, EditAnywhere)
 	TObjectPtr<class UInputMappingContext> IMC;

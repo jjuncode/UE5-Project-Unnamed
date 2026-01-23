@@ -211,6 +211,31 @@ struct S_PARRYDefaultTypeInternal {
   };
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 S_PARRYDefaultTypeInternal _S_PARRY_default_instance_;
+PROTOBUF_CONSTEXPR C_SELECT_ENEMY::C_SELECT_ENEMY(
+    ::_pbi::ConstantInitialized)
+  : target_id_(uint64_t{0u}){}
+struct C_SELECT_ENEMYDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR C_SELECT_ENEMYDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
+  ~C_SELECT_ENEMYDefaultTypeInternal() {}
+  union {
+    C_SELECT_ENEMY _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 C_SELECT_ENEMYDefaultTypeInternal _C_SELECT_ENEMY_default_instance_;
+PROTOBUF_CONSTEXPR S_SELECT_ENEMY::S_SELECT_ENEMY(
+    ::_pbi::ConstantInitialized)
+  : object_info_(nullptr)
+  , target_id_(uint64_t{0u}){}
+struct S_SELECT_ENEMYDefaultTypeInternal {
+  PROTOBUF_CONSTEXPR S_SELECT_ENEMYDefaultTypeInternal()
+      : _instance(::_pbi::ConstantInitialized{}) {}
+  ~S_SELECT_ENEMYDefaultTypeInternal() {}
+  union {
+    S_SELECT_ENEMY _instance;
+  };
+};
+PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 S_SELECT_ENEMYDefaultTypeInternal _S_SELECT_ENEMY_default_instance_;
 PROTOBUF_CONSTEXPR S_DEBUG::S_DEBUG(
     ::_pbi::ConstantInitialized)
   : info_(nullptr){}
@@ -224,7 +249,7 @@ struct S_DEBUGDefaultTypeInternal {
 };
 PROTOBUF_ATTRIBUTE_NO_DESTROY PROTOBUF_CONSTINIT PROTOBUF_ATTRIBUTE_INIT_PRIORITY1 S_DEBUGDefaultTypeInternal _S_DEBUG_default_instance_;
 }  // namespace Protocol
-static ::_pb::Metadata file_level_metadata_Protocol_2eproto[16];
+static ::_pb::Metadata file_level_metadata_Protocol_2eproto[18];
 static constexpr ::_pb::EnumDescriptor const** file_level_enum_descriptors_Protocol_2eproto = nullptr;
 static constexpr ::_pb::ServiceDescriptor const** file_level_service_descriptors_Protocol_2eproto = nullptr;
 
@@ -343,6 +368,21 @@ const uint32_t TableStruct_Protocol_2eproto::offsets[] PROTOBUF_SECTION_VARIABLE
   PROTOBUF_FIELD_OFFSET(::Protocol::S_PARRY, skill_data_),
   PROTOBUF_FIELD_OFFSET(::Protocol::S_PARRY, attacker_id_),
   ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::Protocol::C_SELECT_ENEMY, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::Protocol::C_SELECT_ENEMY, target_id_),
+  ~0u,  // no _has_bits_
+  PROTOBUF_FIELD_OFFSET(::Protocol::S_SELECT_ENEMY, _internal_metadata_),
+  ~0u,  // no _extensions_
+  ~0u,  // no _oneof_case_
+  ~0u,  // no _weak_field_map_
+  ~0u,  // no _inlined_string_donated_
+  PROTOBUF_FIELD_OFFSET(::Protocol::S_SELECT_ENEMY, object_info_),
+  PROTOBUF_FIELD_OFFSET(::Protocol::S_SELECT_ENEMY, target_id_),
+  ~0u,  // no _has_bits_
   PROTOBUF_FIELD_OFFSET(::Protocol::S_DEBUG, _internal_metadata_),
   ~0u,  // no _extensions_
   ~0u,  // no _oneof_case_
@@ -366,7 +406,9 @@ static const ::_pbi::MigrationSchema schemas[] PROTOBUF_SECTION_VARIABLE(protode
   { 88, -1, -1, sizeof(::Protocol::S_SKILL)},
   { 95, -1, -1, sizeof(::Protocol::S_DAMAGED)},
   { 104, -1, -1, sizeof(::Protocol::S_PARRY)},
-  { 113, -1, -1, sizeof(::Protocol::S_DEBUG)},
+  { 113, -1, -1, sizeof(::Protocol::C_SELECT_ENEMY)},
+  { 120, -1, -1, sizeof(::Protocol::S_SELECT_ENEMY)},
+  { 128, -1, -1, sizeof(::Protocol::S_DEBUG)},
 };
 
 static const ::_pb::Message* const file_default_instances[] = {
@@ -385,6 +427,8 @@ static const ::_pb::Message* const file_default_instances[] = {
   &::Protocol::_S_SKILL_default_instance_._instance,
   &::Protocol::_S_DAMAGED_default_instance_._instance,
   &::Protocol::_S_PARRY_default_instance_._instance,
+  &::Protocol::_C_SELECT_ENEMY_default_instance_._instance,
+  &::Protocol::_S_SELECT_ENEMY_default_instance_._instance,
   &::Protocol::_S_DEBUG_default_instance_._instance,
 };
 
@@ -413,9 +457,12 @@ const char descriptor_table_protodef_Protocol_2eproto[] PROTOBUF_SECTION_VARIABL
   "\023.Protocol.SkillData\022\023\n\013attacker_id\030\003 \001("
   "\004\"r\n\007S_PARRY\022)\n\013object_info\030\001 \001(\0132\024.Prot"
   "ocol.ObjectInfo\022\'\n\nskill_data\030\002 \001(\0132\023.Pr"
-  "otocol.SkillData\022\023\n\013attacker_id\030\003 \001(\004\",\n"
-  "\007S_DEBUG\022!\n\004info\030\001 \001(\0132\023.Protocol.DebugI"
-  "nfob\006proto3"
+  "otocol.SkillData\022\023\n\013attacker_id\030\003 \001(\004\"#\n"
+  "\016C_SELECT_ENEMY\022\021\n\ttarget_id\030\001 \001(\004\"N\n\016S_"
+  "SELECT_ENEMY\022)\n\013object_info\030\001 \001(\0132\024.Prot"
+  "ocol.ObjectInfo\022\021\n\ttarget_id\030\002 \001(\004\",\n\007S_"
+  "DEBUG\022!\n\004info\030\001 \001(\0132\023.Protocol.DebugInfo"
+  "b\006proto3"
   ;
 static const ::_pbi::DescriptorTable* const descriptor_table_Protocol_2eproto_deps[2] = {
   &::descriptor_table_Enum_2eproto,
@@ -423,9 +470,9 @@ static const ::_pbi::DescriptorTable* const descriptor_table_Protocol_2eproto_de
 };
 static ::_pbi::once_flag descriptor_table_Protocol_2eproto_once;
 const ::_pbi::DescriptorTable descriptor_table_Protocol_2eproto = {
-    false, false, 1051, descriptor_table_protodef_Protocol_2eproto,
+    false, false, 1168, descriptor_table_protodef_Protocol_2eproto,
     "Protocol.proto",
-    &descriptor_table_Protocol_2eproto_once, descriptor_table_Protocol_2eproto_deps, 2, 16,
+    &descriptor_table_Protocol_2eproto_once, descriptor_table_Protocol_2eproto_deps, 2, 18,
     schemas, file_default_instances, TableStruct_Protocol_2eproto::offsets,
     file_level_metadata_Protocol_2eproto, file_level_enum_descriptors_Protocol_2eproto,
     file_level_service_descriptors_Protocol_2eproto,
@@ -3351,6 +3398,402 @@ void S_PARRY::InternalSwap(S_PARRY* other) {
 
 // ===================================================================
 
+class C_SELECT_ENEMY::_Internal {
+ public:
+};
+
+C_SELECT_ENEMY::C_SELECT_ENEMY(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor();
+  // @@protoc_insertion_point(arena_constructor:Protocol.C_SELECT_ENEMY)
+}
+C_SELECT_ENEMY::C_SELECT_ENEMY(const C_SELECT_ENEMY& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  target_id_ = from.target_id_;
+  // @@protoc_insertion_point(copy_constructor:Protocol.C_SELECT_ENEMY)
+}
+
+inline void C_SELECT_ENEMY::SharedCtor() {
+target_id_ = uint64_t{0u};
+}
+
+C_SELECT_ENEMY::~C_SELECT_ENEMY() {
+  // @@protoc_insertion_point(destructor:Protocol.C_SELECT_ENEMY)
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
+  SharedDtor();
+}
+
+inline void C_SELECT_ENEMY::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+}
+
+void C_SELECT_ENEMY::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+
+void C_SELECT_ENEMY::Clear() {
+// @@protoc_insertion_point(message_clear_start:Protocol.C_SELECT_ENEMY)
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  target_id_ = uint64_t{0u};
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* C_SELECT_ENEMY::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    uint32_t tag;
+    ptr = ::_pbi::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // uint64 target_id = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 8)) {
+          target_id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      default:
+        goto handle_unusual;
+    }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
+  }  // while
+message_done:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto message_done;
+#undef CHK_
+}
+
+uint8_t* C_SELECT_ENEMY::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:Protocol.C_SELECT_ENEMY)
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // uint64 target_id = 1;
+  if (this->_internal_target_id() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteUInt64ToArray(1, this->_internal_target_id(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:Protocol.C_SELECT_ENEMY)
+  return target;
+}
+
+size_t C_SELECT_ENEMY::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:Protocol.C_SELECT_ENEMY)
+  size_t total_size = 0;
+
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // uint64 target_id = 1;
+  if (this->_internal_target_id() != 0) {
+    total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(this->_internal_target_id());
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData C_SELECT_ENEMY::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSizeCheck,
+    C_SELECT_ENEMY::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*C_SELECT_ENEMY::GetClassData() const { return &_class_data_; }
+
+void C_SELECT_ENEMY::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to,
+                      const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+  static_cast<C_SELECT_ENEMY *>(to)->MergeFrom(
+      static_cast<const C_SELECT_ENEMY &>(from));
+}
+
+
+void C_SELECT_ENEMY::MergeFrom(const C_SELECT_ENEMY& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:Protocol.C_SELECT_ENEMY)
+  GOOGLE_DCHECK_NE(&from, this);
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from._internal_target_id() != 0) {
+    _internal_set_target_id(from._internal_target_id());
+  }
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void C_SELECT_ENEMY::CopyFrom(const C_SELECT_ENEMY& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:Protocol.C_SELECT_ENEMY)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool C_SELECT_ENEMY::IsInitialized() const {
+  return true;
+}
+
+void C_SELECT_ENEMY::InternalSwap(C_SELECT_ENEMY* other) {
+  using std::swap;
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  swap(target_id_, other->target_id_);
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata C_SELECT_ENEMY::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_Protocol_2eproto_getter, &descriptor_table_Protocol_2eproto_once,
+      file_level_metadata_Protocol_2eproto[15]);
+}
+
+// ===================================================================
+
+class S_SELECT_ENEMY::_Internal {
+ public:
+  static const ::Protocol::ObjectInfo& object_info(const S_SELECT_ENEMY* msg);
+};
+
+const ::Protocol::ObjectInfo&
+S_SELECT_ENEMY::_Internal::object_info(const S_SELECT_ENEMY* msg) {
+  return *msg->object_info_;
+}
+void S_SELECT_ENEMY::clear_object_info() {
+  if (GetArenaForAllocation() == nullptr && object_info_ != nullptr) {
+    delete object_info_;
+  }
+  object_info_ = nullptr;
+}
+S_SELECT_ENEMY::S_SELECT_ENEMY(::PROTOBUF_NAMESPACE_ID::Arena* arena,
+                         bool is_message_owned)
+  : ::PROTOBUF_NAMESPACE_ID::Message(arena, is_message_owned) {
+  SharedCtor();
+  // @@protoc_insertion_point(arena_constructor:Protocol.S_SELECT_ENEMY)
+}
+S_SELECT_ENEMY::S_SELECT_ENEMY(const S_SELECT_ENEMY& from)
+  : ::PROTOBUF_NAMESPACE_ID::Message() {
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+  if (from._internal_has_object_info()) {
+    object_info_ = new ::Protocol::ObjectInfo(*from.object_info_);
+  } else {
+    object_info_ = nullptr;
+  }
+  target_id_ = from.target_id_;
+  // @@protoc_insertion_point(copy_constructor:Protocol.S_SELECT_ENEMY)
+}
+
+inline void S_SELECT_ENEMY::SharedCtor() {
+::memset(reinterpret_cast<char*>(this) + static_cast<size_t>(
+    reinterpret_cast<char*>(&object_info_) - reinterpret_cast<char*>(this)),
+    0, static_cast<size_t>(reinterpret_cast<char*>(&target_id_) -
+    reinterpret_cast<char*>(&object_info_)) + sizeof(target_id_));
+}
+
+S_SELECT_ENEMY::~S_SELECT_ENEMY() {
+  // @@protoc_insertion_point(destructor:Protocol.S_SELECT_ENEMY)
+  if (auto *arena = _internal_metadata_.DeleteReturnArena<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>()) {
+  (void)arena;
+    return;
+  }
+  SharedDtor();
+}
+
+inline void S_SELECT_ENEMY::SharedDtor() {
+  GOOGLE_DCHECK(GetArenaForAllocation() == nullptr);
+  if (this != internal_default_instance()) delete object_info_;
+}
+
+void S_SELECT_ENEMY::SetCachedSize(int size) const {
+  _cached_size_.Set(size);
+}
+
+void S_SELECT_ENEMY::Clear() {
+// @@protoc_insertion_point(message_clear_start:Protocol.S_SELECT_ENEMY)
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  if (GetArenaForAllocation() == nullptr && object_info_ != nullptr) {
+    delete object_info_;
+  }
+  object_info_ = nullptr;
+  target_id_ = uint64_t{0u};
+  _internal_metadata_.Clear<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>();
+}
+
+const char* S_SELECT_ENEMY::_InternalParse(const char* ptr, ::_pbi::ParseContext* ctx) {
+#define CHK_(x) if (PROTOBUF_PREDICT_FALSE(!(x))) goto failure
+  while (!ctx->Done(&ptr)) {
+    uint32_t tag;
+    ptr = ::_pbi::ReadTag(ptr, &tag);
+    switch (tag >> 3) {
+      // .Protocol.ObjectInfo object_info = 1;
+      case 1:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 10)) {
+          ptr = ctx->ParseMessage(_internal_mutable_object_info(), ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      // uint64 target_id = 2;
+      case 2:
+        if (PROTOBUF_PREDICT_TRUE(static_cast<uint8_t>(tag) == 16)) {
+          target_id_ = ::PROTOBUF_NAMESPACE_ID::internal::ReadVarint64(&ptr);
+          CHK_(ptr);
+        } else
+          goto handle_unusual;
+        continue;
+      default:
+        goto handle_unusual;
+    }  // switch
+  handle_unusual:
+    if ((tag == 0) || ((tag & 7) == 4)) {
+      CHK_(ptr);
+      ctx->SetLastTag(tag);
+      goto message_done;
+    }
+    ptr = UnknownFieldParse(
+        tag,
+        _internal_metadata_.mutable_unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(),
+        ptr, ctx);
+    CHK_(ptr != nullptr);
+  }  // while
+message_done:
+  return ptr;
+failure:
+  ptr = nullptr;
+  goto message_done;
+#undef CHK_
+}
+
+uint8_t* S_SELECT_ENEMY::_InternalSerialize(
+    uint8_t* target, ::PROTOBUF_NAMESPACE_ID::io::EpsCopyOutputStream* stream) const {
+  // @@protoc_insertion_point(serialize_to_array_start:Protocol.S_SELECT_ENEMY)
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  // .Protocol.ObjectInfo object_info = 1;
+  if (this->_internal_has_object_info()) {
+    target = ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::
+      InternalWriteMessage(1, _Internal::object_info(this),
+        _Internal::object_info(this).GetCachedSize(), target, stream);
+  }
+
+  // uint64 target_id = 2;
+  if (this->_internal_target_id() != 0) {
+    target = stream->EnsureSpace(target);
+    target = ::_pbi::WireFormatLite::WriteUInt64ToArray(2, this->_internal_target_id(), target);
+  }
+
+  if (PROTOBUF_PREDICT_FALSE(_internal_metadata_.have_unknown_fields())) {
+    target = ::_pbi::WireFormat::InternalSerializeUnknownFieldsToArray(
+        _internal_metadata_.unknown_fields<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(::PROTOBUF_NAMESPACE_ID::UnknownFieldSet::default_instance), target, stream);
+  }
+  // @@protoc_insertion_point(serialize_to_array_end:Protocol.S_SELECT_ENEMY)
+  return target;
+}
+
+size_t S_SELECT_ENEMY::ByteSizeLong() const {
+// @@protoc_insertion_point(message_byte_size_start:Protocol.S_SELECT_ENEMY)
+  size_t total_size = 0;
+
+  uint32_t cached_has_bits = 0;
+  // Prevent compiler warnings about cached_has_bits being unused
+  (void) cached_has_bits;
+
+  // .Protocol.ObjectInfo object_info = 1;
+  if (this->_internal_has_object_info()) {
+    total_size += 1 +
+      ::PROTOBUF_NAMESPACE_ID::internal::WireFormatLite::MessageSize(
+        *object_info_);
+  }
+
+  // uint64 target_id = 2;
+  if (this->_internal_target_id() != 0) {
+    total_size += ::_pbi::WireFormatLite::UInt64SizePlusOne(this->_internal_target_id());
+  }
+
+  return MaybeComputeUnknownFieldsSize(total_size, &_cached_size_);
+}
+
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData S_SELECT_ENEMY::_class_data_ = {
+    ::PROTOBUF_NAMESPACE_ID::Message::CopyWithSizeCheck,
+    S_SELECT_ENEMY::MergeImpl
+};
+const ::PROTOBUF_NAMESPACE_ID::Message::ClassData*S_SELECT_ENEMY::GetClassData() const { return &_class_data_; }
+
+void S_SELECT_ENEMY::MergeImpl(::PROTOBUF_NAMESPACE_ID::Message* to,
+                      const ::PROTOBUF_NAMESPACE_ID::Message& from) {
+  static_cast<S_SELECT_ENEMY *>(to)->MergeFrom(
+      static_cast<const S_SELECT_ENEMY &>(from));
+}
+
+
+void S_SELECT_ENEMY::MergeFrom(const S_SELECT_ENEMY& from) {
+// @@protoc_insertion_point(class_specific_merge_from_start:Protocol.S_SELECT_ENEMY)
+  GOOGLE_DCHECK_NE(&from, this);
+  uint32_t cached_has_bits = 0;
+  (void) cached_has_bits;
+
+  if (from._internal_has_object_info()) {
+    _internal_mutable_object_info()->::Protocol::ObjectInfo::MergeFrom(from._internal_object_info());
+  }
+  if (from._internal_target_id() != 0) {
+    _internal_set_target_id(from._internal_target_id());
+  }
+  _internal_metadata_.MergeFrom<::PROTOBUF_NAMESPACE_ID::UnknownFieldSet>(from._internal_metadata_);
+}
+
+void S_SELECT_ENEMY::CopyFrom(const S_SELECT_ENEMY& from) {
+// @@protoc_insertion_point(class_specific_copy_from_start:Protocol.S_SELECT_ENEMY)
+  if (&from == this) return;
+  Clear();
+  MergeFrom(from);
+}
+
+bool S_SELECT_ENEMY::IsInitialized() const {
+  return true;
+}
+
+void S_SELECT_ENEMY::InternalSwap(S_SELECT_ENEMY* other) {
+  using std::swap;
+  _internal_metadata_.InternalSwap(&other->_internal_metadata_);
+  ::PROTOBUF_NAMESPACE_ID::internal::memswap<
+      PROTOBUF_FIELD_OFFSET(S_SELECT_ENEMY, target_id_)
+      + sizeof(S_SELECT_ENEMY::target_id_)
+      - PROTOBUF_FIELD_OFFSET(S_SELECT_ENEMY, object_info_)>(
+          reinterpret_cast<char*>(&object_info_),
+          reinterpret_cast<char*>(&other->object_info_));
+}
+
+::PROTOBUF_NAMESPACE_ID::Metadata S_SELECT_ENEMY::GetMetadata() const {
+  return ::_pbi::AssignDescriptors(
+      &descriptor_table_Protocol_2eproto_getter, &descriptor_table_Protocol_2eproto_once,
+      file_level_metadata_Protocol_2eproto[16]);
+}
+
+// ===================================================================
+
 class S_DEBUG::_Internal {
  public:
   static const ::Protocol::DebugInfo& info(const S_DEBUG* msg);
@@ -3539,7 +3982,7 @@ void S_DEBUG::InternalSwap(S_DEBUG* other) {
 ::PROTOBUF_NAMESPACE_ID::Metadata S_DEBUG::GetMetadata() const {
   return ::_pbi::AssignDescriptors(
       &descriptor_table_Protocol_2eproto_getter, &descriptor_table_Protocol_2eproto_once,
-      file_level_metadata_Protocol_2eproto[15]);
+      file_level_metadata_Protocol_2eproto[17]);
 }
 
 // @@protoc_insertion_point(namespace_scope)
@@ -3604,6 +4047,14 @@ Arena::CreateMaybeMessage< ::Protocol::S_DAMAGED >(Arena* arena) {
 template<> PROTOBUF_NOINLINE ::Protocol::S_PARRY*
 Arena::CreateMaybeMessage< ::Protocol::S_PARRY >(Arena* arena) {
   return Arena::CreateMessageInternal< ::Protocol::S_PARRY >(arena);
+}
+template<> PROTOBUF_NOINLINE ::Protocol::C_SELECT_ENEMY*
+Arena::CreateMaybeMessage< ::Protocol::C_SELECT_ENEMY >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::Protocol::C_SELECT_ENEMY >(arena);
+}
+template<> PROTOBUF_NOINLINE ::Protocol::S_SELECT_ENEMY*
+Arena::CreateMaybeMessage< ::Protocol::S_SELECT_ENEMY >(Arena* arena) {
+  return Arena::CreateMessageInternal< ::Protocol::S_SELECT_ENEMY >(arena);
 }
 template<> PROTOBUF_NOINLINE ::Protocol::S_DEBUG*
 Arena::CreateMaybeMessage< ::Protocol::S_DEBUG >(Arena* arena) {
