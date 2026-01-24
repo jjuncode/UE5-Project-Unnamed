@@ -41,6 +41,7 @@ public:
 	bool IsMyPlayer(const Protocol::ObjectInfo& ObjectInfo);
 
 	const auto& GetPlayers() { return Players;  }
+	TObjectPtr<class APlayerBase> GetPlayer(uint64 PlayerId);
 
 protected:
 	UPROPERTY(VisibleAnywhere)

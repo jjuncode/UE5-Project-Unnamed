@@ -24,6 +24,9 @@ private:
 	void PlayHittedAnimation();
 	void PlayParryAnimation();
 
+private:
+	void CheckConvertStateToBattle();
+
 protected:
 	// Cache
 	bool PlayParryTiming = false;

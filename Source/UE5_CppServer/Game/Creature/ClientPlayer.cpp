@@ -53,22 +53,12 @@ AClientPlayer::AClientPlayer()
 		CameraStates.Add(ECameraState::Battle, State);
 	}
 
-	// Damaged
+	// Parry 
 	{
 		FCameraStateData State;
-		State.PivotOffset = FVector(0.f, 70.f, 80.f);
-		State.PivotRotation = FRotator(-10.f, 0.f, 0.f);
-		State.ArmLength = 150.f;
-		State.InterpSpeed = 5.f;
-		CameraStates.Add(ECameraState::Battle, State);
-	}
-
-	// Parry (측면)
-	{
-		FCameraStateData State;
-		State.PivotOffset = FVector(0.f, 90.f, 80.f);
-		State.PivotRotation = FRotator(-25.f, -45.f, 0.f);
-		State.ArmLength = 100.f;
+		State.PivotOffset = FVector(0.f, 70.f, -15.f);
+		State.PivotRotation = FRotator(2.5f, -10.f, 0.f);
+		State.ArmLength = 130.f;
 		State.InterpSpeed = 15.f;
 		CameraStates.Add(ECameraState::Parry, State);
 	}
@@ -135,12 +125,16 @@ void AClientPlayer::Caching()
 void AClientPlayer::OnDamaged(const Protocol::S_DAMAGED& DamagePkt)
 {
 	Super::OnDamaged(DamagePkt);
+
+	if (Target == nullptr)
+	{
+		Target = GetGameManager()->GetPlayer(DamagePkt.attacker_id());
+	}
 }
 
-void AClientPlayer::Parry(Protocol::S_PARRY ParryInfo)
+void AClientPlayer::Parry()
 {
-	Super::Parry(ParryInfo);
-
+	Super::Parry();
 	SetCameraState(ECameraState::Parry);
 }
 
@@ -214,6 +208,9 @@ void AClientPlayer::UpdateCamera(float DeltaTime)
 			const FRotator SmoothRot = FMath::RInterpTo(CurtRot, TargetYawRot, GetWorld()->GetDeltaSeconds(), 15.f);
 			SetActorRotation(SmoothRot);
 		}
+
+		// Controller 회전값 동기화
+		Controller->SetControlRotation(GetActorRotation());
 	}
 	else
 	{

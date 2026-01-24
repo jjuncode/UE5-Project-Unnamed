@@ -22,5 +22,6 @@ class UE5_CPPSERVER_API IParryable
 	GENERATED_BODY()
 
 public:
-	virtual void Parry(Protocol::S_PARRY ParryInfo) =0;	// 패링 수행
+	virtual void Parry() = 0;	// 패링 수행 ( 캐싱해둔 정보로 수행 ) 
+	virtual void CachingParryAttackInfo(Protocol::S_PARRY ParryInfo) = 0;	// 패링정보 캐싱
 };

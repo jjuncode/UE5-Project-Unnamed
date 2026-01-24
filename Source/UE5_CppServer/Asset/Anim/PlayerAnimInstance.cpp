@@ -2,9 +2,10 @@
 
 
 #include "Asset/Anim/PlayerAnimInstance.h"
-#include "PlayerBase.h"
+#include "ClientPlayer.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "KismetAnimationLibrary.h"
+
 
 void UPlayerAnimInstance::NativeInitializeAnimation()
 {
@@ -104,32 +105,8 @@ void UPlayerAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 		break;
 	}
 
-	// 재생 종료
 	if (IsAnyMontagePlaying() == false)
 	{
-
-		if (ActionState == Protocol::ACTION_STATE_BATTLE)
-		{
-			OwnerCharacter->SetActionState(Protocol::ACTION_STATE_BATTLE);
-			OwnerCharacter->ResetDamageDir();
-			State = ActionState::State_Action_Battle;
-		}
-		else if (ActionState == Protocol::ACTION_STATE_MOVE_RUN)
-		{
-			OwnerCharacter->SetActionState(Protocol::ACTION_STATE_MOVE_RUN);
-			OwnerCharacter->ResetDamageDir();
-			State = ActionState::State_Action_Move_Run;
-		}
-		else
-		{
-			OwnerCharacter->SetActionState(Protocol::ACTION_STATE_MOVE_IDLE);
-			OwnerCharacter->ResetDamageDir();
-			State = ActionState::State_Action_Move_Idle;
-		}
-
-		PlayParryTiming = false;
-
-		// 스킬 시전중 데미지 입었을경우를 대비 
 		// 스킬정보 밀어버림
 		OwnerCharacter->SetCurPlayingSkill(Protocol::SKILL_INFO_NONE);
 		CurPlayingAttackSkill = Protocol::SKILL_INFO_NONE;
@@ -171,6 +148,8 @@ void UPlayerAnimInstance::PlayAttackAnimationTry()
 			break;
 		}
 	}
+
+	CheckConvertStateToBattle();
 }
 
 void UPlayerAnimInstance::PlayAttackAnimationSuccess()
@@ -188,7 +167,8 @@ void UPlayerAnimInstance::PlayAttackAnimationInterrupted()
 		PlayAttackInterruptedTiming = false;
 		OwnerCharacter->PlayAnimMontage(AttackInterrupteddMontage, 1.0, "ATTACK_INTERRUPTED");
 	}
-
+	
+	CheckConvertStateToBattle();
 }
 
 void UPlayerAnimInstance::PlayHittedAnimation()
@@ -224,6 +204,8 @@ void UPlayerAnimInstance::PlayHittedAnimation()
 			break;
 		}
 	}
+
+	CheckConvertStateToBattle();
 }
 
 void UPlayerAnimInstance::PlayParryAnimation()
@@ -270,5 +252,31 @@ void UPlayerAnimInstance::PlayParryAnimation()
 		// 패링 애니메이션은 한번만 재생함
 		PlayParryTiming = false;
 		OwnerCharacter->PlayAnimMontage(ParryMontage, 1.0, "Parry");
+
+		// 패링도 수행한다.
+		OwnerCharacter->Parry();
+	}
+
+	CheckConvertStateToBattle();
+}
+
+void UPlayerAnimInstance::CheckConvertStateToBattle()
+{
+	if (IsAnyMontagePlaying() == false)
+	{
+		OwnerCharacter->SetActionState(Protocol::ACTION_STATE_BATTLE);
+		OwnerCharacter->ResetDamageDir();
+		State = ActionState::State_Action_Battle;
+
+		AClientPlayer* ClientPlayer = Cast<AClientPlayer>(OwnerCharacter);
+		if (ClientPlayer)
+		{
+			ClientPlayer->SetCameraState(ECameraState::Battle);
+		}
+
+		// 스킬 시전중 데미지 입었을경우를 대비 
+		// 스킬정보 밀어버림
+		OwnerCharacter->SetCurPlayingSkill(Protocol::SKILL_INFO_NONE);
+		CurPlayingAttackSkill = Protocol::SKILL_INFO_NONE;
 	}
 }

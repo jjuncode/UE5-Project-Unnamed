@@ -168,6 +168,7 @@ void UGameManager::HandleDamaged(const Protocol::S_DAMAGED& DamagePkt)
 	// Damage받은 애 정보 셋팅 
 	TObjectPtr<APlayerBase>* DamagedCreature = Players.Find(ObjectInfo.creature_info().id());
 	ensureMsgf(DamagedCreature, TEXT("[GameManager - HandleDamaged] : Can't Find Player"));
+	(*DamagedCreature)->SetActionState(Protocol::ACTION_STATE_DAMAGED);
 
 	IDamageable* DC = Cast<IDamageable>(*DamagedCreature);
 	if (DC)
@@ -189,14 +190,15 @@ void UGameManager::HandleParry(const Protocol::S_PARRY& ParryPkt)
 	// 패링 수행
 	Protocol::ObjectInfo ObjectInfo = ParryPkt.object_info();
 
-	// Damage받은 애 정보 셋팅 
+	// Parry한 애 정보 셋팅 
 	TObjectPtr<APlayerBase>* ParryCreature = Players.Find(ObjectInfo.creature_info().id());
 	ensureMsgf(ParryCreature, TEXT("[GameManager - HandleParry] : Can't Find Player"));
+	(*ParryCreature)->SetActionState(Protocol::ACTION_STATE_PARRY);
 
 	IParryable* PC = Cast<IParryable>(*ParryCreature);
 	if (PC)
 	{
-		PC->Parry(ParryPkt);
+		PC->CachingParryAttackInfo(ParryPkt); // 캐싱해두고, 애니메이션이 재생될 때 수행해야함
 	}
 
 	// 공격자 공격 실패  
@@ -318,4 +320,16 @@ bool UGameManager::IsMyPlayer(int32 Id)
 bool UGameManager::IsMyPlayer(const Protocol::ObjectInfo& ObjectInfo)
 {
 	return IsMyPlayer(ObjectInfo.creature_info().id());
+}
+
+TObjectPtr<class APlayerBase> UGameManager::GetPlayer(uint64 PlayerId)
+{
+	TObjectPtr<APlayerBase>* Player = Players.Find(PlayerId);
+
+	if (Player)
+	{
+		return *Player;
+	}
+
+	return nullptr;
 }

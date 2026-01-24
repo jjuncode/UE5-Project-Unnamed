@@ -69,13 +69,18 @@ void APlayerBase::OnDamaged(const Protocol::S_DAMAGED& DamagePkt)
 	DamagedDir = DamagingSkill.attack_dir();
 }
 
-void APlayerBase::Parry(Protocol::S_PARRY ParryInfo)
+void APlayerBase::Parry()
 {
-	SetObjectInfo(ParryInfo.object_info());
+	SetObjectInfo(ParryAttackInfo.object_info());
 
 	// 패링 스킬 정보 
-	Protocol::SkillData DamagingSkill = ParryInfo.skill_data();
+	Protocol::SkillData DamagingSkill = ParryAttackInfo.skill_data();
 	//DamagedDir = DamagingSkill.attack_dir();
+}
+
+void APlayerBase::CachingParryAttackInfo(Protocol::S_PARRY ParryInfo)
+{
+	ParryAttackInfo = ParryInfo;
 }
 
 void APlayerBase::MoveSync()

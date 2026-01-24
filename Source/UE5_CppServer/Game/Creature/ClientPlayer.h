@@ -50,7 +50,7 @@ public:
 	// --------------------------------
 	//		Interface - Parryable
 	// --------------------------------
-	virtual void Parry(Protocol::S_PARRY ParryInfo);
+	virtual void Parry();
 
 	// ----------------------
 	//		Camera

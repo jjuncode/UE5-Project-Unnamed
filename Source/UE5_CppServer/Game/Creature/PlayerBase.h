@@ -42,7 +42,8 @@ public:
 	// --------------------------------
 	//		Interface - Parryable
 	// --------------------------------
-	virtual void Parry(Protocol::S_PARRY ParryInfo);
+	virtual void Parry();
+	virtual void CachingParryAttackInfo(Protocol::S_PARRY ParryInfo);	// 패링정보 캐싱
 
 	// ----------------------
 	//		Event Handle
@@ -62,6 +63,9 @@ protected:
 
 	TObjectPtr<class ABasePlayerController> Controller;
 	Protocol::AttackDir DamagedDir;	// 데미지 받은 방향 
+
+	// 패링 정보 캐싱 해둠 ( 애니메이션이 재생될 때 수행되기 위한 ) 
+	Protocol::S_PARRY ParryAttackInfo;
 
 	bool bIsMyPlayer = false;
 	bool bIsDummy = false;
