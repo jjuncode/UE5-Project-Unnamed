@@ -14,7 +14,7 @@ void ACreature::BeginPlay()
 	Super::BeginPlay();
 
 	// Idle
-	SetActionState(Protocol::ACTION_STATE_MOVE_IDLE);
+	SetActionState(Protocol::ACTION_STATE_MOVE);
 
 	// 정보 동기화
 	{

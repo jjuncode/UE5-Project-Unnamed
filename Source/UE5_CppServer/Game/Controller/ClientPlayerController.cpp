@@ -88,8 +88,7 @@ void AClientPlayerController::HandleMoveActionTrigerred(const FInputActionValue&
 	// IDLE / RUN / BATTLE 상태에서만 움직이기가 가능하다
 	Protocol::ActionState ActionState = ClientPlayer->GetActionState();
 
-	if (ActionState == Protocol::ACTION_STATE_MOVE_IDLE
-		|| ActionState == Protocol::ACTION_STATE_MOVE_RUN
+	if (ActionState == Protocol::ACTION_STATE_MOVE
 		|| ActionState == Protocol::ACTION_STATE_BATTLE)
 	{}
 	else return;
@@ -100,7 +99,7 @@ void AClientPlayerController::HandleMoveActionTrigerred(const FInputActionValue&
 	}
 	else
 	{
-		_HandleMoveAction(Value, Protocol::ACTION_STATE_MOVE_RUN);
+		_HandleMoveAction(Value, Protocol::ACTION_STATE_MOVE);
 	}
 }
 
@@ -115,7 +114,7 @@ void AClientPlayerController::HandleMoveActionCompleted(const FInputActionValue&
 	}
 	else
 	{
-		_HandleMoveAction(Value, Protocol::ACTION_STATE_MOVE_IDLE);
+		_HandleMoveAction(Value, Protocol::ACTION_STATE_MOVE);
 	}
 }
 
@@ -123,8 +122,7 @@ void AClientPlayerController::SyncYaw(const FInputActionValue& Value)
 {
 	// 키 입력시 yaw 동기화 
 	Protocol::ActionState ActionState = ClientPlayer->GetActionState();
-	if (ActionState == Protocol::ACTION_STATE_MOVE_IDLE
-		|| ActionState == Protocol::ACTION_STATE_MOVE_RUN
+	if (ActionState == Protocol::ACTION_STATE_MOVE
 		|| ActionState == Protocol::ACTION_STATE_BATTLE ) 
 	{
 		FVector2D InputValue = Value.Get<FVector2D>();
@@ -149,8 +147,7 @@ void AClientPlayerController::HandleMouseLookAction(const FInputActionValue& Val
 	Protocol::ActionState ActionState = ClientPlayer->GetActionState();
 
 	// IDLE / MOVE / BATTLE 일 때만 카메라 회전이 가능 
-	if (ActionState == Protocol::ACTION_STATE_MOVE_IDLE
-		|| ActionState == Protocol::ACTION_STATE_MOVE_RUN
+	if (ActionState == Protocol::ACTION_STATE_MOVE
 		|| ActionState == Protocol::ACTION_STATE_BATTLE )
 	{}
 	else return;
@@ -163,8 +160,7 @@ void AClientPlayerController::HandleSkillAction(const FInputActionValue& Value)
 {
 	Protocol::ActionState ActionState = ClientPlayer->GetActionState();
 	
-	if (ActionState == Protocol::ACTION_STATE_MOVE_IDLE
-		|| ActionState == Protocol::ACTION_STATE_MOVE_RUN
+	if (ActionState == Protocol::ACTION_STATE_MOVE
 		|| ActionState == Protocol::ACTION_STATE_BATTLE )
 	{}
 	else
@@ -199,10 +195,13 @@ void AClientPlayerController::HandleSearchEnemyAction(const FInputActionValue& V
 	auto* GameManager = GetGameManager();
 	if (!GameManager || !ClientPlayer) return;
 
-	if (ClientPlayer->GetTarget() != nullptr)
+	// target이 있거나 or target이 없는데 배틀상태 
+	if (ClientPlayer->GetTarget() != nullptr
+		|| (ClientPlayer->GetActionState()==Protocol::ACTION_STATE_BATTLE && ClientPlayer->GetTarget() == nullptr  ))
 	{
 		ClientPlayer->ResetTarget();
 		ClientPlayer->SetCameraState(ECameraState::Normal);
+		ClientPlayer->SetActionState(Protocol::ACTION_STATE_MOVE);
 		return;
 	}
 

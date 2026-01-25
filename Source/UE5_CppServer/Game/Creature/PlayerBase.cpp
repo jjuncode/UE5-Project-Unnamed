@@ -89,8 +89,9 @@ void APlayerBase::MoveSync()
 	if (bIsMyPlayer)
 		return;
 
-	if (GetActionState() == Protocol::ACTION_STATE_MOVE_RUN || 
-		GetActionState() == Protocol::ACTION_STATE_MOVE_IDLE)
+	if (GetActionState() == Protocol::ACTION_STATE_MOVE || 
+		// BATTLE의 경우 임시 ( TODO : 칼뽑 이동 애니메이션 ) 
+		GetActionState() == Protocol::ACTION_STATE_BATTLE)	
 	{
 		// Rotate
 		{

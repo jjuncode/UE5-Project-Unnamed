@@ -71,18 +71,20 @@ void UPlayerAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 		Direction = ret;
 	}
 
-	Protocol::ActionState ActionState = OwnerCharacter->GetActionState();
+	Protocol::ActionState CurState = OwnerCharacter->GetActionState();
 
-	switch (ActionState)
+	switch (CurState)
 	{
 	case Protocol::ACTION_STATE_NONE:
-		State = ActionState::State_Action_None;
+	case Protocol::ACTION_STATE_BATTLE:
+	case Protocol::ACTION_STATE_MOVE:
 		break;
+
 	case Protocol::ACTION_STATE_ATTACK_TRY:
 		PlayAttackAnimationTry();
 		break;
 	case Protocol::ACTION_STATE_ATTACK_SUCCESS:
-		PlayAttackAnimationTry();	// 공격 애니메이션 그대로 수행 
+		PlayAttackAnimationSuccess();
 		break;
 	case Protocol::ACTION_STATE_ATTACK_INTERRUPTED:
 		PlayAttackAnimationInterrupted();
@@ -111,20 +113,20 @@ void UPlayerAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 		OwnerCharacter->SetCurPlayingSkill(Protocol::SKILL_INFO_NONE);
 		CurPlayingAttackSkill = Protocol::SKILL_INFO_NONE;
 	}
+
+	// PrevState 갱신
+	PrevState = CurState;
 }
 
 void UPlayerAnimInstance::PlayAttackAnimationTry()
 {
 	// 한번만 수행해야한다.
-	if (State != ActionState::State_Action_Attack_Try)
+	if (PrevState != Protocol::ACTION_STATE_ATTACK_TRY )
 	{
- 		State = ActionState::State_Action_Attack_Try;
-
 		// Skill Animation
 		Protocol::SkillId CurSkill = OwnerCharacter->GetCurPlayingSkill();
 		CurPlayingAttackSkill = CurSkill;
-
-		// 재생
+		
 		switch (CurSkill)
 		{
 		case Protocol::SKILL_INFO_SLASH_UP:
@@ -149,11 +151,14 @@ void UPlayerAnimInstance::PlayAttackAnimationTry()
 		}
 	}
 
-	CheckConvertStateToBattle();
+	CheckConvertStateToBattle(Protocol::ACTION_STATE_ATTACK_TRY);
 }
 
 void UPlayerAnimInstance::PlayAttackAnimationSuccess()
 {
+	// 공격 애니메이션 하던걸 그대로 수행 
+	
+	CheckConvertStateToBattle(Protocol::ACTION_STATE_ATTACK_SUCCESS);
 }
 
 void UPlayerAnimInstance::PlayAttackAnimationInterrupted()
@@ -163,21 +168,18 @@ void UPlayerAnimInstance::PlayAttackAnimationInterrupted()
 	if (PlayAttackInterruptedTiming )
 	{
 		// 패링 애니메이션은 한번만 재생함
-		State = ActionState::State_Action_Attack_Interrupted;
 		PlayAttackInterruptedTiming = false;
 		OwnerCharacter->PlayAnimMontage(AttackInterrupteddMontage, 1.0, "ATTACK_INTERRUPTED");
 	}
 	
-	CheckConvertStateToBattle();
+	CheckConvertStateToBattle(Protocol::ACTION_STATE_ATTACK_INTERRUPTED);
 }
 
 void UPlayerAnimInstance::PlayHittedAnimation()
 {
 	// 한번만 수행해야한다.
-	if (State != ActionState::State_Action_OnDamaged)
+	if (PrevState != Protocol::ACTION_STATE_DAMAGED)
 	{
-		State = ActionState::State_Action_OnDamaged;
-
 		Protocol::AttackDir DamageDir = OwnerCharacter->GetDamagedDir();
 
 		switch (DamageDir)
@@ -205,16 +207,14 @@ void UPlayerAnimInstance::PlayHittedAnimation()
 		}
 	}
 
-	CheckConvertStateToBattle();
+	CheckConvertStateToBattle(Protocol::ACTION_STATE_DAMAGED);
 }
 
 void UPlayerAnimInstance::PlayParryAnimation()
 {
 	// 한번만 수행해야한다.
-	if (State != ActionState::State_Action_Parry)
+	if (PrevState != Protocol::ACTION_STATE_PARRY )
 	{
-		State = ActionState::State_Action_Parry;
-
 		// 초반 공격애니메이션 재생
 		Protocol::SkillId CurSkill = OwnerCharacter->GetCurPlayingSkill();
 
@@ -247,7 +247,7 @@ void UPlayerAnimInstance::PlayParryAnimation()
 		}
 	}
 
-	if (PlayParryTiming && State == ActionState::State_Action_Parry)
+	if (PlayParryTiming && PrevState == Protocol::ACTION_STATE_PARRY)
 	{
 		// 패링 애니메이션은 한번만 재생함
 		PlayParryTiming = false;
@@ -257,16 +257,18 @@ void UPlayerAnimInstance::PlayParryAnimation()
 		OwnerCharacter->Parry();
 	}
 
-	CheckConvertStateToBattle();
+	CheckConvertStateToBattle(Protocol::ACTION_STATE_PARRY);
 }
 
-void UPlayerAnimInstance::CheckConvertStateToBattle()
+void UPlayerAnimInstance::CheckConvertStateToBattle(Protocol::ActionState CheckState)
 {
+	if (PrevState != CheckState)
+		return;
+
 	if (IsAnyMontagePlaying() == false)
 	{
 		OwnerCharacter->SetActionState(Protocol::ACTION_STATE_BATTLE);
 		OwnerCharacter->ResetDamageDir();
-		State = ActionState::State_Action_Battle;
 
 		AClientPlayer* ClientPlayer = Cast<AClientPlayer>(OwnerCharacter);
 		if (ClientPlayer)

@@ -25,13 +25,14 @@ private:
 	void PlayParryAnimation();
 
 private:
-	void CheckConvertStateToBattle();
+	void CheckConvertStateToBattle(Protocol::ActionState CheckState);
 
 protected:
 	// Cache
 	bool PlayParryTiming = false;
 	bool PlayAttackInterruptedTiming = false;
 	Protocol::SkillId CurPlayingAttackSkill;
+	Protocol::ActionState PrevState;
 
 protected:
 	// ------------------
@@ -72,9 +73,6 @@ protected:
 
 	UPROPERTY(Category = Character, VisibleAnywhere, BlueprintReadOnly)
 	bool bIsFalling;
-
-	UPROPERTY(Category = Character, VisibleAnywhere, BlueprintReadOnly)
-	FGameplayTag State;
 
 public:
 	friend class UAnimNotify_SlowEffect_End;
