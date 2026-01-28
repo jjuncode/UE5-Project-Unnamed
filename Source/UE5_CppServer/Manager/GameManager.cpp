@@ -194,6 +194,7 @@ void UGameManager::HandleParry(const Protocol::S_PARRY& ParryPkt)
 	TObjectPtr<APlayerBase>* ParryCreature = Players.Find(ObjectInfo.creature_info().id());
 	ensureMsgf(ParryCreature, TEXT("[GameManager - HandleParry] : Can't Find Player"));
 	(*ParryCreature)->SetActionState(Protocol::ACTION_STATE_PARRY);
+	(*ParryCreature)->SetCurPlayingSkill(ParryPkt.skill_data().id());
 
 	IParryable* PC = Cast<IParryable>(*ParryCreature);
 	if (PC)

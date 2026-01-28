@@ -107,13 +107,6 @@ void UPlayerAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 		break;
 	}
 
-	if (IsAnyMontagePlaying() == false)
-	{
-		// 스킬정보 밀어버림
-		OwnerCharacter->SetCurPlayingSkill(Protocol::SKILL_INFO_NONE);
-		CurPlayingAttackSkill = Protocol::SKILL_INFO_NONE;
-	}
-
 	// PrevState 갱신
 	PrevState = CurState;
 }
@@ -146,7 +139,7 @@ void UPlayerAnimInstance::PlayAttackAnimationTry()
 			break;
 
 		default:
-			GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, TEXT("[ UPlayerAnimInstance ] : Error - Incorrect Skill Info"));
+			GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, TEXT("[ UPlayerAnimInstance - PlayAttackAnimationTry ] : Error - Incorrect Skill Info"));
 			break;
 		}
 	}
@@ -241,7 +234,7 @@ void UPlayerAnimInstance::PlayParryAnimation()
 				break;
 
 			default:
-				GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, TEXT("[ UPlayerAnimInstance ] : Error - Incorrect Skill Info"));
+				GEngine->AddOnScreenDebugMessage(-1, 3.0f, FColor::Red, TEXT("[ UPlayerAnimInstance - PlayParryAnimation ] : Error - Incorrect Skill Info"));
 				break;
 			}
 		}
@@ -275,9 +268,8 @@ void UPlayerAnimInstance::CheckConvertStateToBattle(Protocol::ActionState CheckS
 		{
 			ClientPlayer->SetCameraState(ECameraState::Battle);
 		}
-
-		// 스킬 시전중 데미지 입었을경우를 대비 
-		// 스킬정보 밀어버림
+		
+		// 스킬 시전이 끝났을 경우 
 		OwnerCharacter->SetCurPlayingSkill(Protocol::SKILL_INFO_NONE);
 		CurPlayingAttackSkill = Protocol::SKILL_INFO_NONE;
 	}

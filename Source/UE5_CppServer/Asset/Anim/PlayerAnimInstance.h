@@ -30,6 +30,7 @@ private:
 protected:
 	// Cache
 	bool PlayParryTiming = false;
+
 	bool PlayAttackInterruptedTiming = false;
 	Protocol::SkillId CurPlayingAttackSkill;
 	Protocol::ActionState PrevState;
