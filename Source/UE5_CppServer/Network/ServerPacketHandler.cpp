@@ -3,7 +3,7 @@
 #include "atomic"
 
 extern PacketHandlerFunc GPacketHandler[UINT16_MAX]{};
-static std::atomic<int32> PlayerId = 0;
+static std::atomic<int32> PlayerId = 1;
 
 bool Handle_INVALID(PacketSessionRef& session, BYTE* buffer, int32 len)
 {
