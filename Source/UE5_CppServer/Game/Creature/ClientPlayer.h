@@ -61,6 +61,9 @@ public:
 
 private:
 	void UpdateCamera(float DeltaTime);
+	//260627
+	bool ShouldLockOnTarget() const;
+	void ApplyLockOnRotation(float DeltaTime);
 
 	// ----------------------
 	//		Handle Event
@@ -68,6 +71,27 @@ private:
 public:
 	virtual void HandleEvent(FGameplayTag EventTag) override;
 
+	void Dash();
+	void Dodge();
+	void UseSkill(int32 SkillId);
+
+	void Attack();
+	void TryParry();
+	void HandleDamage(const Protocol::S_DAMAGED& DamageInfo);
+
+	void Die();
+
+	void EnterGroggy();
+	void RecoverFromGroggy();
+private:
+	void PlayDashMontage();
+	void PlayDodgeMontage();
+	void PlayAttackMontage();
+	void PlayParryMontage();
+	void PlayHitMontage();
+	void PlayDeathMontage();
+	void PlayGroggyMontage();
+	void PlayGroggyRecoverMontage();
 	// -------------------
 	//		Network
 	// -------------------

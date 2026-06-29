@@ -2,7 +2,7 @@
 #include "UE5_CppServer.h"
 #include "atomic"
 
-extern PacketHandlerFunc GPacketHandler[UINT16_MAX]{};
+extern PacketHandlerFunc g_packet_handler[UINT16_MAX]{};
 static std::atomic<int32> PlayerId = 1;
 
 bool Handle_INVALID(PacketSessionRef& session, BYTE* buffer, int32 len)

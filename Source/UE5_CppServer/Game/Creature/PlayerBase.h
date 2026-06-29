@@ -56,6 +56,21 @@ public:
 	void MoveSync();
 	bool IsDummy() { return bIsDummy; }
 
+	//새로 추가
+	bool IsMoveState() const;
+	bool CanMove() const;
+	bool CanUseSkill() const;
+	bool CanDash() const;
+	bool CanDodge() const;
+	bool CanAttack() const;
+	bool CanParry() const;
+	bool CanTakeDamage() const;
+	bool IsDeadState() const;
+	bool CanDie() const;
+	bool IsGroggyState() const;
+	bool CanRecoverFromGroggy() const;
+	bool IsActionBlockedState() const;
+
 protected:
 	// Caching 
 	UPROPERTY(EditAnyWhere, Category = "Weapon")

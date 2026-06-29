@@ -68,6 +68,27 @@ void AClientPlayerController::HandleEvent(FGameplayTag EventTag)
 	}
 }
 
+//260627
+bool AClientPlayerController::CanControlPlayer() const
+{
+	if (ClientPlayer == nullptr)
+		return false;
+
+	return ClientPlayer->CanMove();
+}
+
+//260627 현재 상태가 전투 상태면 BATTLE 이동, 아니면 일반 MOVE 이동으로 처리하는 분기 로직을 GetMoveActionState()로 분리
+Protocol::ActionState AClientPlayerController::GetMoveActionState() const
+{
+	if (ClientPlayer == nullptr)
+		return Protocol::ACTION_STATE_MOVE;
+
+	if (ClientPlayer->GetActionState() == Protocol::ACTION_STATE_BATTLE)
+		return Protocol::ACTION_STATE_BATTLE;
+
+	return Protocol::ACTION_STATE_MOVE;
+}
+
 void AClientPlayerController::_HandleMoveAction(const FInputActionValue& Value, const Protocol::ActionState& State )
 {
 	FVector2D InputValue = Value.Get<FVector2D>();
@@ -93,37 +114,22 @@ void AClientPlayerController::HandleMoveActionTrigerred(const FInputActionValue&
 	{}
 	else return;
 
-	if (ActionState == Protocol::ACTION_STATE_BATTLE)
-	{
-		_HandleMoveAction(Value, Protocol::ACTION_STATE_BATTLE);
-	}
-	else
-	{
-		_HandleMoveAction(Value, Protocol::ACTION_STATE_MOVE);
-	}
+	_HandleMoveAction(Value, GetMoveActionState());
 }
 
 void AClientPlayerController::HandleMoveActionCompleted(const FInputActionValue& Value)
 {
 	ClientPlayer->ForceSendMovePkt();
 
-	Protocol::ActionState ActionState = ClientPlayer->GetActionState();
-	if (ActionState == Protocol::ACTION_STATE_BATTLE)
-	{
-		_HandleMoveAction(Value, Protocol::ACTION_STATE_BATTLE);
-	}
-	else
-	{
-		_HandleMoveAction(Value, Protocol::ACTION_STATE_MOVE);
-	}
+	_HandleMoveAction(Value, GetMoveActionState());
 }
 
 void AClientPlayerController::SyncYaw(const FInputActionValue& Value)
 {
 	// 키 입력시 yaw 동기화 
 	Protocol::ActionState ActionState = ClientPlayer->GetActionState();
-	if (ActionState == Protocol::ACTION_STATE_MOVE
-		|| ActionState == Protocol::ACTION_STATE_BATTLE ) 
+	if (!CanControlPlayer())
+		return;
 	{
 		FVector2D InputValue = Value.Get<FVector2D>();
 
@@ -158,34 +164,11 @@ void AClientPlayerController::HandleMouseLookAction(const FInputActionValue& Val
 
 void AClientPlayerController::HandleSkillAction(const FInputActionValue& Value)
 {
-	Protocol::ActionState ActionState = ClientPlayer->GetActionState();
-	
-	if (ActionState == Protocol::ACTION_STATE_MOVE
-		|| ActionState == Protocol::ACTION_STATE_BATTLE )
-	{}
-	else
+	if (ClientPlayer == nullptr)
 		return;
 
-	if (ClientPlayer->GetCurPlayingSkill() != Protocol::SKILL_INFO_NONE)
-		return;
-
-	const int SkillIndex = Value.Get<float>();
-
-	Protocol::C_SKILL SkillPkt;
-
-	// 스킬 idx 설정 
-	Protocol::SkillId SkillInfo = static_cast<Protocol::SkillId>(SkillIndex);
-	SkillPkt.set_skill_id(SkillInfo);
-
-	// 위치, yaw설정 
-	Protocol::Vec3* Pos = SkillPkt.mutable_pos();
-	FVector Location = ClientPlayer->GetActorLocation();
-	Pos->set_x(Location.X);
-	Pos->set_y(Location.Y);
-	Pos->set_z(Location.Z);
-	SkillPkt.set_yaw(ClientPlayer->GetObjectInfo().yaw());
-
-	SEND_PACKET_NO_SESSION(SkillPkt);
+	const int32 SkillIndex = Value.Get<float>();
+	ClientPlayer->UseSkill(SkillIndex);
 }
 
 void AClientPlayerController::HandleSearchEnemyAction(const FInputActionValue& Value)
@@ -335,4 +318,36 @@ void AClientPlayerController::HandleSearchEnemyAction(const FInputActionValue& V
 			1.5f
 		);
 	}
+}
+
+void AClientPlayerController::HandleDashAction(const FInputActionValue& Value)
+{
+	if (ClientPlayer == nullptr)
+		return;
+
+	ClientPlayer->Dash();
+}
+
+void AClientPlayerController::HandleDodgeAction(const FInputActionValue& Value)
+{
+	if (ClientPlayer == nullptr)
+		return;
+
+	ClientPlayer->Dodge();
+}
+
+void AClientPlayerController::HandleAttackAction(const FInputActionValue& Value)
+{
+	if (ClientPlayer == nullptr)
+		return;
+
+	ClientPlayer->Attack();
+}
+
+void AClientPlayerController::HandleParryAction(const FInputActionValue& Value)
+{
+	if (ClientPlayer == nullptr)
+		return;
+
+	ClientPlayer->TryParry();
 }

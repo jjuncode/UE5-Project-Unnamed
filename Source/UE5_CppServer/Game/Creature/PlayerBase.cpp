@@ -83,15 +83,82 @@ void APlayerBase::CachingParryAttackInfo(Protocol::S_PARRY ParryInfo)
 	ParryAttackInfo = ParryInfo;
 }
 
+bool APlayerBase::IsMoveState() const
+{
+	const Protocol::ActionState State = GetActionState();
+
+	return State == Protocol::ACTION_STATE_MOVE ||
+		State == Protocol::ACTION_STATE_BATTLE;
+}
+
+//구현 할 것들을 위해 함수 작성
+ 
+
+bool APlayerBase::CanUseSkill() const
+{
+	return !IsActionBlockedState() && IsMoveState();
+}
+
+bool APlayerBase::CanDash() const
+{
+	return !IsActionBlockedState() && IsMoveState();
+}
+
+bool APlayerBase::CanDodge() const
+{
+	return !IsActionBlockedState() && IsMoveState();
+}
+
+bool APlayerBase::CanAttack() const
+{
+	return !IsActionBlockedState() && IsMoveState();
+}
+
+bool APlayerBase::CanParry() const
+{
+	return !IsActionBlockedState() && IsMoveState();
+}
+
+bool APlayerBase::CanTakeDamage() const
+{
+	return true;
+}
+
+// ----------------------------추후 return 값 수정 피료
+bool APlayerBase::IsDeadState() const
+{
+	return false;
+}
+
+bool APlayerBase::IsGroggyState() const
+{
+	return false;
+}
+//------------------------
+
+//한번에 관리
+bool APlayerBase::IsActionBlockedState() const
+{
+	return IsDeadState() || IsGroggyState();
+}
+ 
+bool APlayerBase::CanRecoverFromGroggy() const
+{
+	return IsGroggyState();
+}
+bool APlayerBase::CanDie() const
+{
+	return true;
+}
 void APlayerBase::MoveSync()
 {
 	// ClientPlayer는 제외
 	if (bIsMyPlayer)
 		return;
 
-	if (GetActionState() == Protocol::ACTION_STATE_MOVE || 
+	
 		// BATTLE의 경우 임시 ( TODO : 칼뽑 이동 애니메이션 ) 
-		GetActionState() == Protocol::ACTION_STATE_BATTLE)	
+	if (IsMoveState())
 	{
 		// Rotate
 		{
